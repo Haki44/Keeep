@@ -19,3 +19,17 @@
 
 Pour mettre à jour la DB avec les seeders
 - php artisan migrate:refresh --seed
+
+## Login
+
+- admin
+admin@gmail.com
+password
+
+- user1
+user1@gmail.com
+password
+
+- user2
+user2@gmail.com
+password
