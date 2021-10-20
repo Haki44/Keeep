@@ -23,13 +23,13 @@ Pour mettre à jour la DB avec les seeders
 ## Login
 
 - admin
-admin@gmail.com
-password
+-admin@gmail.com
+-password
 
 - user1
-user1@gmail.com
-password
+-user1@gmail.com
+-password
 
 - user2
-user2@gmail.com
-password
+-user2@gmail.com
+-password
