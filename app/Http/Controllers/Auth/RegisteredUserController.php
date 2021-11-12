@@ -34,8 +34,8 @@ class RegisteredUserController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name' => ['nullable', 'string', 'max:255'],
-            'firstname' => ['nullable', 'string', 'max:255'],
+            'name' => ['nullable', 'string', 'min:2', 'max:255'],
+            'firstname' => ['nullable', 'string', 'min:2', 'max:255'],
             'address' => ['nullable', 'string', 'max:255'],
             'phone' => ['nullable', 'numeric'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
