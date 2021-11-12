@@ -13,10 +13,31 @@
             @csrf
 
             <!-- Name -->
-            <div>
-                <x-label for="name" :value="__('Name')" />
+            <div class="mt-4">
+                <x-label for="name" :value="__('Nom')" />
 
-                <x-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name')" required autofocus />
+                <x-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name')" autofocus required />
+            </div>
+
+            <!-- FirstName -->
+            <div class="mt-4">
+                <x-label for="firstname" :value="__('Prénom')" />
+
+                <x-input id="firstname" class="block mt-1 w-full" type="text" name="firstname" :value="old('firstname')" required />
+            </div>
+
+            <!-- Postal Address -->
+            <div class="mt-4">
+                <x-label for="address" :value="__('Adresse')" />
+
+                <x-input id="address" class="block mt-1 w-full" type="text" name="address" :value="old('address')" />
+            </div>
+
+            <!-- Phone -->
+            <div class="mt-4">
+                <x-label for="phone" :value="__('N° Téléphone')" />
+
+                <x-input id="phone" class="block mt-1 w-full" type="number" name="phone" :value="old('phone')" />
             </div>
 
             <!-- Email Address -->
