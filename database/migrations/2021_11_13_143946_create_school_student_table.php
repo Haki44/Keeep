@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddSchoolIdToUsersTable extends Migration
+class CreateSchoolStudentTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,11 @@ class AddSchoolIdToUsersTable extends Migration
      */
     public function up()
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->foreignId('school_id')->nullable()->constrained();
+        Schema::create('school_student', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('school_id')->constrained();
+            $table->foreignId('user_id')->constrained();
+            $table->timestamps();
         });
     }
 
@@ -25,8 +28,6 @@ class AddSchoolIdToUsersTable extends Migration
      */
     public function down()
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->dropColumn('school_id');
-        });
+        Schema::dropIfExists('school_student');
     }
 }

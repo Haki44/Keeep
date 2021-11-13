@@ -1,6 +1,8 @@
 <?php
 
+use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ReferentController;
 
 /*
 |--------------------------------------------------------------------------
@@ -12,6 +14,15 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+
+// DOCUMENTATION
+Route::get('/doc', function () {
+    return view('documentation');
+})->name('documentation');
+
+// A ajouter un middleware/gate admin
+Route::get('/referent/create', [ReferentController::class, 'create'])->name('referent.create');
+Route::post('/referent', [ReferentController::class, 'store'])->name('referent.store');
 
 Route::get('/', function () {
     return view('welcome');
