@@ -15,12 +15,12 @@ class School extends Model
         'user_id'
     ];
 
-    public function users()
+    public function students()
     {
         return $this->hasMany(User::class);
     }
 
-    public function user()
+    public function referent()
     {
         return $this->belongsTo(User::class);
     }

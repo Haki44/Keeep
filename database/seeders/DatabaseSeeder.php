@@ -30,6 +30,14 @@ class DatabaseSeeder extends Seeder
             'name' => 'STUDENT'
         ]);
 
+        // Création des ECOLES
+        $school_1 = School::factory()->create([
+            'name' => 'SCHOOL1',
+        ]);
+        $school_2 = School::factory()->create([
+            'name' => 'SCHOOL2',
+        ]);
+
         // Création des users
         // ADMIN
         User::create([
@@ -41,68 +49,48 @@ class DatabaseSeeder extends Seeder
             'role_id' => $role_admin->id
         ]);
 
-        // REFERENT 1 de SCHOOL 1
-        $referent_1 = User::create([
+        // REFERENTS
+        User::create([
             'name' => 'referent1',
             'email'=>'referent1@gmail.com',
             'email_verified_at' => now(),
             'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
             'remember_token' => Str::random(10),
-            'role_id' => $role_referent->id
-        ]);
-        $school_1 = School::factory()->create([
-            'name' => 'SCHOOL1',
-            'user_id' => $referent_1->id
+            'role_id' => $role_referent->id,
+            'school_id' => $school_1->id
         ]);
 
-        // REFERENT 2 de SCHOOL 2
-        $referent_2 = User::create([
+        User::create([
             'name' => 'referent2',
             'email'=>'referent2@gmail.com',
             'email_verified_at' => now(),
             'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
             'remember_token' => Str::random(10),
-            'role_id' => $role_referent->id
-        ]);
-        $school_2 = School::factory()->create([
-            'name' => 'SCHOOL2',
-            'user_id' => $referent_2->id
+            'role_id' => $role_referent->id,
+            'school_id' => $school_2->id
         ]);
 
-        // ETDUDIANT 1 de SCHOOL 1
-        $student_1 = User::create([
+        // ETDUDIANTS
+        User::create([
             'name' => 'etudiant1',
             'email'=>'etudiant1@gmail.com',
             'email_verified_at' => now(),
             'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
             'remember_token' => Str::random(10),
             'role_id' => $role_student->id,
+            'school_id' => $school_1->id,
             'register_token' => NULL
         ]);
-        
-        DB::table('school_student')->insert(
-            [
-                'school_id' => $school_1->id,
-                'user_id' => $student_1->id,
-            ]
-        );
 
-        // ETDUDIANT 2 de SCHOOL 2
-        $student_2 = User::create([
+        User::create([
             'name' => 'etudiant2',
             'email'=>'etudiant2@gmail.com',
             'email_verified_at' => now(),
             'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
             'remember_token' => Str::random(10),
             'role_id' => $role_student->id,
+            'school_id' => $school_2->id,
             'register_token' => NULL
         ]);
-
-        DB::table('school_student')->insert(
-            [
-                'school_id' => $school_2->id,
-                'user_id' => $student_2->id,
-            ]
-        );
     }
 }

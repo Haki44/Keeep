@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\RegisterStudentMail;
 use App\Models\Role;
 use App\Models\User;
-use App\Models\School;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 
 class StudentController extends Controller
 {
@@ -44,19 +44,15 @@ class StudentController extends Controller
         ]);
 
         $data['role_id'] = Role::where('name', 'STUDENT')->first()->id;
+        $data['school_id'] = auth()->user()->school->id;
         $data['register_token'] = Str::uuid()->toString();
         
         $student = User::create($data);
 
-        // On ajoute l'ecole à l'étudiant créé
-        DB::table('school_student')->insert(
-            [
-                'school_id' => School::where('user_id', auth()->user()->id)->first()->id,
-                'user_id' => $student->id,
-            ]
-        );
+        // // Envoie du mail a l'etudiant
+        Mail::to($student->email)->send(new RegisterStudentMail($student));
 
-        // Envoie du mail a l'etudiant
+        // Redirection vers une page indiquant qu'un mail vient d'etre envoyé
     }
 
     /**

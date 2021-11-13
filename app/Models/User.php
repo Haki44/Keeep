@@ -27,7 +27,8 @@ class User extends Authenticatable
         'email',
         'password',
         'role_id',
-        'register_token'
+        'register_token',
+        'school_id'
     ];
 
     /**
@@ -51,8 +52,17 @@ class User extends Authenticatable
 
     protected $with = [
         'role',
-        'school',
+        'school'
     ];
+
+    // public static function boot()
+    // {
+    //     parent::boot();
+
+    //     self::creating(function($user) {
+    //         $user->school()->associate(auth()->user()->school->id);
+    //     });
+    // }
 
     public function role()
     {
@@ -62,10 +72,5 @@ class User extends Authenticatable
     public function school()
     {
         return $this->belongsTo(School::class);
-    }
-
-    public function schools()
-    {
-        return $this->hasMany(School::class);
     }
 }

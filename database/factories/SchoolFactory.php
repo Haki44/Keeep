@@ -23,7 +23,6 @@ class SchoolFactory extends Factory
     {
         return [
             'name' => '',
-            'user_id' => ''
         ];
     }
 }
