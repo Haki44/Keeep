@@ -3,6 +3,7 @@
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ReferentController;
+use App\Http\Controllers\StudentController;
 
 /*
 |--------------------------------------------------------------------------
@@ -23,6 +24,9 @@ Route::get('/doc', function () {
 // A ajouter un middleware/gate admin
 Route::get('/referent/create', [ReferentController::class, 'create'])->name('referent.create');
 Route::post('/referent', [ReferentController::class, 'store'])->name('referent.store');
+
+Route::get('/student/create', [StudentController::class, 'create'])->name('student.create');
+Route::post('/student', [StudentController::class, 'store'])->name('student.store');
 
 Route::get('/', function () {
     return view('welcome');
