@@ -22,11 +22,11 @@ Route::get('/doc', function () {
 })->name('documentation');
 
 // A ajouter un middleware/gate admin
-Route::get('/referent/create', [ReferentController::class, 'create'])->name('referent.create');
-Route::post('/referent', [ReferentController::class, 'store'])->name('referent.store');
+Route::get('/referents/create', [ReferentController::class, 'create'])->name('referent.create');
+Route::post('/referents', [ReferentController::class, 'store'])->name('referent.store');
 
-Route::get('/student/create', [StudentController::class, 'create'])->name('student.create');
-Route::post('/student', [StudentController::class, 'store'])->name('student.store');
+Route::get('/students/create', [StudentController::class, 'create'])->name('student.create');
+Route::post('/students', [StudentController::class, 'store'])->name('student.store');
 
 Route::get('/', function () {
     return view('welcome');

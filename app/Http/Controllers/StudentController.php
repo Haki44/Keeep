@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\AddStudentEvent;
 use App\Mail\RegisterStudentMail;
 use App\Models\Role;
 use App\Models\User;
@@ -43,14 +44,17 @@ class StudentController extends Controller
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
         ]);
 
-        $data['role_id'] = Role::where('name', 'STUDENT')->first()->id;
-        $data['school_id'] = auth()->user()->school->id;
-        $data['register_token'] = Str::uuid()->toString();
+        // $data['role_id'] = Role::where('name', 'STUDENT')->first()->id;
+        // $data['school_id'] = auth()->user()->school->id;
+        // $data['register_token'] = Str::uuid()->toString();
+
+        // Envoie de l'email a l'événement
+        event(new AddStudentEvent($data));
         
-        $student = User::create($data);
+        // $student = User::create($data);
 
         // // Envoie du mail a l'etudiant
-        Mail::to($student->email)->send(new RegisterStudentMail($student));
+        // Mail::to($student->email)->send(new RegisterStudentMail($student));
 
         // Redirection vers une page indiquant qu'un mail vient d'etre envoyé
     }
