@@ -6,10 +6,7 @@ use App\Models\Role;
 use App\Models\User;
 use Illuminate\Support\Str;
 use App\Events\AddStudentEvent;
-use App\Mail\RegisterStudentMail;
-use Illuminate\Support\Facades\Mail;
-use Illuminate\Queue\InteractsWithQueue;
-use Illuminate\Contracts\Queue\ShouldQueue;
+use App\Jobs\SendInviteStudentJob;
 
 class InsertNewStudentListener
 {
@@ -39,6 +36,6 @@ class InsertNewStudentListener
         $student = User::create($data);
 
         // // Envoie du mail a l'etudiant
-        Mail::to($student->email)->send(new RegisterStudentMail($student));
+        SendInviteStudentJob::dispatch($student);
     }
 }

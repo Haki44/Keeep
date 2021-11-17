@@ -35,3 +35,10 @@ student1@gmail.com / password
 
 - étudiant 2
 student2@gmail.com / password
+
+# Test d'un ajout étudiant
+
+- php artisan migrate:refresh --seed
+- Dans .env modifier : QUEUE_CONNECTION=database ainsi que les données MAIL (par ceux de Mailtrap)
+- Lancer la commande : php artisan queue:work
+- Se logger en tant que referent puis aller sur /students/create
