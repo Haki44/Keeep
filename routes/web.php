@@ -1,9 +1,8 @@
 <?php
 
-use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\ReferentController;
 use App\Http\Controllers\StudentController;
+use App\Http\Controllers\ReferentController;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,12 +20,17 @@ Route::get('/doc', function () {
     return view('documentation');
 })->name('documentation');
 
-// A ajouter un middleware/gate admin
-Route::get('/referents/create', [ReferentController::class, 'create'])->name('referent.create');
-Route::post('/referents', [ReferentController::class, 'store'])->name('referent.store');
+// REFERENTS
+Route::middleware('can:admin')->group(function () {
+    Route::get('/referents/create', [ReferentController::class, 'create'])->name('referent.create');
+    Route::post('/referents', [ReferentController::class, 'store'])->name('referent.store');
+});
 
-Route::get('/students/create', [StudentController::class, 'create'])->name('student.create');
-Route::post('/students', [StudentController::class, 'store'])->name('student.store');
+// STUDENTS
+Route::middleware('can:handle-student')->group(function () {
+    Route::get('/students/create', [StudentController::class, 'create'])->name('student.create');
+    Route::post('/students', [StudentController::class, 'store'])->name('student.store');
+});
 
 Route::get('/', function () {
     return view('welcome');

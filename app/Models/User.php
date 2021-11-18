@@ -55,15 +55,6 @@ class User extends Authenticatable
         'school'
     ];
 
-    // public static function boot()
-    // {
-    //     parent::boot();
-
-    //     self::creating(function($user) {
-    //         $user->school()->associate(auth()->user()->school->id);
-    //     });
-    // }
-
     public function role()
     {
         return $this->belongsTo(Role::class);
@@ -72,5 +63,15 @@ class User extends Authenticatable
     public function school()
     {
         return $this->belongsTo(School::class);
+    }
+
+    public function isAdmin()
+    {
+        return $this->role->name === 'ADMIN';
+    }
+
+    public function isReferent()
+    {
+        return $this->role->name === 'REFERENT';
     }
 }
