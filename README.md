@@ -19,6 +19,8 @@
 Pour mettre à jour la DB avec les seeders
 - php artisan migrate:refresh --seed
 
+Si ca ne fonctionne pas ou message d'erreur, supprimer à la main toutes les tables de votre DB dans phpmyadmin
+
 ## Login
 
 - admin
@@ -36,9 +38,21 @@ student1@gmail.com / password
 - étudiant 2
 student2@gmail.com / password
 
-# Test d'un ajout étudiant
+# Test d'un ajout Référent
 
 - php artisan migrate:refresh --seed
-- Dans .env modifier : QUEUE_CONNECTION=database ainsi que les données MAIL (par ceux de Mailtrap)
+- Dans .env modifier : 
+    * QUEUE_CONNECTION=database 
+    * les données MAIL (par ceux de Mailtrap)
+    * APP_URL=VotreVirtualHost (si vous en avez un)
 - Lancer la commande : php artisan queue:work
-- Se logger en tant que referent puis aller sur /students/create
+- Se logger en tant qu'admin puis aller sur /referents/create
+- Une fois le référent créé, se délogger et cliquer le lien reçu par mail
+- Remplir le formulaire, le référent a fini son inscription et est connecté
+
+# Test d'un ajout Etudiant
+
+- Lancer la commande : php artisan queue:work
+- Se logger en tant que référent puis aller sur /students/create
+- Une fois l'étudiant créé, se délogger et cliquer le lien reçu par mail
+- Remplir le formulaire, l'étudiant a fini son inscription et est connecté
