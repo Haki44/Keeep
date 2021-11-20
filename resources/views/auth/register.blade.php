@@ -66,10 +66,6 @@
             </div>
 
             <div class="flex items-center justify-end mt-4">
-                <a class="text-sm text-gray-600 underline hover:text-gray-900" href="{{ route('login') }}">
-                    Déjà inscrit ?
-                </a>
-
                 <x-button class="ml-4">
                     S'inscrire
                 </x-button>
