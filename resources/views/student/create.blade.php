@@ -6,6 +6,10 @@
     </x-slot>
 
     <div class="py-5">
+
+        <!-- Validation Errors -->
+        <x-auth-validation-errors class="container px-10 mx-auto mb-4 lg:px-40" :errors="$errors" />
+
         <form action="{{ route('student.store') }}" method="POST" class="container px-10 mx-auto lg:px-40">
             @csrf
 

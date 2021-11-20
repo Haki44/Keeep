@@ -14,7 +14,7 @@ Route::get('/register/{id}/{token}', [RegisteredUserController::class, 'create']
                 ->middleware('guest')
                 ->name('register');
 
-Route::post('/register', [RegisteredUserController::class, 'store'])
+Route::post('/register/{user}', [RegisteredUserController::class, 'store'])
                 ->middleware('guest')
                 ->name('register.store');
 

@@ -9,8 +9,14 @@
         <!-- Validation Errors -->
         <x-auth-validation-errors class="mb-4" :errors="$errors" />
 
-        <form method="POST" action="{{ route('register.store') }}">
+        <form method="POST" action="{{ route('register.store', $student) }}">
             @csrf
+
+            <!-- Email -->
+            <div class="mt-4">
+                <x-label value="Email" />
+                <p class="italic">{{ $student->email }}</p>
+            </div>
 
             <!-- Name -->
             <div class="mt-4">
@@ -37,15 +43,8 @@
             <div class="mt-4">
                 <x-label for="phone" value="N° Téléphone" />
 
-                <x-input id="phone" class="block w-full mt-1" type="number" name="phone" :value="old('phone')" />
+                <x-input id="phone" class="block w-full mt-1" type="tel" name="phone" :value="old('phone')" />
             </div>
-
-            <!-- Email Address -->
-            {{-- <div class="mt-4">
-                <x-label for="email" value="Email" />
-
-                <x-input id="email" class="block w-full mt-1" type="email" name="email" :value="old('email')" required />
-            </div> --}}
 
             <!-- Password -->
             <div class="mt-4">

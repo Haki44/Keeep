@@ -39,13 +39,20 @@ class StudentController extends Controller
     {
         $data = $request->validate([
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+        ],
+        [
+            'email.required' => 'Vous devez indiquer une adresse email',
+            'email.string' => 'L\'adresse email doit être une chaine de caractère',
+            'email.email' => 'L\'adresse email doit être une adresse email valide',
+            'email.max' => 'L\'adresse email ne peut exéder :max caractères',
+            'email.unique' => 'L\'adresse email existe déjà',
         ]);
 
         // Envoie de l'email a l'événement
         event(new AddStudentEvent($data));
 
         // Redirection vers une page indiquant qu'un mail vient d'etre envoyé
-        return redirect(RouteServiceProvider::HOME);
+        return redirect(RouteServiceProvider::HOME)->with('success', 'L\'étudiant a bien été créé');
     }
 
     /**
