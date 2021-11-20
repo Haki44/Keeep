@@ -6,7 +6,7 @@
     </x-slot>
 
     <div class="py-5">
-        <form action="{{ route('student.store') }}" method="POST" class="container px-40 mx-auto">
+        <form action="{{ route('student.store') }}" method="POST" class="container px-10 mx-auto lg:px-40">
             @csrf
 
             <!-- Email Address -->

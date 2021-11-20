@@ -41,11 +41,11 @@
             </div>
 
             <!-- Email Address -->
-            <div class="mt-4">
+            {{-- <div class="mt-4">
                 <x-label for="email" value="Email" />
 
                 <x-input id="email" class="block w-full mt-1" type="email" name="email" :value="old('email')" required />
-            </div>
+            </div> --}}
 
             <!-- Password -->
             <div class="mt-4">

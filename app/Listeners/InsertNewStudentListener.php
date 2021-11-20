@@ -28,14 +28,18 @@ class InsertNewStudentListener
      */
     public function handle(AddStudentEvent $event)
     {
-        $data['email'] = $event->student['email'];
-        $data['role_id'] = Role::where('name', 'STUDENT')->first()->id;
-        $data['school_id'] = auth()->user()->school->id;
-        $data['register_token'] = Str::uuid()->toString();
+        $data = [
+            'email' => $event->student['email'],
+            'role_id' => Role::where('name', 'STUDENT')->first()->id,
+            // Vu que c'est un référent qui ajoute un élève on peux récupérer l'id de l'école
+            'school_id' => auth()->user()->school->id,
+            'register_token' => Str::uuid()->toString()
+        ];
 
+        // Création de l'élève en DB
         $student = User::create($data);
 
-        // // Envoie du mail a l'etudiant
+        // Création d'un Job pour envoie de mail à l'élève
         SendInviteStudentJob::dispatch($student);
     }
 }

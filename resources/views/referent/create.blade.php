@@ -6,22 +6,8 @@
     </x-slot>
 
     <div class="py-5">
-        <form action="{{ route('referent.store') }}" method="POST" class="container px-40 mx-auto">
+        <form action="{{ route('referent.store') }}" method="POST" class="container px-10 mx-auto lg:px-40">
             @csrf
-
-            <!-- Name -->
-            <div class="mt-4">
-                <x-label for="name" value="Nom" />
-
-                <x-input id="name" class="block w-full mt-1" type="text" name="name" :value="old('name')" autofocus required />
-            </div>
-
-            <!-- FirstName -->
-            <div class="mt-4">
-                <x-label for="firstname" value="Prénom" />
-
-                <x-input id="firstname" class="block w-full mt-1" type="text" name="firstname" :value="old('firstname')" required />
-            </div>
 
             <!-- Email Address -->
             <div class="mt-4">

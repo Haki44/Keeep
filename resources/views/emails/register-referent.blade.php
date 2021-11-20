@@ -1,8 +1,8 @@
 @component('mail::message')
-# Bonjour cher étudiant de {{ $student->school->name }},<br>
+# Bonjour cher référent de {{ $referent->school->name }},<br>
 
 Voici le lien pour pouvoir créer votre compte sur Keeep.fr<br>
-@component('mail::button', ['url' => route('register', [$student->id, $student->register_token])])
+@component('mail::button', ['url' => route('register', [$referent->id, $referent->register_token])])
 M'inscrire
 @endcomponent
 

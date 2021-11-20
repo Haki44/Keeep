@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\School;
 use Illuminate\Http\Request;
+use App\Events\AddReferentEvent;
 
 class ReferentController extends Controller
 {
@@ -36,26 +36,12 @@ class ReferentController extends Controller
     public function store(Request $request)
     {
         $data = $request->validate([
-            'name' => ['required', 'max:255'],
-            'firstname' => ['required', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'school' => ['required', 'max:255']
         ]);
 
-        // On met l'ecole en majuscule
-        $data['school'] = strtoupper($data['school']);
-        
-        // On check que l'école n'existe pas deja
-        // PLUSIEURS REFERENTS POUR UNE ECOLE ? Si oui : on cré le referent si l'ecole existe deja, sinon msg erreurs ?
-        $school = School::where('name', $data['school'])->get();
-        if ($school->isNotEmpty()) {
-            dd($school);
-        } else {
-            dd('On doit créer l\'école');
-        }
-
-        // Envoie d'un mail au référent
-        // Jobs ?
+        // On appel l'event d'ajout de referent
+        event(new AddReferentEvent($data));
     }
 
     /**

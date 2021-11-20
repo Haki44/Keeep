@@ -18,19 +18,15 @@ class RegisteredUserController extends Controller
      *
      * @return \Illuminate\View\View
      */
-    public function create(String $token)
+    public function create(Int $id, String $token)
     {
+        $student = User::where('register_token', $token)->find($id);
 
-        
-        $student = User::where('register_token', $token)->first();
-
-        if ($student->count() > 1) {
+        if ($student !== null) {
             return view('auth.register');
         } else {
             dd('Token invalide, redirect ou msg erreur');
         }
-        
-        
     }
 
     /**
