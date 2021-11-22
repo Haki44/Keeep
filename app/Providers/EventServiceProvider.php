@@ -2,10 +2,14 @@
 
 namespace App\Providers;
 
+use App\Events\AddStudentEvent;
+use App\Events\AddReferentEvent;
+use Illuminate\Support\Facades\Event;
 use Illuminate\Auth\Events\Registered;
+use App\Listeners\InsertNewStudentListener;
+use App\Listeners\InsertNewReferentListener;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
-use Illuminate\Support\Facades\Event;
 
 class EventServiceProvider extends ServiceProvider
 {
@@ -17,6 +21,12 @@ class EventServiceProvider extends ServiceProvider
     protected $listen = [
         Registered::class => [
             SendEmailVerificationNotification::class,
+        ],
+        AddStudentEvent::class => [
+            InsertNewStudentListener::class,
+        ],
+        AddReferentEvent::class => [
+            InsertNewReferentListener::class,
         ],
     ];
 
