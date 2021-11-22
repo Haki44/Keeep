@@ -14,7 +14,9 @@ class OfferController extends Controller
      */
     public function index()
     {
-        //
+        $offers = Offer::get();
+
+        return view('dashboard', compact('offers'));
     }
 
     /**
@@ -24,7 +26,7 @@ class OfferController extends Controller
      */
     public function create()
     {
-        //
+        return view('offer.create');
     }
 
     /**
@@ -35,7 +37,18 @@ class OfferController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = $request->validate([
+            'name' => 'required|max:255',
+            'description' => 'required|max:10000',
+            'offer_day' => 'required|date',
+            'price' => 'required|numeric',
+            'user_id' => 'nullable',
+            'category_id' => 'nullable',
+        ]);
+
+        Offer::create($data);
+
+        return redirect()->route('dashboard');
     }
 
     /**
