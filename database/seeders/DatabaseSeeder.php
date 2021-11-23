@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Category;
 use App\Models\Role;
 use App\Models\User;
 use App\Models\School;
@@ -36,6 +37,19 @@ class DatabaseSeeder extends Seeder
         ]);
         $school_2 = School::factory()->create([
             'name' => 'SCHOOL2',
+        ]);
+
+        // Création de catégories
+        Category::create([
+            'name' => 'Utilitaire',
+        ]);
+
+        Category::create([
+            'name' => 'Jardin',
+        ]);
+
+        Category::create([
+            'name' => 'Electroménager',
         ]);
 
         // Création des users
