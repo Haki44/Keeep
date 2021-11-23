@@ -40,7 +40,9 @@
 
                 <!-- category_id -->
                 <div class="mt-4">
-                    <x-input id="category_id" class="block mt-1 w-full" type="hidden" name="category_id" value="1" />
+                    <x-label for="category_id" value="Catégorie" />
+
+                    <x-select field="category_id" label="Catégories" :values="$categories->pluck('name', 'id')" />
                 </div>
 
                 <div class="flex items-center justify-end mt-4">
