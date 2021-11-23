@@ -38,12 +38,7 @@
                     <x-input id="price" class="block mt-1 w-full" type="number" name="price" :value="old('price')" />
                 </div>
 
-                <!-- User_id (provisoir) -->
-                <div class="mt-4">
-                    <x-input id="user_id" class="block mt-1 w-full" type="hidden" name="user_id" value="1" />
-                </div>
-
-                <!-- category_id (provisoir) -->
+                <!-- category_id -->
                 <div class="mt-4">
                     <x-input id="category_id" class="block mt-1 w-full" type="hidden" name="category_id" value="1" />
                 </div>

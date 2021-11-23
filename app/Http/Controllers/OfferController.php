@@ -42,9 +42,10 @@ class OfferController extends Controller
             'description' => 'required|max:10000',
             'offer_day' => 'required|date',
             'price' => 'required|numeric',
-            'user_id' => 'nullable',
             'category_id' => 'nullable',
         ]);
+
+        $data['user_id'] = auth()->user()->id;
 
         Offer::create($data);
 
