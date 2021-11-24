@@ -22,8 +22,8 @@
                         <div class="w-full h-full flex flex-col justify-between">
                             <div>
                                 <h3 class="text-xl">{{ $offer->name }}</h3>
-                                <p class="text-xs">le {{ date('d/m/Y', strtotime($offer->offer_day)); }}</p>
-                                <p class="mt-2">{{ substr($offer->description, 0, 30); }}...</p>
+                                <p class="text-xs">le {{ date('d/m/Y', strtotime($offer->offer_day)) }}</p>
+                                <p class="mt-2">{{ substr($offer->description, 0, 30) }}...</p>
                             </div>
                             <div class="flex justify-between mt-2">
                                 <a href="#" class="text-blue-500">Voir le detail</a>
