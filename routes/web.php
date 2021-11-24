@@ -43,7 +43,7 @@ Route::get('/', function () {
     Route::post('/offer', [OfferController::class, 'store'])->name('offer.store');
 // });
 
-Route::get('/offer/{offer}/edit', [OfferController::class, 'edit'])->name('offer.edit')->where('offer', '[0-9]+');
+Route::get('/offer/{offer}/edit', [OfferController::class, 'edit'])->name('offer.edit')->where('offer', '[0-9]+')->middleware('can:manage-offer,offer');
 
 Route::get('/dashboard', [OfferController::class, 'index'])->name('dashboard')->middleware(['auth']);
 // Route::get('/dashboard', function () {
