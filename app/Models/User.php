@@ -67,11 +67,11 @@ class User extends Authenticatable
 
     public function isAdmin()
     {
-        return $this->role['name'] === 'ADMIN';
+        return $this->role->name === 'ADMIN';
     }
 
     public function isReferent()
     {
-        return $this->role['name'] === 'REFERENT';
+        return $this->role->name === 'REFERENT';
     }
 }
