@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Category;
+use App\Models\Offer;
 use App\Models\Role;
 use App\Models\User;
 use App\Models\School;
@@ -40,15 +41,15 @@ class DatabaseSeeder extends Seeder
         ]);
 
         // Création de catégories
-        Category::create([
+        $utilitaire = Category::create([
             'name' => 'Utilitaire',
         ]);
 
-        Category::create([
+        $jardin = Category::create([
             'name' => 'Jardin',
         ]);
 
-        Category::create([
+        $electromenager = Category::create([
             'name' => 'Electroménager',
         ]);
 
@@ -85,7 +86,7 @@ class DatabaseSeeder extends Seeder
         ]);
 
         // ETDUDIANTS
-        User::create([
+        $etudiant1 = User::create([
             'name' => 'etudiant1',
             'email'=>'etudiant1@gmail.com',
             'email_verified_at' => now(),
@@ -96,7 +97,7 @@ class DatabaseSeeder extends Seeder
             'register_token' => NULL
         ]);
 
-        User::create([
+        $etudiant2 = User::create([
             'name' => 'etudiant2',
             'email'=>'etudiant2@gmail.com',
             'email_verified_at' => now(),
@@ -105,6 +106,43 @@ class DatabaseSeeder extends Seeder
             'role_id' => $role_student->id,
             'school_id' => $school_2->id,
             'register_token' => NULL
+        ]);
+
+        // Création d'offres
+        Offer::create([
+            'name' => 'Cafetière',
+            'description' => 'Bonjour, je vous prete ma cafetiere qui n\'a jamais servi',
+            'offer_day' => '2021-11-25',
+            'price' => '15',
+            'user_id' => $etudiant1->id,
+            'category_id' => $utilitaire->id,
+        ]);
+
+        Offer::create([
+            'name' => 'Magnifique pelle',
+            'description' => 'Hello je prete ma pelle si vous avez besoin d\'enterrer un cadavre',
+            'offer_day' => '2021-11-28',
+            'price' => '18',
+            'user_id' => $etudiant2->id,
+            'category_id' => $jardin->id,
+        ]);
+
+        Offer::create([
+            'name' => 'Aspirateur',
+            'description' => 'Salut pour ceux qui vive dans la poussiere et qui n\'ont pas d\'aspi, bah j\'en ai un :)',
+            'offer_day' => '2021-11-23',
+            'price' => '24',
+            'user_id' => $etudiant1->id,
+            'category_id' => $electromenager->id,
+        ]);
+
+        Offer::create([
+            'name' => 'Grille-pain',
+            'description' => 'Je vous prete mon grille pain, il est rouge',
+            'offer_day' => '2021-11-26',
+            'price' => '8',
+            'user_id' => $etudiant2->id,
+            'category_id' => $electromenager->id,
         ]);
     }
 }

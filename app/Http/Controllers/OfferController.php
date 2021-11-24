@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use App\Models\Offer;
 use Illuminate\Http\Request;
 
@@ -26,7 +27,9 @@ class OfferController extends Controller
      */
     public function create()
     {
-        return view('offer.create');
+        $categories = Category::get();
+
+        return view('offer.create', compact('categories'));
     }
 
     /**
@@ -42,7 +45,7 @@ class OfferController extends Controller
             'description' => 'required|max:10000',
             'offer_day' => 'required|date',
             'price' => 'required|numeric',
-            'category_id' => 'nullable',
+            'category_id' => 'required',
         ]);
 
         $data['user_id'] = auth()->user()->id;
