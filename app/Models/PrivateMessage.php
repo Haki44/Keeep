@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Models\User;
+use App\Models\Offer;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -15,6 +16,8 @@ class PrivateMessage extends Model
         'from_id',
         'to_id',
         'content',
+        'offer_id',
+        'read_at'
     ];
 
     public function userFrom()
@@ -25,5 +28,10 @@ class PrivateMessage extends Model
     public function userTo()
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function offer()
+    {
+        return $this->belongsTo(Offer::class);
     }
 }

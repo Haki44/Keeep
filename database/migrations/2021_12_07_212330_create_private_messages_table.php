@@ -20,6 +20,7 @@ class CreatePrivateMessagesTable extends Migration
             $table->unsignedBigInteger('to_id')->index();
             $table->foreign('to_id')->references('id')->on('users')->onDelete('cascade');
             $table->text('content');
+            $table->foreignId('offer_id')->constrained();
             $table->dateTime('read_at')->nullable();
             $table->timestamps();
             $table->softDeletes();
