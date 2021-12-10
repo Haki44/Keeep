@@ -63,7 +63,7 @@ class OfferController extends Controller
      */
     public function show(Offer $offer)
     {   
-        $offer = Offer::with('user')->find($offer->id);
+        $offer = Offer::with('user')->findOrFail($offer->id);
       
         return view('offer.show', compact('offer'));   
     }
