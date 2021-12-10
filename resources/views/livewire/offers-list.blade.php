@@ -26,7 +26,7 @@
                                 <p class="mt-2">{{ substr($offer->description, 0, 30) }}...</p>
                             </div>
                             <div class="flex justify-between mt-2">
-                                <a href="#" class="text-blue-500">Voir le detail</a>
+                                <a href="{{ route('offer.show', $offer->id) }}" class="text-blue-500">Voir le detail</a>
                                 <h6 class="flex justify-end font-bold">{{ $offer->price }} kips</h6>
                             </div>
                             @can('manage-offer', $offer)

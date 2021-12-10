@@ -12,15 +12,15 @@
     "devDependencies": {
         "@tailwindcss/forms": "^0.2.1",
         "alpinejs": "^2.8.2",
-        "autoprefixer": "^10.3.7",
+        "autoprefixer": "^10.4.0",
         "axios": "^0.21",
         "laravel-mix": "^6.0.6",
         "lodash": "^4.17.19",
-        "postcss": "^8.3.9",
+        "postcss": "^8.4.4",
         "postcss-import": "^12.0.1",
         "resolve-url-loader": "^4.0.0",
         "sass": "^1.43.2",
         "sass-loader": "^12.1.0",
-        "tailwindcss": "^2.2.17"
+        "tailwindcss": "^3.0.0"
     }
 }
