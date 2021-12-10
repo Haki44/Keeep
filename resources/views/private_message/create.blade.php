@@ -1,14 +1,13 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="text-xl font-semibold leading-tight text-gray-800">
-            Envoyer un message à #Utilisateur
+            Envoyer un message privé à {{ $offer->user->name }}
         </h2>
     </x-slot>
 
     <div class="max-w-4xl mx-auto mt-6 sm:px-6 lg:px-8">
-        <div class="flex justify-center p-10 overflow-hidden bg-white shadow-sm sm:rounded-lg">
-            {{-- <form class="w-2/3" method="POST" action="{{ route('private_message.store') }}"> --}}
-            <form class="w-2/3" method="POST" action="">
+        <div class="flex justify-center p-5 overflow-hidden bg-white shadow-sm lg:p-10 sm:rounded-lg">
+            <form class="w-full lg:w-2/3" method="POST" action="{{ route('private_message.store', $offer->id) }}">
                 @csrf
 
                 <!-- Message -->

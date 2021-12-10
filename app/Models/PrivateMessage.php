@@ -16,7 +16,6 @@ class PrivateMessage extends Model
         'from_id',
         'to_id',
         'content',
-        'offer_id',
         'read_at'
     ];
 
@@ -28,10 +27,5 @@ class PrivateMessage extends Model
     public function userTo()
     {
         return $this->belongsTo(User::class);
-    }
-
-    public function offer()
-    {
-        return $this->belongsTo(Offer::class);
     }
 }

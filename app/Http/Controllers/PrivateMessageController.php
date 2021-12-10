@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Offer;
 use Illuminate\Http\Request;
+use App\Models\PrivateMessage;
+use App\Providers\RouteServiceProvider;
 
 class PrivateMessageController extends Controller
 {
@@ -33,9 +35,28 @@ class PrivateMessageController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Offer $offer, Request $request)
     {
-        //
+        $content = $request->validate([
+            'content' => ['required', 'max:255', 'string']
+        ],
+        [
+            'content.required' => 'Vous devez indiquer un message',
+            'content.string' => 'Votre message doit être une chaine de caractère',
+            'content.max' => 'Votre message ne peut exéder :max caractères',
+        ]);
+
+        $ids = [
+            'from_id' => auth()->user()->id,
+            'to_id' => $offer->user->id
+        ];
+
+        $data = array_merge($content, $ids);
+
+        PrivateMessage::create($data);
+
+        // Redirection vers la home avec alert success
+        return redirect(RouteServiceProvider::HOME)->with('success', 'Votre message à bien été envoyé à ' . $offer->user->firstname);
     }
 
     /**
