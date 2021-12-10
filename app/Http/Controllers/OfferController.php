@@ -70,8 +70,10 @@ class OfferController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function show(Offer $offer)
-    {
-        //
+    {   
+        $offer = Offer::with('user')->findOrFail($offer->id);
+      
+        return view('offer.show', compact('offer'));   
     }
 
     /**
