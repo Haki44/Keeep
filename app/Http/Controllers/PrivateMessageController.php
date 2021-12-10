@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Offer;
 use Illuminate\Http\Request;
 use App\Models\PrivateMessage;
+use App\Notifications\PrivateMessageNotification;
 use App\Providers\RouteServiceProvider;
 
 class PrivateMessageController extends Controller
@@ -53,10 +54,16 @@ class PrivateMessageController extends Controller
 
         $data = array_merge($content, $ids);
 
+        // $message = auth()->user()->messageSends()->create($data);
+        // $offer->user->messageReceiveds()->associate($message);
+
         PrivateMessage::create($data);
 
+        // Envoie d'un mail
+        $offer->user->notify(new PrivateMessageNotification($offer, auth()->user()));
+
         // Redirection vers la home avec alert success
-        return redirect(RouteServiceProvider::HOME)->with('success', 'Votre message à bien été envoyé à ' . $offer->user->firstname);
+        return redirect('dashboard')->with('success', 'Votre message à bien été envoyé à ' . $offer->user->firstname);
     }
 
     /**

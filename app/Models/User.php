@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Models\Role;
 use App\Models\School;
+use App\Models\PrivateMessage;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
@@ -74,4 +75,9 @@ class User extends Authenticatable
     {
         return $this->role->name === 'REFERENT';
     }
+
+    // public function messageSends()
+    // {
+    //     return $this->hasMany(PrivateMessage::class, 'from_id');
+    // }
 }
