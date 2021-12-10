@@ -3,8 +3,8 @@
 <div class="form-group row">
     <x-label :field="$field" :label="$label" />
 
-    <div class="col-md-6">
-        <select name="{{ $field }}" id="{{ $field }}" class="form-control @error($field) is-invalid @enderror">
+    <div class="w-full">
+        <select name="{{ $field }}" id="{{ $field }}" class="w-full rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 @error($field) is-invalid @enderror">
             @foreach ($values as $k => $v)
                 <option value="{{ $k }}" @if($k == (old($field) ?? $value)) selected @endif>{{ $v }}</option>
             @endforeach
