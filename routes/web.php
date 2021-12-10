@@ -46,6 +46,7 @@ Route::get('/', function () {
 // });
 
 Route::get('/offer/{offer}/edit', [OfferController::class, 'edit'])->name('offer.edit')->where('offer', '[0-9]+')->middleware('can:manage-offer,offer');
+Route::get('/offer/{offer}/destroy', [OfferController::class, 'destroy'])->name('offer.destroy')->where('offer', '[0-9]+')->middleware('can:manage-offer,offer');
 
 Route::get('/dashboard', [OfferController::class, 'index'])->name('dashboard')->middleware(['auth']);
 // Route::get('/dashboard', function () {
