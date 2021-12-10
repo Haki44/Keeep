@@ -82,7 +82,9 @@ class OfferController extends Controller
      */
     public function edit(Offer $offer)
     {
-        //
+        $offer = Offer::find($offer->id);
+
+        return view('offer.edit', compact('offer'));
     }
 
     /**

@@ -33,10 +33,10 @@ referent1@gmail.com / password
 referent2@gmail.com / password
 
 - étudiant 1
-student1@gmail.com / password
+etudiant1@gmail.com / password
 
 - étudiant 2
-student2@gmail.com / password
+etudiant2@gmail.com / password
 
 # Test d'un ajout Référent
 

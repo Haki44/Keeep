@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Models\Offer;
 use App\Models\User;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
@@ -32,6 +33,11 @@ class AuthServiceProvider extends ServiceProvider
 
         Gate::define('handle-student', function (User $user) {
             return $user->isReferent() || $user->isAdmin();
+        });
+
+        Gate::define('manage-offer', function (User $user, Offer $offer) {
+            return $user->isAdmin() ||
+            ($user->id === $offer->user_id);
         });
     }
 }
