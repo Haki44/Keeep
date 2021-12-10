@@ -100,7 +100,7 @@ class DatabaseSeeder extends Seeder
 
         $etudiant2 = User::create([
             'name' => 'etudiant2',
-            'name' => 'Maxsense',
+            'firstname' => 'Maxsense',
             'email'=>'etudiant2@gmail.com',
             'email_verified_at' => now(),
             'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
