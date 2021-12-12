@@ -6,7 +6,11 @@
     </x-slot>
 
     <div class="max-w-4xl mx-auto mt-6 sm:px-6 lg:px-8">
-        <div class="flex justify-center p-5 overflow-hidden bg-white shadow-sm lg:p-10 sm:rounded-lg">
+
+        <div class="p-5 overflow-hidden bg-white shadow-sm lg:p-10 sm:rounded-lg">
+
+            <x-auth-validation-errors class="mb-4" :errors="$errors" />
+
             <form class="w-full lg:w-2/3" method="POST" action="{{ route('private_message.store', $offer->id) }}">
                 @csrf
 
@@ -14,7 +18,7 @@
                 <div class="mt-4">
                     <x-label for="content" value="Message *" />
 
-                    <x-textarea class="w-full" name="content" id="content" :value="old('content')" type="text" required ></x-textarea>
+                    <x-textarea class="w-full" name="content" id="content" :value="old('content')" type="text" required></x-textarea>
                 </div>
 
                 <div class="flex items-center justify-end mt-4">
