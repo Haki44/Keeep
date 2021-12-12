@@ -46,13 +46,21 @@ class OfferController extends Controller
             'offer_day' => 'required|date',
             'price' => 'required|numeric',
             'category_id' => 'required',
-        ]);
+        ],
+        [
+            'name.required' => 'Vous devez indiquer le nom de l\'offre',
+            'name.max' => 'Le nom de l\'offre est trop long !',
+            'description.required' => 'Vous devez indiquer une description à votre offre',
+            'offer_day.required' => 'Vous devez indiquer une date',
+            'price.required' => 'Vous devez indiquer un prix à votre offre',
+        ]
+    );
 
         $data['user_id'] = auth()->user()->id;
 
         Offer::create($data);
 
-        return redirect()->route('dashboard');
+        return redirect()->route('offer.show');
     }
 
     /**
@@ -62,8 +70,10 @@ class OfferController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function show(Offer $offer)
-    {
-        //
+    {   
+        $offer = Offer::with('user')->findOrFail($offer->id);
+      
+        return view('offer.show', compact('offer'));   
     }
 
     /**
