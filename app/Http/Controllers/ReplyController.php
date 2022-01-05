@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Events\AddReplyEvent;
+use App\Models\Reply;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Http\Request;
 use App\Models\Offer;
@@ -98,6 +99,13 @@ class ReplyController extends Controller
      */
     public function destroy($id)
     {
-        //
+
+        $reply = Reply::find($id);
+
+        $isok = $reply->delete();
+
+        if($isok){
+            return redirect(RouteServiceProvider::HOME)->with('success', 'Votre répoonse a bien été annulée !');
+        }
     }
 }
