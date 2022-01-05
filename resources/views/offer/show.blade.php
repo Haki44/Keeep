@@ -20,7 +20,7 @@
                 <p class="text-xl p-2">Disponible le  : {{ date('d/m/Y', strtotime($offer->offer_day)) }} à {{ date('H:i', strtotime($offer->offer_day)) }}</p>
                 <div class="flex p-2 flex-col items-center"  x-data="{ open:false }">
                     <a href="#" class="mr-2 mb-2 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-lg px-5 py-2.5 text-center">Contacter {{ $offer->user->firstname }} pour + de précisions</a>
-                    @if(!is_null($reply))
+                    @if(!is_null($reply) && is_null($reply->is_accepted))
                         <form  method="POST" action="{{ route('reply.destroy', $reply->id) }}">
                             @csrf
                             @method('DELETE')

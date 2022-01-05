@@ -101,11 +101,15 @@ class ReplyController extends Controller
     {
 
         $reply = Reply::find($id);
+        if(is_null($reply->is_accepted)){
+            $isok = $reply->delete();
 
-        $isok = $reply->delete();
-
-        if($isok){
-            return redirect(RouteServiceProvider::HOME)->with('success', 'Votre répoonse a bien été annulée !');
+            if($isok){
+                return redirect(RouteServiceProvider::HOME)->with('success', 'Votre répoonse a bien été annulée !');
+            }
+        } else {
+            return redirect(RouteServiceProvider::HOME)->with('danger', 'Vous ne pouvez pas annuler votre réponse, celle-ci a déjà été accepté');
         }
+
     }
 }
