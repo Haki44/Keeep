@@ -18,9 +18,26 @@
                 <p class="text-xl p-2">Description : {{ $offer->description }} Kips</p>
                 <p class="text-xl p-2">Prix : {{ $offer->price }} Kips</p>
                 <p class="text-xl p-2">Disponible le  : {{ date('d/m/Y', strtotime($offer->offer_day)) }} à {{ date('H:i', strtotime($offer->offer_day)) }}</p>
-                <div class="flex p-2 flex-col items-center">                 
+                <div class="flex p-2 flex-col items-center">
                     <a href="#" class="mr-2 mb-2 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-lg px-5 py-2.5 text-center">Contacter {{ $offer->user->firstname }} pour + de précisions</a>
-                    <a href="#" class="text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-lg px-5 py-2.5 text-center">Acheter ({{ $offer->price }} kips)</a>
+                    <a href="#" @click="open = !open" class="text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-lg px-5 py-2.5 text-center">Acheter ({{ $offer->price }} kips)</a>
+
+                    <div x-open="open" class="w-full sm:w-2/3">
+                        <x-auth-validation-errors class="mb-4" :errors="$errors" />
+                        <form class="w-full sm:w-2/3" method="POST" action="{{ route('reply.store', ['offer' => $offer->id]) }}">
+                        @csrf
+                            <div class="mt-4">
+                                <x-label for="reply" value="Combien de jours / heures avez-vous besoin de cette offre ?*" />
+
+                                <x-textarea class="w-full" name="reply" id="reply" :value="old('reply')" type="text" placeholder="Exemple : J'ai besoin de cette pelle pendant 2 heures"></x-textarea>
+                            </div>
+                            <div class="flex items-center justify-end mt-4">
+                                <x-button class="ml-4">
+                                    Envoyer ma réponse
+                                </x-button>
+                            </div>
+                        </form>
+                    </div>
                 </div>
             </div>
 
