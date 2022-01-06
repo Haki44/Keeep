@@ -4,7 +4,9 @@ namespace App\Models;
 
 use App\Models\Role;
 use App\Models\School;
+use App\Models\PrivateMessage;
 use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Support\Facades\Config;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -67,11 +69,16 @@ class User extends Authenticatable
 
     public function isAdmin()
     {
-        return $this->role->name === 'ADMIN';
+        return $this->role->name === Config::get('constants.roles.admin');
     }
 
     public function isReferent()
     {
-        return $this->role->name === 'REFERENT';
+        return $this->role->name === Config::get('constants.roles.referent');
     }
+
+    // public function messageSends()
+    // {
+    //     return $this->hasMany(PrivateMessage::class, 'from_id');
+    // }
 }
