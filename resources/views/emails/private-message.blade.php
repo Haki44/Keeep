@@ -5,7 +5,7 @@ Bonjour {{ $offer->user->firstname }},<br>
 
 Veuillez vous rendre sur Keeep pour lui répondre.<br>
 
-@component('mail::button', ['url' => route('dashboard')])
+@component('mail::button', ['url' => route('offer.show', $offer->id)])
 Répondre
 @endcomponent
 

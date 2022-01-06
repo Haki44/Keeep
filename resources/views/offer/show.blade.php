@@ -1,25 +1,25 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+        <h2 class="text-xl font-semibold leading-tight text-gray-800">
             {{ __("Détails de l'offre : ") }} {{ $offer->name }}
         </h2>
     </x-slot>
 
-    <div class="pb-10 max-w-6xl mx-auto sm:px-6 lg:px-8 mt-6">
-        <div class="pt-2 pb-10 bg-white overflow-hidden shadow-sm flex flex-wrap justify-center">
+    <div class="max-w-6xl pb-10 mx-auto mt-6 sm:px-6 lg:px-8">
+        <div class="flex flex-wrap justify-center pt-2 pb-10 overflow-hidden bg-white shadow-sm">
             <div class="flex-column">
-                <p class="text-4xl font-semi-bold p-1">Nom : {{ $offer->user->name }} {{ $offer->user->firstname[0  ] }}</p>
+                <p class="p-1 text-4xl font-semi-bold">Nom : {{ $offer->user->name }} {{ $offer->user->firstname[0  ] }}</p>
             </div>
         </div>
         <hr>
-        <div class="pb-4 bg-white overflow-hidden shadow-sm flex flex-col items-center">
+        <div class="flex flex-col items-center pb-4 overflow-hidden bg-white shadow-sm">
             <div class="flex-column">
-                <p class="text-4xl font-bold p-2">{{ $offer->name }}</p>
-                <p class="text-xl p-2">Description : {{ $offer->description }}</p>
-                <p class="text-xl p-2">Prix : {{ $offer->price }} Kips</p>
-                <p class="text-xl p-2">Disponible le  : {{ date('d/m/Y', strtotime($offer->offer_day)) }} à {{ date('H:i', strtotime($offer->offer_day)) }}</p>
-                <div class="flex p-2 flex-col items-center"  x-data="{ open:false }">
-                    <a href="#" class="mr-2 mb-2 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-lg px-5 py-2.5 text-center">Contacter {{ $offer->user->firstname }} pour + de précisions</a>
+                <p class="p-2 text-4xl font-bold">{{ $offer->name }}</p>
+                <p class="p-2 text-xl">Description : {{ $offer->description }}</p>
+                <p class="p-2 text-xl">Prix : {{ $offer->price }} Kips</p>
+                <p class="p-2 text-xl">Disponible le  : {{ date('d/m/Y', strtotime($offer->offer_day)) }} à {{ date('H:i', strtotime($offer->offer_day)) }}</p>
+                <div class="flex flex-col items-center p-2"  x-data="{ open:false }">
+                    <a href="{{ route('private_message.create', $offer->id) }}" class="mr-2 mb-2 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-lg px-5 py-2.5 text-center">Contacter {{ $offer->user->firstname }} pour + de précisions</a>
                     @if(!is_null($reply) && is_null($reply->is_accepted))
                         <form  method="POST" action="{{ route('reply.destroy', $reply->id) }}">
                             @csrf
