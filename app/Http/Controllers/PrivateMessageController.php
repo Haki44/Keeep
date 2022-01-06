@@ -63,7 +63,7 @@ class PrivateMessageController extends Controller
         $offer->user->notify(new PrivateMessageNotification($offer, auth()->user()));
 
         // Redirection vers la home avec alert success
-        return redirect('dashboard')->with('success', 'Votre message à bien été envoyé à ' . $offer->user->firstname);
+        return redirect()->route('offer.show', $offer->id)->with('success', 'Votre message à bien été envoyé à ' . $offer->user->firstname);
     }
 
     /**
