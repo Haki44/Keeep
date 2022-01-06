@@ -19,6 +19,10 @@ class Offer extends Model
         'category_id',
     ];
 
+    protected $casts = [
+        'offer_day' => 'date',
+    ];
+
     public function category()
     {
         return $this->belongsTo(Category::class);

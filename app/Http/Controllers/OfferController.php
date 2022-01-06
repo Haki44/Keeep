@@ -54,7 +54,7 @@ class OfferController extends Controller
             'offer_day.required' => 'Vous devez indiquer une date',
             'price.required' => 'Vous devez indiquer un prix à votre offre',
         ]
-    );
+        );
 
         $data['user_id'] = auth()->user()->id;
 
@@ -85,8 +85,9 @@ class OfferController extends Controller
     public function edit(Offer $offer)
     {
         $offer = Offer::find($offer->id);
+        $categories = Category::get();
 
-        return view('offer.edit', compact('offer'));
+        return view('offer.edit', compact('offer', 'categories'));
     }
 
     /**
@@ -98,7 +99,25 @@ class OfferController extends Controller
      */
     public function update(Request $request, Offer $offer)
     {
-        //
+        $data = $request->validate([
+            'name' => 'required|max:255',
+            'description' => 'required|max:10000',
+            'offer_day' => 'required|date',
+            'price' => 'required|numeric',
+            'category_id' => 'required',
+        ],
+        [
+            'name.required' => 'Vous devez indiquer le nom de l\'offre',
+            'name.max' => 'Le nom de l\'offre est trop long !',
+            'description.required' => 'Vous devez indiquer une description à votre offre',
+            'offer_day.required' => 'Vous devez indiquer une date',
+            'price.required' => 'Vous devez indiquer un prix à votre offre',
+        ]
+        );
+
+        Offer::whereId($offer->id)->update($data);
+
+        return redirect()->route('offer.show');
     }
 
     /**
