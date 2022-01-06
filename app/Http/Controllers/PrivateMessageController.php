@@ -44,7 +44,7 @@ class PrivateMessageController extends Controller
         [
             'content.required' => 'Vous devez indiquer un message',
             'content.string' => 'Votre message doit être une chaine de caractère',
-            'content.max' => 'Votre message ne peut exéder :max caractères',
+            'content.max' => 'Votre message ne peut excéder :max caractères',
         ]);
 
         $ids = [
