@@ -58,9 +58,9 @@ class OfferController extends Controller
 
         $data['user_id'] = auth()->user()->id;
 
-        Offer::create($data);
+        $offer = Offer::create($data);
 
-        return redirect()->route('offer.show');
+        return redirect()->route('offer.show', $offer->id);
     }
 
     /**
@@ -70,8 +70,10 @@ class OfferController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function show(Offer $offer)
-    {
-        //
+    {   
+        $offer = Offer::with('user')->findOrFail($offer->id);
+      
+        return view('offer.show', compact('offer'));   
     }
 
     /**
@@ -126,6 +128,9 @@ class OfferController extends Controller
      */
     public function destroy(Offer $offer)
     {
-        //
+        Offer::find($offer->id)->delete();
+
+        // TODO : route à changer sur la liste des offres plus tard
+        return redirect()->route('dashboard');
     }
 }
