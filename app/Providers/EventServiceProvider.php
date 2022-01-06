@@ -4,6 +4,8 @@ namespace App\Providers;
 
 use App\Events\AddStudentEvent;
 use App\Events\AddReferentEvent;
+use App\Events\AddReplyEvent;
+use App\Listeners\InsertNewReply;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Auth\Events\Registered;
 use App\Listeners\InsertNewStudentListener;
@@ -27,6 +29,9 @@ class EventServiceProvider extends ServiceProvider
         ],
         AddReferentEvent::class => [
             InsertNewReferentListener::class,
+        ],
+        AddReplyEvent::class => [
+            InsertNewReply::class,
         ],
     ];
 

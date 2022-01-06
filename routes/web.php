@@ -5,6 +5,7 @@ use App\Http\Controllers\StudentController;
 use App\Http\Controllers\ReferentController;
 use App\Http\Controllers\OfferController;
 use App\Http\Controllers\PrivateMessageController;
+use App\Http\Controllers\ReplyController;
 
 /*
 |--------------------------------------------------------------------------
@@ -50,10 +51,17 @@ Route::get('/', function () {
 // });
 
 Route::get('/offer/{offer}/edit', [OfferController::class, 'edit'])->name('offer.edit')->where('offer', '[0-9]+')->middleware('can:manage-offer,offer');
+Route::post('/offer/{offer}', [OfferController::class, 'update'])->name('offer.update')->where('offer', '[0-9]+');
+Route::get('/offer/{offer}/destroy', [OfferController::class, 'destroy'])->name('offer.destroy')->where('offer', '[0-9]+')->middleware('can:manage-offer,offer');
 
 Route::get('/dashboard', [OfferController::class, 'index'])->name('dashboard')->middleware(['auth']);
 // Route::get('/dashboard', function () {
 //     return view('dashboard');
 // })->middleware(['auth'])->name('dashboard');
+
+// REPLIES
+
+Route::post('/reply/{offer}', [ReplyController::class, 'store'])->name('reply.store');
+Route::delete('/reply/{reply}', [ReplyController::class, 'destroy'])->name('reply.destroy');
 
 require __DIR__.'/auth.php';

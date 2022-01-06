@@ -16,7 +16,7 @@ class CreateRepliesTable extends Migration
         Schema::create('replies', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained();
-            $table->text('description')->nullable();
+            $table->foreignId('offer_id')->constrained();
             $table->boolean('is_accepted')->nullable();
             $table->timestamps();
             $table->softDeletes();

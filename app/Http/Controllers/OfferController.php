@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use App\Models\Offer;
+use App\Models\Reply;
 use Illuminate\Http\Request;
 
 class OfferController extends Controller
@@ -54,13 +55,13 @@ class OfferController extends Controller
             'offer_day.required' => 'Vous devez indiquer une date',
             'price.required' => 'Vous devez indiquer un prix à votre offre',
         ]
-    );
+        );
 
         $data['user_id'] = auth()->user()->id;
 
-        Offer::create($data);
+        $offer = Offer::create($data);
 
-        return redirect()->route('offer.show');
+        return redirect()->route('offer.show', $offer->id);
     }
 
     /**
@@ -70,10 +71,10 @@ class OfferController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function show(Offer $offer)
-    {   
+    {
         $offer = Offer::with('user')->findOrFail($offer->id);
-      
-        return view('offer.show', compact('offer'));   
+        $reply = Reply::where([['offer_id','=',$offer->id],['user_id','=', auth()->user()->id]])->first();
+        return view('offer.show', compact('offer', 'reply'));
     }
 
     /**
@@ -85,8 +86,9 @@ class OfferController extends Controller
     public function edit(Offer $offer)
     {
         $offer = Offer::find($offer->id);
+        $categories = Category::get();
 
-        return view('offer.edit', compact('offer'));
+        return view('offer.edit', compact('offer', 'categories'));
     }
 
     /**
@@ -98,7 +100,27 @@ class OfferController extends Controller
      */
     public function update(Request $request, Offer $offer)
     {
-        //
+        $data = $request->validate([
+            'name' => 'required|max:255',
+            'description' => 'required|max:10000',
+            'offer_day' => 'required|date',
+            'price' => 'required|numeric',
+            'category_id' => 'required',
+        ],
+        [
+            'name.required' => 'Vous devez indiquer le nom de l\'offre',
+            'name.max' => 'Le nom de l\'offre est trop long !',
+            'description.required' => 'Vous devez indiquer une description à votre offre',
+            'offer_day.required' => 'Vous devez indiquer une date',
+            'price.required' => 'Vous devez indiquer un prix à votre offre',
+        ]
+        );
+
+        $offer_id = $offer->id;
+
+        Offer::whereId($offer->id)->update($data);
+
+        return redirect()->route('offer.show', $offer_id);
     }
 
     /**
@@ -109,6 +131,9 @@ class OfferController extends Controller
      */
     public function destroy(Offer $offer)
     {
-        //
+        Offer::find($offer->id)->delete();
+
+        // TODO : route à changer sur la liste des offres plus tard
+        return redirect()->route('dashboard');
     }
 }
