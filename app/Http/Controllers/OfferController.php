@@ -116,9 +116,11 @@ class OfferController extends Controller
         ]
         );
 
+        $offer_id = $offer->id;
+
         Offer::whereId($offer->id)->update($data);
 
-        return redirect()->route('offer.show');
+        return redirect()->route('offer.show', $offer_id);
     }
 
     /**
