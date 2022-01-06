@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\ReferentController;
 use App\Http\Controllers\OfferController;
+use App\Http\Controllers\ReplyController;
 
 /*
 |--------------------------------------------------------------------------
@@ -53,5 +54,10 @@ Route::get('/dashboard', [OfferController::class, 'index'])->name('dashboard')->
 // Route::get('/dashboard', function () {
 //     return view('dashboard');
 // })->middleware(['auth'])->name('dashboard');
+
+// REPLIES
+
+Route::post('/reply/{offer}', [ReplyController::class, 'store'])->name('reply.store');
+Route::delete('/reply/{reply}', [ReplyController::class, 'destroy'])->name('reply.destroy');
 
 require __DIR__.'/auth.php';

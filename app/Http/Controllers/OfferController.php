@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use App\Models\Offer;
+use App\Models\Reply;
 use Illuminate\Http\Request;
 
 class OfferController extends Controller
@@ -70,10 +71,10 @@ class OfferController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function show(Offer $offer)
-    {   
+    {
         $offer = Offer::with('user')->findOrFail($offer->id);
-      
-        return view('offer.show', compact('offer'));   
+        $reply = Reply::where([['offer_id','=',$offer->id],['user_id','=', auth()->user()->id]])->first();
+        return view('offer.show', compact('offer', 'reply'));
     }
 
     /**
