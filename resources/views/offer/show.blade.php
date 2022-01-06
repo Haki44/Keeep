@@ -15,7 +15,7 @@
         <div class="pb-4 bg-white overflow-hidden shadow-sm flex flex-col items-center">
             <div class="flex-column">
                 <p class="text-4xl font-bold p-2">{{ $offer->name }}</p>
-                <p class="text-xl p-2">Description : {{ $offer->description }} Kips</p>
+                <p class="text-xl p-2">Description : {{ $offer->description }}</p>
                 <p class="text-xl p-2">Prix : {{ $offer->price }} Kips</p>
                 <p class="text-xl p-2">Disponible le  : {{ date('d/m/Y', strtotime($offer->offer_day)) }} à {{ date('H:i', strtotime($offer->offer_day)) }}</p>
                 <div class="flex p-2 flex-col items-center"  x-data="{ open:false }">
