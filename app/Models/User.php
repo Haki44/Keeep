@@ -74,4 +74,9 @@ class User extends Authenticatable
     {
         return $this->role->name === 'REFERENT';
     }
+
+    public function isStudent()
+    {
+        return $this->role->name === 'STUDENT';
+    }
 }
