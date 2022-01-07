@@ -77,6 +77,11 @@ class User extends Authenticatable
         return $this->role->name === Config::get('constants.roles.referent');
     }
 
+    public function isStudent()
+    {
+        return $this->role->name === 'STUDENT';
+    }
+  
     // public function messageSends()
     // {
     //     return $this->hasMany(PrivateMessage::class, 'from_id');

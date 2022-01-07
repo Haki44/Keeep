@@ -41,8 +41,9 @@ Route::get('/', function () {
 
 // OFFERS
 // Route::middleware('can:student')->group(function () {
-    Route::get('/offer/create', [OfferController::class, 'create'])->name('offer.create');
-    Route::post('/offer', [OfferController::class, 'store'])->name('offer.store');
+    Route::get('/offer/create', [OfferController::class, 'create'])->name('offer.create')->middleware('can:create-offer');
+    Route::post('/offer', [OfferController::class, 'store'])->name('offer.store')->middleware('can:create-offer');
+
     Route::get('/offer/{offer}/show', [OfferController::class, 'show'])->name('offer.show')->where('offer', '[0-9]+');
 
     // Private messages
@@ -51,7 +52,7 @@ Route::get('/', function () {
 // });
 
 Route::get('/offer/{offer}/edit', [OfferController::class, 'edit'])->name('offer.edit')->where('offer', '[0-9]+')->middleware('can:manage-offer,offer');
-Route::post('/offer/{offer}', [OfferController::class, 'update'])->name('offer.update')->where('offer', '[0-9]+');
+Route::post('/offer/{offer}', [OfferController::class, 'update'])->name('offer.update')->where('offer', '[0-9]+')->middleware('can:manage-offer,offer');
 Route::get('/offer/{offer}/destroy', [OfferController::class, 'destroy'])->name('offer.destroy')->where('offer', '[0-9]+')->middleware('can:manage-offer,offer');
 
 Route::get('/dashboard', [OfferController::class, 'index'])->name('dashboard')->middleware(['auth']);
