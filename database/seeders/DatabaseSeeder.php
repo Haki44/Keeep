@@ -9,6 +9,7 @@ use App\Models\User;
 use App\Models\School;
 use Illuminate\Support\Str;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\DB;
 use SebastianBergmann\Type\NullType;
 
@@ -23,13 +24,13 @@ class DatabaseSeeder extends Seeder
     {
         // Création des ROLES
         $role_admin = Role::factory()->create([
-            'name' => 'ADMIN'
+            'name' => Config::get('constants.roles.admin')
         ]);
         $role_referent = Role::factory()->create([
-            'name' => 'REFERENT'
+            'name' => Config::get('constants.roles.referent')
         ]);
         $role_student = Role::factory()->create([
-            'name' => 'STUDENT'
+            'name' => Config::get('constants.roles.student')
         ]);
 
         // Création des ECOLES

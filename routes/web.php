@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\ReferentController;
 use App\Http\Controllers\OfferController;
+use App\Http\Controllers\PrivateMessageController;
 use App\Http\Controllers\ReplyController;
 
 /*
@@ -44,6 +45,10 @@ Route::get('/', function () {
     Route::post('/offer', [OfferController::class, 'store'])->name('offer.store')->middleware('can:create-offer');
 
     Route::get('/offer/{offer}/show', [OfferController::class, 'show'])->name('offer.show')->where('offer', '[0-9]+');
+
+    // Private messages
+    Route::get('/offer/{offer}/private_message/create', [PrivateMessageController::class, 'create'])->name('private_message.create')->where('offer', '[0-9]+');
+    Route::post('/offer/{offer}/private_message', [PrivateMessageController::class, 'store'])->name('private_message.store')->where('offer', '[0-9]+');
 // });
 
 Route::get('/offer/{offer}/edit', [OfferController::class, 'edit'])->name('offer.edit')->where('offer', '[0-9]+')->middleware('can:manage-offer,offer');

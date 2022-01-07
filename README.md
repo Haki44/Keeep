@@ -56,3 +56,7 @@ etudiant2@gmail.com / password
 - Se logger en tant que référent puis aller sur /students/create
 - Une fois l'étudiant créé, se délogger et cliquer le lien reçu par mail
 - Remplir le formulaire, l'étudiant a fini son inscription et est connecté
+
+# Accès à Telescope
+
+http://votreVirtualHost/telescope
