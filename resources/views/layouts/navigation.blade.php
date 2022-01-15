@@ -16,9 +16,15 @@
                         {{ __('Dashboard') }}
                     </x-nav-link>
 
+                    @can('create-offer')
                     <x-nav-link :href="route('offer.create')" :active="request()->routeIs('offer.create')">
                         {{ __('Créer une offre') }}
                     </x-nav-link>
+
+                    <x-nav-link :href="route('reply.index')" :active="request()->routeIs('reply.index')">
+                        {{ __('Réponses') }}
+                    </x-nav-link>
+                    @endcan
                     
                     @can('admin')
                     <x-nav-link :href="route('referent.create')" :active="request()->routeIs('referent.create')">
@@ -83,9 +89,15 @@
                 {{ __('Dashboard') }}
             </x-responsive-nav-link>
 
+            @can('create-offer')
             <x-responsive-nav-link :href="route('offer.create')" :active="request()->routeIs('offer.create')">
                 {{ __('Créer une offre') }}
             </x-responsive-nav-link>
+            
+            <x-responsive-nav-link :href="route('reply.index')" :active="request()->routeIs('reply.index')">
+                {{ __('Réponses') }}
+            </x-responsive-nav-link>
+            @endcan
 
             @can('admin')
             <x-responsive-nav-link :href="route('referent.create')" :active="request()->routeIs('referent.create')">
