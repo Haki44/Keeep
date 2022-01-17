@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Models\Role;
+use App\Models\Offer;
 use App\Models\Reply;
 use App\Models\School;
 use App\Models\PrivateMessage;
@@ -71,6 +72,11 @@ class User extends Authenticatable
     public function replies()
     {
         return $this->belongsToMany(Reply::class);
+    }
+
+    public function offers()
+    {
+        return $this->hasMany(Offer::class);
     }
 
     public function isAdmin()

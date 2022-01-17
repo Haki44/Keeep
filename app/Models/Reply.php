@@ -16,10 +16,6 @@ class Reply extends Model
         'user_id'
     ];
 
-    protected $with = [
-        'offer'
-    ];
-
     // La réponse appartient à une offre
     public function offer()
     {

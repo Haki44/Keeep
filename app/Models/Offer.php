@@ -24,6 +24,10 @@ class Offer extends Model
         'offer_day' => 'date',
     ];
 
+    protected $with = [
+        'replies'
+    ];
+
     public function category()
     {
         return $this->belongsTo(Category::class);

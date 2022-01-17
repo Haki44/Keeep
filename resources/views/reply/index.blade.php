@@ -10,7 +10,7 @@
         <div class="p-5 overflow-hidden bg-white shadow-sm lg:p-10 sm:rounded-lg">
 
             
-            @foreach ($offers as $offer)
+            @forelse ($offers as $offer)
                 <p class="my-2 text-2xl font-bold">Offre : <span class="underline">{{ $offer->name }}</span></p>
 
                     <table class="block min-w-full mb-5 border-collapse md:table">
@@ -76,7 +76,10 @@
                 @endforelse
                     </tbody>
                 </table>
-            @endforeach
+
+            @empty
+                <p>Vous ne proposez pas d'offres pour le moment</p>
+            @endforelse
 
             
             
