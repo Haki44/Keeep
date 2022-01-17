@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Models\Role;
+use App\Models\Reply;
 use App\Models\School;
 use App\Models\PrivateMessage;
 use Laravel\Sanctum\HasApiTokens;
@@ -65,6 +66,11 @@ class User extends Authenticatable
     public function school()
     {
         return $this->belongsTo(School::class);
+    }
+
+    public function replies()
+    {
+        return $this->belongsToMany(Reply::class);
     }
 
     public function isAdmin()

@@ -38,4 +38,10 @@ class Offer extends Model
     {
         return $this->belongsToMany(PrivateMessage::class);
     }
+
+    // L'offre peut avoir plusieurs réponses
+    public function replies()
+    {
+        return $this->hasMany(Reply::class);
+    }
 }

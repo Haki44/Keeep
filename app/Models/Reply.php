@@ -2,8 +2,10 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\User;
+use App\Models\Offer;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Reply extends Model
 {
@@ -13,5 +15,21 @@ class Reply extends Model
         'offer_id',
         'user_id'
     ];
+
+    protected $with = [
+        'offer'
+    ];
+
+    // La réponse appartient à une offre
+    public function offer()
+    {
+        return $this->belongsTo(Offer::class);
+    }
+
+    // Une réponse a été créé par un user
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 
 }

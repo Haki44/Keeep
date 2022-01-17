@@ -17,9 +17,11 @@ class ReplyController extends Controller
      */
     public function index()
     {
-        $replies = Reply::get();
-
-        dd($replies);
+        // Les offres du user connecté avec les réponses
+        // Le whereRelation prends en premier paramètre le nom de la relation, le champ de relation et la valeur du champ
+        $offers = Offer::with('replies')->whereRelation('user', 'user_id', auth()->user()->id)->get();
+        
+        return view('reply.index', compact('offers'));
     }
 
     /**
