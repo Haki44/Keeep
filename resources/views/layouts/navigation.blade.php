@@ -27,12 +27,10 @@
                         {{-- Badge du nombre de réponses --}}
                         @php
                             $count = 0
+                            @foreach (Auth::user()->offers as $offer)
+                                $count += intval($offer->replies->count())
+                            @endforeach
                         @endphp
-                        @foreach (Auth::user()->offers as $offer)
-                        @php
-                            $count += intval($offer->replies->count())
-                        @endphp
-                        @endforeach
                         @if ($count != 0)
                             <span class="inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-red-100 bg-red-600 rounded-full">
                                 {{ $count }}

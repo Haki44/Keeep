@@ -46,6 +46,6 @@ class Offer extends Model
     // L'offre peut avoir plusieurs réponses
     public function replies()
     {
-        return $this->hasMany(Reply::class);
+        return $this->hasMany(Reply::class)->where('deleted_at', NULL);
     }
 }
