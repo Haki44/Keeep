@@ -8,18 +8,18 @@
     <div class="max-w-6xl pb-10 mx-auto mt-6 sm:px-6 lg:px-8">
         <div class="flex flex-wrap justify-center pt-2 pb-10 overflow-hidden bg-white shadow-sm">
             <div class="flex-column">
-                <p class="p-1 text-4xl font-semi-bold">Nom : {{ $offer->user->firstname }} {{ $offer->user->name[0  ] }}.</p>
+                <p class="p-1 text-4xl font-semi-bold">Nom : {{ $offer->user->firstname }} {{ $offer->user->name[0  ] }}.  de {{$offer->user->school->name}}</p>
             </div>
         </div>
         <hr>
-        <div class="flex items-start pb-4 overflow-hidden bg-white shadow-sm">
+        <div class="flex  @if ($offer->img != null) justify-start @else justify-center @endif pb-4 overflow-hidden bg-white shadow-sm">
             @if ($offer->img != null)
             <div class="pr-4">
                 <img class="w-80" src="{{$_ENV["APP_URL"]}}/img/{{$offer->img}}" alt="{{$offer->name}}">
             </div>
             @endif
             <div class="flex flex-column items-center">
-                <div class="flex-column ">
+                <div class="flex-column">
                     <p class="p-2 text-4xl font-bold">{{ $offer->name }}</p>
                     <p class="p-2 text-xl">Description : {{ $offer->description }}</p>
                     <p class="p-2 text-xl">Prix : {{ $offer->price }} Kips</p>
