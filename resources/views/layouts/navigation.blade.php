@@ -113,10 +113,16 @@
             <x-responsive-nav-link :href="route('offer.create')" :active="request()->routeIs('offer.create')">
                 {{ __('Créer une offre') }}
             </x-responsive-nav-link>
-            
-            <x-responsive-nav-link :href="route('reply.index')" :active="request()->routeIs('reply.index')">
-                {{ __('Réponses') }}
-            </x-responsive-nav-link>
+
+            <a href="{{ route('reply.index') }}" class="{{ request()->routeIs('reply.index') ? 'block pl-3 pr-4 py-2 border-l-4 border-indigo-400 text-base font-medium text-indigo-700 bg-indigo-50 focus:outline-none focus:text-indigo-800 focus:bg-indigo-100 focus:border-indigo-700 transition duration-150 ease-in-out' : 'block pl-3 pr-4 py-2 border-l-4 border-transparent text-base font-medium text-gray-600 hover:text-gray-800 hover:bg-gray-50 hover:border-gray-300 focus:outline-none focus:text-gray-800 focus:bg-gray-50 focus:border-gray-300 transition duration-150 ease-in-out' }}">
+
+                <span>Réponses</span>
+                @if ($count != 0)
+                    <span class="inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-red-100 bg-red-600 rounded-full">
+                        {{ $count }}
+                    </span>
+                @endif
+            </a>
             @endcan
 
             @can('admin')
