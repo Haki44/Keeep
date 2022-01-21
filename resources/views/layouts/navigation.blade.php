@@ -26,11 +26,18 @@
 
                         {{-- Badge du nombre de réponses --}}
                         @php
+                            // Init d'un compteur à 0
                             $count = 0
-                            @foreach (Auth::user()->offers as $offer)
-                                $count += intval($offer->replies->count())
-                            @endforeach
                         @endphp
+
+                        {{-- On boucle sur les offres du user connecté pour récupérer toutes les réponses --}}
+                        @foreach (Auth::user()->offers as $offer)
+                            @php
+                                $count += intval($offer->replies->count())
+                            @endphp
+                        @endforeach
+                        
+                        {{-- S'il y a au moins une réponse, on affiche un badge avec le nombre de réponses à l'intérieur --}}
                         @if ($count != 0)
                             <span class="inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-red-100 bg-red-600 rounded-full">
                                 {{ $count }}
