@@ -16,7 +16,7 @@
                         {{ __('Dashboard') }}
                     </x-nav-link>
 
-                    @can('create-offer')
+                    @can('create-offer-and-reply')
                     <x-nav-link :href="route('offer.create')" :active="request()->routeIs('offer.create')">
                         {{ __('Créer une offre') }}
                     </x-nav-link>
@@ -36,7 +36,7 @@
                                 $count += intval($offer->replies->count())
                             @endphp
                         @endforeach
-                        
+
                         {{-- S'il y a au moins une réponse, on affiche un badge avec le nombre de réponses à l'intérieur --}}
                         @if ($count != 0)
                             <span class="inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-red-100 bg-red-600 rounded-full">
@@ -45,7 +45,7 @@
                         @endif
                     </a>
                     @endcan
-                    
+
                     @can('admin')
                     <x-nav-link :href="route('referent.create')" :active="request()->routeIs('referent.create')">
                         {{ __('Ajouter Référent') }}
@@ -56,7 +56,7 @@
                         {{ __('Ajouter Elève') }}
                     </x-nav-link>
                     @endcan
-                    
+
                 </div>
             </div>
 
@@ -109,7 +109,7 @@
                 {{ __('Dashboard') }}
             </x-responsive-nav-link>
 
-            @can('create-offer')
+            @can('create-offer-and-reply')
             <x-responsive-nav-link :href="route('offer.create')" :active="request()->routeIs('offer.create')">
                 {{ __('Créer une offre') }}
             </x-responsive-nav-link>
