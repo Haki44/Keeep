@@ -31,7 +31,7 @@
                     @if(is_null($reply) && $offer->user_id !== auth()->user()->id)
                     <a href="#" @click="open = !open" class="mb-2 text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-lg px-5 py-2.5 text-center">Acheter ({{ $offer->price }} kips)</a>
                     @endif
-                    <dix x-show="open" class="w-full sm:w-2/3">
+                    <div x-show="open" class="w-full sm:w-2/3">
                         <x-auth-validation-errors class="mb-4" :errors="$errors" />
                         <form class="w-full sm:w-2/3" method="POST" action="{{ route('reply.store', $offer->id) }}">
                         @csrf
@@ -46,7 +46,7 @@
                                     </x-button>
                                 </div>
                         </form>
-                    </dix>
+                    </div>
                 </div>
             </div>
 
