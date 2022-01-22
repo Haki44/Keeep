@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Events\AddReplyEvent;
 use App\Models\Reply;
+use App\Notifications\ReplyNotification;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Http\Request;
 use App\Models\Offer;
@@ -53,6 +53,7 @@ class ReplyController extends Controller
         $data = ['user_id' => $offer->user_id, 'offer_id' => $offer->id, 'reply' => $data['reply']];
 
         Reply::create($data);
+        $offer->user->notify(new ReplyNotification($offer, auth()->user()));
 
         // Affichage du message de confirmation de l'envoi de l'e-mail et retour à l'accueil
         return redirect(RouteServiceProvider::HOME)->with('success', 'Demande envoyée à ' . $offer['user']->firstname);
