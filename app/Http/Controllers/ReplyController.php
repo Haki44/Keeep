@@ -36,20 +36,23 @@ class ReplyController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request, $offer)
+
+    public function store(Request $request, Offer $offer)
     {
-        $data = $request->validate([
-            'reply' => ['required', 'string'],
-        ],
-        [
-            'reply.required' => 'Vous ne pouvez pas laisser de réponse vide',
-            'reply.string' => 'La réponse doit être une chaine de caractère'
-        ]);
 
-        $data = compact('data', 'offer');
+        $data = $request->validate(
+            [
+                'reply' => ['required', 'string'],
+            ],
+            [
+                'reply.required' => 'Vous ne pouvez pas laisser de réponse vide',
+                'reply.string' => 'La réponse doit être une chaine de caractère'
+            ]
+        );
 
-        // Envoie de l'email a l'événement
-        event(new AddReplyEvent($data));
+        $data = ['user_id' => $offer->user_id, 'offer_id' => $offer->id, 'reply' => $data['reply']];
+
+        Reply::create($data);
 
         // Affichage du message de confirmation de l'envoi de l'e-mail et retour à l'accueil
         return redirect(RouteServiceProvider::HOME)->with('success', 'Demande envoyée à ' . $offer['user']->firstname);
@@ -99,15 +102,14 @@ class ReplyController extends Controller
     {
 
         $reply = Reply::find($id);
-        if(is_null($reply->is_accepted)){
+        if (is_null($reply->is_accepted)) {
             $isok = $reply->delete();
 
-            if($isok){
+            if ($isok) {
                 return redirect(RouteServiceProvider::HOME)->with('success', 'Votre répoonse a bien été annulée !');
             }
         } else {
             return redirect(RouteServiceProvider::HOME)->with('danger', 'Vous ne pouvez pas annuler votre réponse, celle-ci a déjà été accepté');
         }
-
     }
 }
