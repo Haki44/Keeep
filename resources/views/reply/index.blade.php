@@ -35,14 +35,14 @@
 
                         {{-- En FullPage --}}
                         <td class="hidden w-full p-2 text-left md:block md:w-1/12 md:border md:border-grey-500 md:table-cell">
-                            <a href="#" target="_blank" class="block md:flex md:justify-center">
+                            <a href="#" class="block md:flex md:justify-center">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="#00561B">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
                                 </svg>
                             </a>
                         </td>
                         <td class="hidden w-full p-2 text-left md:block md:w-1/12 md:border md:border-grey-500 md:table-cell">
-                            <a href="#" target="_blank" class="block md:flex md:justify-center">
+                            <a href="#" class="block md:flex md:justify-center">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="#f00020">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
                                 </svg>
@@ -53,13 +53,13 @@
                         <td class="block w-full p-2 md:mt-2 md:hidden">
                             <span class="inline-block w-1/3 font-bold md:hidden">Actions</span>
                             <span class="flex my-2">
-                                <a href="#" target="_blank" class="flex w-1/2">
+                                <a href="#" class="flex w-1/2">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="#00561B">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
                                     </svg>
                                     Accepter
                                 </a>
-                                <a href="#" target="_blank" class="flex w-1/2">
+                                <a href="#" class="flex w-1/2">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="#f00020">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
                                     </svg>
