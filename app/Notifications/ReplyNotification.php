@@ -16,10 +16,11 @@ class ReplyNotification extends Notification
      *
      * @return void
      */
-    public function __construct($offer, $user_from)
+    public function __construct($offer, $user_from, $reply)
     {
         $this->offer = $offer;
         $this->user_from = $user_from;
+        $this->reply = $reply;
     }
 
     /**
@@ -41,7 +42,7 @@ class ReplyNotification extends Notification
      */
     public function toMail($notifiable)
     {
-        return (new MailMessage())->markdown('emails.confirm-reply', ['offer' => $this->offer, 'user_from' => $this->user_from])
+        return (new MailMessage())->markdown('emails.confirm-reply', ['offer' => $this->offer, 'user_from' => $this->user_from, 'reply' => $this->reply])
                                   ->subject("Nouvelle réponse à l'offre : " . $this->offer->name);
     }
 

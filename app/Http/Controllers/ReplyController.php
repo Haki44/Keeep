@@ -53,7 +53,7 @@ class ReplyController extends Controller
         $data = ['user_id' => $offer->user_id, 'offer_id' => $offer->id, 'reply' => $data['reply']];
 
         Reply::create($data);
-        $offer->user->notify(new ReplyNotification($offer, auth()->user()));
+        $offer->user->notify(new ReplyNotification($offer, auth()->user(), $data['reply']));
 
         // Affichage du message de confirmation de l'envoi de l'e-mail et retour à l'accueil
         return redirect(RouteServiceProvider::HOME)->with('success', 'Demande envoyée à ' . $offer['user']->firstname);

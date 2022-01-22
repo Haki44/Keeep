@@ -1,12 +1,12 @@
 @component('mail::message')
-Bonjour {{ $reply['offer']->user->firstname }}, <br>
+Bonjour {{ $offer->user->firstname }}, <br>
 
-{{ auth()->user()->firstname }} vient de répondre à votre offre nommée : {{ $reply['offer']->name }} <br>
+{{ $user_from->firstname}} vient de répondre à votre offre nommée : {{ $offer->name }} <br>
 
-Avec les détails suivant : {{ $reply['data']['reply'] }}
+Avec les détails suivant : {{ $reply }}
 
 Veuillez vous rendre sur Keeep pour <strong>accepter</strong> ou <strong>refuser</strong> la réponse.
-@component('mail::button', ['url' => route('offer.show', $reply['offer']->id)])
+@component('mail::button', ['url' => route('offer.show',$offer->id)])
     Cliquez ici pour accéder à l'offre
 @endcomponent
 
