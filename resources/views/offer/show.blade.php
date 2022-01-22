@@ -18,7 +18,7 @@
                 <p class="p-2 text-xl">Description : {{ $offer->description }}</p>
                 <p class="p-2 text-xl">Prix : {{ $offer->price }} Kips</p>
                 <p class="p-2 text-xl">Disponible le  : {{ date('d/m/Y', strtotime($offer->offer_day)) }} à {{ date('H:i', strtotime($offer->offer_day)) }}</p>
-                <div class="flex flex-col items-center p-2"  x-data="{ open:false }">
+                <div class="flex flex-col items-center p-2"  x-data="{ open:{{$errors->isEmpty() ? 'false' : 'open'}} }">
                     <a href="{{ route('private_message.create', $offer->id) }}" class="mr-2 mb-2 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-lg px-5 py-2.5 text-center">Contacter {{ $offer->user->firstname }} pour + de précisions</a>
                     @if(!is_null($reply) && is_null($reply->is_accepted))
                         <form  method="POST" action="{{ route('reply.destroy', $reply->id) }}">

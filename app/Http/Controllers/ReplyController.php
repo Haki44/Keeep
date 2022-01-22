@@ -56,7 +56,7 @@ class ReplyController extends Controller
         $offer->user->notify(new ReplyNotification($offer, auth()->user(), $data['reply']));
 
         // Affichage du message de confirmation de l'envoi de l'e-mail et retour à l'accueil
-        return redirect(RouteServiceProvider::HOME)->with('success', 'Demande envoyée à ' . $offer['user']->firstname);
+        return redirect('dashboard')->with('success', 'Demande envoyée à ' . $offer->user()->firstname);
     }
 
     /**
@@ -104,13 +104,11 @@ class ReplyController extends Controller
 
         $reply = Reply::find($id);
         if (is_null($reply->is_accepted)) {
-            $isok = $reply->delete();
+            $reply->delete();
 
-            if ($isok) {
-                return redirect(RouteServiceProvider::HOME)->with('success', 'Votre répoonse a bien été annulée !');
-            }
+            return redirect('dashboard')->with('success', 'Votre répoonse a bien été annulée !');
         } else {
-            return redirect(RouteServiceProvider::HOME)->with('danger', 'Vous ne pouvez pas annuler votre réponse, celle-ci a déjà été accepté');
+            return redirect('dashboard')->with('danger', 'Vous ne pouvez pas annuler votre réponse, celle-ci a déjà été accepté');
         }
     }
 }
