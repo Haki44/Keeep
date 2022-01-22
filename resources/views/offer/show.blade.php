@@ -8,7 +8,7 @@
     <div class="max-w-6xl pb-10 mx-auto mt-6 sm:px-6 lg:px-8">
         <div class="flex flex-wrap justify-center pt-2 pb-10 overflow-hidden bg-white shadow-sm">
             <div class="flex-column">
-                <p class="p-1 text-4xl font-semi-bold">Nom : {{ $offer->user->firstname }} {{ $offer->user->name[0  ] }}.  de {{$offer->user->school->name}}</p>
+                <p class="p-1 text-4xl font-semi-bold">Nom : {{ $offer->user->firstname }} {{ $offer->user->name[0] }}.  de {{$offer->user->school->name}}</p>
             </div>
         </div>
         <hr>
@@ -23,7 +23,7 @@
                     <p class="p-2 text-4xl font-bold">{{ $offer->name }}</p>
                     <p class="p-2 text-xl">Description : {{ $offer->description }}</p>
                     <p class="p-2 text-xl">Prix : {{ $offer->price }} Kips</p>
-                    <p class="p-2 text-xl">Disponible le  : {{ date('d/m/Y', strtotime($offer->offer_day)) }} à {{ date('H:i', strtotime($offer->offer_day)) }}</p>
+                    <p class="p-2 text-xl">Disponible le  : {{ date('d/m/Y', strtotime($offer->offer_day)) }}</p>
                     <div class="flex flex-col items-center p-2"  x-data="{ open:false }">
                         <a href="{{ route('private_message.create', $offer->id) }}" class="mr-2 mb-2 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-lg px-5 py-2.5 text-center">Contacter {{ $offer->user->firstname }} pour + de précisions</a>
                         @if(!is_null($reply) && is_null($reply->is_accepted))
