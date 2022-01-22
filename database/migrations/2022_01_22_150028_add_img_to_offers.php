@@ -14,7 +14,7 @@ class AddImgToOffers extends Migration
     public function up()
     {
         Schema::table('offers', function (Blueprint $table) {
-            $table->string('img')->nullable();
+            $table->string('img')->after('price')->nullable();
         });
     }
 
