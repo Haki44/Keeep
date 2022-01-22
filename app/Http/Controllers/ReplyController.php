@@ -50,7 +50,7 @@ class ReplyController extends Controller
             ]
         );
 
-        $data = ['user_id' => $offer->user_id, 'offer_id' => $offer->id, 'reply' => $data['reply']];
+        $data = ['user_id' =>  auth()->user()->id, 'offer_id' => $offer->id, 'reply' => $data['reply']];
 
         Reply::create($data);
         $offer->user->notify(new ReplyNotification($offer, auth()->user(), $data['reply']));
