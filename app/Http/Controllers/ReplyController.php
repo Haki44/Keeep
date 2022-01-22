@@ -41,10 +41,10 @@ class ReplyController extends Controller
         $data = $request->validate([
             'reply' => ['required', 'string'],
         ],
-            [
-                'reply.required' => 'Vous ne pouvez pas laisser de réponse vide',
-                'reply.string' => 'La réponse doit être une chaine de caractère'
-            ]);
+        [
+            'reply.required' => 'Vous ne pouvez pas laisser de réponse vide',
+            'reply.string' => 'La réponse doit être une chaine de caractère'
+        ]);
 
         $offer = Offer::with('user')->find($offer_id);
 
