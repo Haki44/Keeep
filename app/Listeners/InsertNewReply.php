@@ -32,7 +32,8 @@ class InsertNewReply
 
         $data = [
             'user_id' => auth()->user()->id,
-            'offer_id' => $event->reply['offer']->id
+            'offer_id' => $event->reply['offer']->id,
+            'reply' => $event->reply['reply']
         ];
 
         // Ajout de la réponse en base de donnée

@@ -11,7 +11,8 @@ class Reply extends Model
 
     protected $fillable = [
         'offer_id',
-        'user_id'
+        'user_id',
+        'reply'
     ];
 
 }
