@@ -36,7 +36,7 @@ class ReplyController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request, $offer_id)
+    public function store(Request $request, $offer)
     {
         $data = $request->validate([
             'reply' => ['required', 'string'],
@@ -45,8 +45,6 @@ class ReplyController extends Controller
             'reply.required' => 'Vous ne pouvez pas laisser de réponse vide',
             'reply.string' => 'La réponse doit être une chaine de caractère'
         ]);
-
-        $offer = Offer::with('user')->find($offer_id);
 
         $data = compact('data', 'offer');
 

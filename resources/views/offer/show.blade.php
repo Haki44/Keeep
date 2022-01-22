@@ -33,7 +33,7 @@
                     @endif
                     <div x-show="open" class="w-full sm:w-2/3">
                         <x-auth-validation-errors class="mb-4" :errors="$errors" />
-                        <form class="w-full sm:w-2/3" method="POST" action="{{ route('reply.store', $offer->id) }}">
+                        <form class="w-full sm:w-2/3" method="POST" action="{{ route('reply.store', $offer) }}">
                         @csrf
                             <div class="mt-4">
                                 <x-label for="reply" value="Combien de jours / heures avez-vous besoin de cette offre ?*" />
