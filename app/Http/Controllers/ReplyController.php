@@ -111,7 +111,7 @@ class ReplyController extends Controller
         if (is_null($reply->is_accepted)) {
             $reply->delete();
 
-            return redirect('dashboard')->with('success', 'Votre répoonse a bien été annulée !');
+            return redirect('dashboard')->with('success', 'Votre réponse a bien été annulée !');
         } else {
             return redirect('dashboard')->with('danger', 'Vous ne pouvez pas annuler votre réponse, celle-ci a déjà été accepté');
         }
