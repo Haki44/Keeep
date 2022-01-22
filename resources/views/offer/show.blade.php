@@ -20,13 +20,19 @@
                 <p class="p-2 text-xl">Disponible le  : {{ date('d/m/Y', strtotime($offer->offer_day)) }} à {{ date('H:i', strtotime($offer->offer_day)) }}</p>
                 <div class="flex flex-col items-center p-2"  x-data="{ open:false }">
                     <a href="{{ route('private_message.create', $offer->id) }}" class="mr-2 mb-2 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-lg px-5 py-2.5 text-center">Contacter {{ $offer->user->firstname }} pour + de précisions</a>
+
                     @if(!is_null($reply) && is_null($reply->is_accepted))
                         <form  method="POST" action="{{ route('reply.destroy', $reply->id) }}">
                             @csrf
                             @method('DELETE')
                             <button type="submit" class="mb-2 text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-lg px-5 py-2.5 text-center">Annuler ma réponse</button>
                         </form>
-
+                    @else
+                        <div id="alert-1" class="flex p-4 mb-4 bg-green-100 rounded-lg" role="alert">
+                            <div class="ml-3 text-sm font-medium text-green-700">
+                              Votre réponse a été acceptée, vous ne pouvez plus l'annuler.
+                            </div>
+                        </div>
                     @endif
                     @if(is_null($reply) && $offer->user_id !== auth()->user()->id)
                     <a href="#" @click="open = !open" class="mb-2 text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-lg px-5 py-2.5 text-center">Acheter ({{ $offer->price }} kips)</a>
