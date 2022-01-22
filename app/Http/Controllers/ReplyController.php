@@ -21,7 +21,7 @@ class ReplyController extends Controller
         // Les offres du user connecté avec les réponses
         // Le whereRelation prends en paramètres le nom de la relation, le champ de relation et la valeur du champ
         $offers = Offer::whereRelation('user', 'user_id', auth()->user()->id)->get();
-        
+
         return view('reply.index', compact('offers'));
     }
 
@@ -61,7 +61,7 @@ class ReplyController extends Controller
         $offer->user->notify(new ReplyNotification($offer, auth()->user(), $data['reply']));
 
         // Affichage du message de confirmation de l'envoi de l'e-mail et retour à l'accueil
-        return redirect('dashboard')->with('success', 'Demande envoyée à ' . $offer->user()->firstname);
+        return redirect('dashboard')->with('success', 'Demande envoyée à ' . $offer->user->firstname);
     }
 
     /**
