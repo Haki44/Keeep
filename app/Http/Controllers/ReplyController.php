@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Reply;
 use App\Notifications\ReplyNotification;
-use App\Providers\RouteServiceProvider;
-use Illuminate\Http\Request;
 use App\Models\Offer;
+use App\Models\Reply;
+use Illuminate\Http\Request;
+use App\Events\AddReplyEvent;
+use App\Providers\RouteServiceProvider;
 
 class ReplyController extends Controller
 {
@@ -17,7 +18,11 @@ class ReplyController extends Controller
      */
     public function index()
     {
-        //
+        // Les offres du user connecté avec les réponses
+        // Le whereRelation prends en paramètres le nom de la relation, le champ de relation et la valeur du champ
+        $offers = Offer::whereRelation('user', 'user_id', auth()->user()->id)->get();
+        
+        return view('reply.index', compact('offers'));
     }
 
     /**

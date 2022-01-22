@@ -65,4 +65,6 @@ Route::get('/dashboard', [OfferController::class, 'index'])->name('dashboard')->
 Route::post('/reply/{offer}', [ReplyController::class, 'store'])->name('reply.store')->middleware('can:create-offer-and-reply');
 Route::delete('/reply/{reply}', [ReplyController::class, 'destroy'])->name('reply.destroy')->middleware('can:create-offer-and-reply');
 
+Route::get('/reply', [ReplyController::class, 'index'])->name('reply.index');
+
 require __DIR__.'/auth.php';
