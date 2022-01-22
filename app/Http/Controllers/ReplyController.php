@@ -116,4 +116,15 @@ class ReplyController extends Controller
         }
 
     }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  \App\Models\Reply  $reply
+     * @return \Illuminate\Http\Response
+     */
+    public function refuse(Reply $reply)
+    {
+        $reply->delete();
+    }
 }
