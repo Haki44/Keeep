@@ -35,6 +35,10 @@ class AuthServiceProvider extends ServiceProvider
             return $user->isReferent() || $user->isAdmin();
         });
 
+        Gate::define('create-offer-and-reply', function (User $user) {
+            return $user->isStudent();
+        });
+
         Gate::define('manage-offer', function (User $user, Offer $offer) {
             return $user->isAdmin() ||
             ($user->id === $offer->user_id);

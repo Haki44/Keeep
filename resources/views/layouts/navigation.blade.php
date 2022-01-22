@@ -16,10 +16,36 @@
                         {{ __('Dashboard') }}
                     </x-nav-link>
 
+                    @can('create-offer-and-reply')
                     <x-nav-link :href="route('offer.create')" :active="request()->routeIs('offer.create')">
                         {{ __('Créer une offre') }}
                     </x-nav-link>
-                    
+
+                    <a href="{{ route('reply.index') }}" class="{{ request()->routeIs('reply.index') ? 'inline-flex items-center px-1 pt-1 border-b-2 border-indigo-400 text-sm font-medium leading-5 text-gray-900 focus:outline-none focus:border-indigo-700 transition duration-150 ease-in-out' : 'inline-flex items-center px-1 pt-1 border-b-2 border-transparent text-sm font-medium leading-5 text-gray-500 hover:text-gray-700 hover:border-gray-300 focus:outline-none focus:text-gray-700 focus:border-gray-300 transition duration-150 ease-in-out'}}">
+                        <span class="mr-2">Réponses</span>
+
+                        {{-- Badge du nombre de réponses --}}
+                        @php
+                            // Init d'un compteur à 0
+                            $count = 0
+                        @endphp
+
+                        {{-- On boucle sur les offres du user connecté pour récupérer toutes les réponses --}}
+                        @foreach (Auth::user()->offers as $offer)
+                            @php
+                                $count += intval($offer->replies->count())
+                            @endphp
+                        @endforeach
+
+                        {{-- S'il y a au moins une réponse, on affiche un badge avec le nombre de réponses à l'intérieur --}}
+                        @if ($count != 0)
+                            <span class="inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-red-100 bg-red-600 rounded-full">
+                                {{ $count }}
+                            </span>
+                        @endif
+                    </a>
+                    @endcan
+
                     @can('admin')
                     <x-nav-link :href="route('referent.create')" :active="request()->routeIs('referent.create')">
                         {{ __('Ajouter Référent') }}
@@ -30,7 +56,7 @@
                         {{ __('Ajouter Elève') }}
                     </x-nav-link>
                     @endcan
-                    
+
                 </div>
             </div>
 
@@ -83,9 +109,21 @@
                 {{ __('Dashboard') }}
             </x-responsive-nav-link>
 
+            @can('create-offer-and-reply')
             <x-responsive-nav-link :href="route('offer.create')" :active="request()->routeIs('offer.create')">
                 {{ __('Créer une offre') }}
             </x-responsive-nav-link>
+
+            <a href="{{ route('reply.index') }}" class="{{ request()->routeIs('reply.index') ? 'block pl-3 pr-4 py-2 border-l-4 border-indigo-400 text-base font-medium text-indigo-700 bg-indigo-50 focus:outline-none focus:text-indigo-800 focus:bg-indigo-100 focus:border-indigo-700 transition duration-150 ease-in-out' : 'block pl-3 pr-4 py-2 border-l-4 border-transparent text-base font-medium text-gray-600 hover:text-gray-800 hover:bg-gray-50 hover:border-gray-300 focus:outline-none focus:text-gray-800 focus:bg-gray-50 focus:border-gray-300 transition duration-150 ease-in-out' }}">
+
+                <span>Réponses</span>
+                @if ($count != 0)
+                    <span class="inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-red-100 bg-red-600 rounded-full">
+                        {{ $count }}
+                    </span>
+                @endif
+            </a>
+            @endcan
 
             @can('admin')
             <x-responsive-nav-link :href="route('referent.create')" :active="request()->routeIs('referent.create')">

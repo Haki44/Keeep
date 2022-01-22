@@ -43,7 +43,6 @@
                             @csrf
                                 <div class="mt-4">
                                     <x-label for="reply" value="Combien de jours / heures avez-vous besoin de cette offre ?*" />
-
                                     <x-textarea class="w-full" name="reply" id="reply" :value="old('reply')" type="text" placeholder="Exemple : J'ai besoin de cette pelle pendant 2 heures"></x-textarea>
                                 </div>
                                     <div class="flex items-center justify-end mt-4">

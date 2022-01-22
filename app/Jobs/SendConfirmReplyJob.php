@@ -2,7 +2,7 @@
 
 namespace App\Jobs;
 
-use App\Mail\RegisterReplyMail;
+use App\Mail\ConfirmReplyMail;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldBeUnique;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -34,6 +34,6 @@ class SendConfirmReplyJob implements ShouldQueue
      */
     public function handle()
     {
-      Mail::to($this->reply['offer']['user']->email)->send(new RegisterReplyMail($this->reply));
+      Mail::to($this->reply['offer']['user']->email)->send(new ConfirmReplyMail($this->reply));
     }
 }

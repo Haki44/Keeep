@@ -3,6 +3,8 @@
 namespace App\Models;
 
 use App\Models\Role;
+use App\Models\Offer;
+use App\Models\Reply;
 use App\Models\School;
 use App\Models\PrivateMessage;
 use Laravel\Sanctum\HasApiTokens;
@@ -67,6 +69,16 @@ class User extends Authenticatable
         return $this->belongsTo(School::class);
     }
 
+    public function replies()
+    {
+        return $this->belongsToMany(Reply::class);
+    }
+
+    public function offers()
+    {
+        return $this->hasMany(Offer::class);
+    }
+
     public function isAdmin()
     {
         return $this->role->name === Config::get('constants.roles.admin');
@@ -77,6 +89,11 @@ class User extends Authenticatable
         return $this->role->name === Config::get('constants.roles.referent');
     }
 
+    public function isStudent()
+    {
+        return $this->role->name === 'STUDENT';
+    }
+  
     // public function messageSends()
     // {
     //     return $this->hasMany(PrivateMessage::class, 'from_id');
