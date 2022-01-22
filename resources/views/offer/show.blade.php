@@ -12,9 +12,9 @@
             </div>
         </div>
         <hr>
-        <div class="flex  @if ($offer->img != null) justify-start @else justify-center @endif pb-4 overflow-hidden bg-white shadow-sm">
+        <div class="flex flex-col md:flex-row @if($offer->img != null) justify-start @else justify-center @endif pb-4 overflow-hidden bg-white shadow-sm">
             @if ($offer->img != null)
-            <div class="pr-4">
+            <div class="pr-4 mx-auto md:mx-0">
                 <img class="w-80" src="{{$_ENV["APP_URL"]}}/img/{{$offer->img}}" alt="{{$offer->name}}">
             </div>
             @endif
