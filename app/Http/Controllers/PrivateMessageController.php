@@ -82,13 +82,9 @@ class PrivateMessageController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Offer $offer)
+    public function show($id)
     {
-
-        $offer = Offer::with('user')->findOrFail($offer->id);
-
-        return view('private_message.show', compact('offer'));
-
+        //
     }
 
     /**
