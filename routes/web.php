@@ -48,7 +48,6 @@ Route::get('/', function () {
 
     // Private messages
     Route::get('/offer/{offer}/private_message/create', [PrivateMessageController::class, 'create'])->name('private_message.create')->where('offer', '[0-9]+');
-    Route::get('/private_message/{user}', [PrivateMessageController::class, 'index'])->name('private_message.index')->where('user', '[0-9]+');
     Route::post('/offer/{offer}/private_message', [PrivateMessageController::class, 'store'])->name('private_message.store')->where('offer', '[0-9]+');
 // });
 
@@ -67,6 +66,5 @@ Route::post('/reply/{offer}', [ReplyController::class, 'store'])->name('reply.st
 Route::delete('/reply/{reply}', [ReplyController::class, 'destroy'])->name('reply.destroy')->middleware('can:create-offer-and-reply');
 
 Route::get('/reply', [ReplyController::class, 'index'])->name('reply.index');
-Route::get('/reply/refuse/{reply}', [ReplyController::class, 'refuse'])->name('reply.refuse');
 
 require __DIR__.'/auth.php';

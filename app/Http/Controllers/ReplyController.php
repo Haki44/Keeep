@@ -7,7 +7,6 @@ use App\Models\Offer;
 use App\Models\Reply;
 use Illuminate\Http\Request;
 use App\Events\AddReplyEvent;
-use App\Notifications\RefuseResponseNotification;
 use App\Providers\RouteServiceProvider;
 
 class ReplyController extends Controller
@@ -116,22 +115,5 @@ class ReplyController extends Controller
         } else {
             return redirect('dashboard')->with('danger', 'Vous ne pouvez pas annuler votre réponse, celle-ci a déjà été accepté');
         }
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Reply  $reply
-     * @return \Illuminate\Http\Response
-     */
-    public function refuse(Reply $reply)
-    {
-        // Soft delete
-        $reply->delete();
-
-        // Envoie d'un mail
-        $reply->user->notify(new RefuseResponseNotification($reply));
-
-        return redirect()->route('reply.index')->with('success', 'La réponse à bien été refusée');
     }
 }
