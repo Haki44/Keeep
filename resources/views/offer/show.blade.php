@@ -32,6 +32,12 @@
                                 @method('DELETE')
                                 <button type="submit" class="mb-2 text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-lg px-5 py-2.5 text-center">Annuler ma réponse</button>
                             </form>
+                        @else
+                            <div id="alert-1" class="flex p-4 mb-4 bg-green-100 rounded-lg" role="alert">
+                                <div class="ml-3 text-sm font-medium text-green-700">
+                                    Vous ne pouvez plus annuler votre réponse car elle a été acceptée par <strong>{{ $offer->user->firstname }} {{ $offer->user->name[0] }}</strong>
+                                </div>
+                            </div>
                         @endif
                         @if(is_null($reply) && $offer->user_id !== auth()->user()->id)
                         <a href="#" @click="open = !open" class="mb-2 text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-lg px-5 py-2.5 text-center">Acheter ({{ $offer->price }} kips)</a>
