@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use App\Models\Offer;
 use Illuminate\Http\Request;
 use App\Models\PrivateMessage;
-use App\Notifications\PrivateMessageNotification;
 use App\Providers\RouteServiceProvider;
+use App\Notifications\PrivateMessageNotification;
 
 class PrivateMessageController extends Controller
 {
@@ -15,9 +16,18 @@ class PrivateMessageController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(User $user)
     {
-        //
+        // On récupère les messages envoyé de l'utilisateur connecté a celui qui a créé l'offre
+        $PM_sender = PrivateMessage::where('to_id', $user->id)->where('from_id', auth()->user()->id)->get();
+
+        // On récupère les messages de l'utilisteur qui a créé l'offre a celui qui est connecté
+        $PM_receiver = PrivateMessage::where('to_id', auth()->user()->id)->where('from_id', $user->id)->get();
+
+        // On merge les 2 collections de facon ordonné (le plus ancien message en dernier)
+        $private_messages = $PM_sender->merge($PM_receiver)->sortByDesc('created_at');
+
+        return view('private_message.index', compact('private_messages', 'user'));
     }
 
     /**
