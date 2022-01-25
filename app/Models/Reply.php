@@ -6,12 +6,10 @@ use App\Models\User;
 use App\Models\Offer;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Reply extends Model
 {
     use HasFactory;
-    use SoftDeletes;
 
     protected $fillable = [
         'offer_id',
