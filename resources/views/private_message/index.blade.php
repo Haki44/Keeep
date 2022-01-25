@@ -19,10 +19,10 @@
                       </div>
                    </div>
                 </div>
-                <div id="messages" class="flex flex-col p-3 space-y-4 overflow-y-auto scrolling-touch scrollbar-thumb-blue scrollbar-thumb-rounded scrollbar-track-blue-lighter scrollbar-w-2">
+                <div id="messages" class="flex flex-col-reverse p-3 space-y-4 overflow-y-auto scrolling-touch scrollbar-thumb-blue scrollbar-thumb-rounded scrollbar-track-blue-lighter scrollbar-w-2">
 
                     @foreach ($private_messages as $private_message)
-                        @if ($private_message->to_id == auth()->user()->id)
+                        @if ($private_message->to_id == $user->id)
                             <div class="chat-message">
                                 <div class="flex items-end justify-end">
                                     <div class="flex flex-col items-end order-1 max-w-xs mx-2 space-y-2 text-xs">
@@ -43,10 +43,10 @@
                         @endif
                     @endforeach
 
-                   
 
-                   
-                   
+
+
+
                 </div>
                 <div class="px-4 pt-4 mb-2 border-t-2 border-gray-200 sm:mb-0">
                    <form action="" method="POST" class="relative flex">
