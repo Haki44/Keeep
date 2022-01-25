@@ -8,7 +8,7 @@
     <div class="max-w-6xl pb-10 mx-auto mt-6 sm:px-6 lg:px-8">
         <div class="flex flex-wrap justify-center pt-2 pb-10 overflow-hidden bg-white shadow-sm">
             <div class="flex-column">
-                <p class="p-1 text-4xl font-semi-bold">Nom : {{ $offer->user->name }} {{ $offer->user->firstname[0  ] }}</p>
+                <p class="p-1 text-4xl font-semi-bold">Nom : {{ $offer->user->firstname }} {{ $offer->user->name[0] }}.  de {{$offer->user->school->name}}</p>
             </div>
         </div>
         <hr>
@@ -43,19 +43,18 @@
                         @csrf
                             <div class="mt-4">
                                 <x-label for="reply" value="Combien de jours / heures avez-vous besoin de cette offre ?*" />
-
-                                <x-textarea class="w-full" name="reply" id="reply" :value="old('reply')" type="text" placeholder="Exemple : J'ai besoin de cette pelle pendant 2 heures"></x-textarea>
-                            </div>
+                                    <x-textarea class="w-full" name="reply" id="reply" :value="old('reply')" type="text" placeholder="Exemple : J'ai besoin de cette pelle pendant 2 heures"></x-textarea>
+                                </div>
                                 <div class="flex items-center justify-end mt-4">
                                     <x-button class="ml-4">
                                         Envoyer ma réponse à {{ $offer->user->firstname }}
                                     </x-button>
                                 </div>
-                        </form>
+                            </form>
+                        </dix>
                     </div>
                 </div>
             </div>
-
         </div>
     </div>
 </x-app-layout>

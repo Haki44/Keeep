@@ -41,8 +41,8 @@ Route::get('/', function () {
 
 // OFFERS
 // Route::middleware('can:student')->group(function () {
-    Route::get('/offer/create', [OfferController::class, 'create'])->name('offer.create')->middleware('can:create-offer');
-    Route::post('/offer', [OfferController::class, 'store'])->name('offer.store')->middleware('can:create-offer');
+    Route::get('/offer/create', [OfferController::class, 'create'])->name('offer.create')->middleware('can:create-offer-and-reply');
+    Route::post('/offer', [OfferController::class, 'store'])->name('offer.store')->middleware('can:create-offer-and-reply');
 
     Route::get('/offer/{offer}/show', [OfferController::class, 'show'])->name('offer.show')->where('offer', '[0-9]+');
 
@@ -62,7 +62,10 @@ Route::get('/dashboard', [OfferController::class, 'index'])->name('dashboard')->
 
 // REPLIES
 
-Route::post('/reply/{offer}', [ReplyController::class, 'store'])->name('reply.store');
-Route::delete('/reply/{reply}', [ReplyController::class, 'destroy'])->name('reply.destroy');
+Route::post('/reply/{offer}', [ReplyController::class, 'store'])->name('reply.store')->middleware('can:create-offer-and-reply');
+Route::delete('/reply/{reply}', [ReplyController::class, 'destroy'])->name('reply.destroy')->middleware('can:create-offer-and-reply');
+
+Route::get('/reply', [ReplyController::class, 'index'])->name('reply.index');
+Route::get('/reply/refuse/{reply}', [ReplyController::class, 'refuse'])->name('reply.refuse');
 
 require __DIR__.'/auth.php';

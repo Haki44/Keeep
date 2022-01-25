@@ -7,12 +7,10 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-class ReplyNotification extends Notification implements ShouldQueue
+class RefuseResponseNotification extends Notification implements ShouldQueue
 {
     use Queueable;
 
-    public $offer;
-    public $user_from;
     public $reply;
 
     /**
@@ -20,10 +18,8 @@ class ReplyNotification extends Notification implements ShouldQueue
      *
      * @return void
      */
-    public function __construct($offer, $user_from, $reply)
+    public function __construct($reply)
     {
-        $this->offer = $offer;
-        $this->user_from = $user_from;
         $this->reply = $reply;
     }
 
@@ -46,8 +42,13 @@ class ReplyNotification extends Notification implements ShouldQueue
      */
     public function toMail($notifiable)
     {
-        return (new MailMessage())->markdown('emails.confirm-reply', ['offer' => $this->offer, 'user_from' => $this->user_from, 'reply' => $this->reply])
-                                  ->subject("Nouvelle réponse à l'offre : " . $this->offer->name);
+        // return (new MailMessage)
+        //             ->line('The introduction to the notification.')
+        //             ->action('Notification Action', url('/'))
+        //             ->line('Thank you for using our application!');
+
+        return (new MailMessage)->markdown('emails.refuse-response', ['reply' => $this->reply])
+                                ->subject('Refus de la réponse pour l\'offre ' . $this->reply->offer->name);
     }
 
     /**
