@@ -24,7 +24,7 @@
                     <p class="p-2 text-xl">Description : {{ $offer->description }}</p>
                     <p class="p-2 text-xl">Prix : {{ $offer->price }} Kips</p>
                     <p class="p-2 text-xl">Disponible le  : {{ date('d/m/Y', strtotime($offer->offer_day)) }}</p>
-                    <div class="flex flex-col items-center p-2"  x-data="{ open:false }">
+                    <div class="flex flex-col items-center p-2"  x-data="{ open:{{$errors->isEmpty() ? 'false' :'open'}} }">
                         <a href="{{ route('private_message.create', $offer->id) }}" class="mr-2 mb-2 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-lg px-5 py-2.5 text-center">Contacter {{ $offer->user->firstname }} pour + de précisions</a>
                         @if(!is_null($reply) && is_null($reply->is_accepted))
                             <form  method="POST" action="{{ route('reply.destroy', $reply->id) }}">
@@ -42,21 +42,21 @@
                         @if(is_null($reply) && $offer->user_id !== auth()->user()->id)
                         <a href="#" @click="open = !open" class="mb-2 text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-lg px-5 py-2.5 text-center">Acheter ({{ $offer->price }} kips)</a>
                         @endif
-                        <dix x-show="open" class="w-full sm:w-2/3">
+                        <div x-show="open" class="w-full sm:w-2/3">
                             <x-auth-validation-errors class="mb-4" :errors="$errors" />
                             <form class="w-full sm:w-2/3" method="POST" action="{{ route('reply.store', $offer->id) }}">
-                            @csrf
+                                @csrf
                                 <div class="mt-4">
                                     <x-label for="reply" value="Combien de jours / heures avez-vous besoin de cette offre ?*" />
                                     <x-textarea class="w-full" name="reply" id="reply" :value="old('reply')" type="text" placeholder="Exemple : J'ai besoin de cette pelle pendant 2 heures"></x-textarea>
                                 </div>
-                                    <div class="flex items-center justify-end mt-4">
-                                        <x-button class="ml-4">
-                                            Envoyer ma réponse à {{ $offer->user->firstname }}
-                                        </x-button>
-                                    </div>
+                                <div class="flex items-center justify-end mt-4">
+                                    <x-button class="ml-4">
+                                        Envoyer ma réponse à {{ $offer->user->firstname }}
+                                    </x-button>
+                                </div>
                             </form>
-                        </dix>
+                        </div>
                     </div>
                 </div>
             </div>

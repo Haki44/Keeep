@@ -47,13 +47,13 @@ class ReplyController extends Controller
     {
 
         $data = $request->validate(
-            [
-                'reply' => ['required', 'string'],
-            ],
-            [
-                'reply.required' => 'Vous ne pouvez pas laisser de réponse vide',
-                'reply.string' => 'La réponse doit être une chaine de caractère'
-            ]
+        [
+            'reply' => ['required', 'string'],
+        ],
+        [
+            'reply.required' => 'Vous ne pouvez pas laisser de réponse vide',
+            'reply.string' => 'La réponse doit être une chaine de caractère'
+        ]
         );
 
         $data = ['user_id' =>  auth()->user()->id, 'offer_id' => $offer->id, 'reply' => $data['reply']];
