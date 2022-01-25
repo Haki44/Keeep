@@ -66,6 +66,5 @@ Route::post('/reply/{offer}', [ReplyController::class, 'store'])->name('reply.st
 Route::delete('/reply/{reply}', [ReplyController::class, 'destroy'])->name('reply.destroy')->middleware('can:create-offer-and-reply');
 
 Route::get('/reply', [ReplyController::class, 'index'])->name('reply.index');
-Route::get('/reply/refuse/{reply}', [ReplyController::class, 'refuse'])->name('reply.refuse');
 
 require __DIR__.'/auth.php';
