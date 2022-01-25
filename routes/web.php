@@ -46,6 +46,8 @@ Route::get('/', function () {
 
     Route::get('/offer/{offer}/show', [OfferController::class, 'show'])->name('offer.show')->where('offer', '[0-9]+');
 
+    Route::get('/offer/myoffers', [OfferController::class, 'myoffers'])->name('offer.myoffers')->where('offer', '[0-9]+')->middleware('can:create-offer-and-reply');
+
     // Private messages
     Route::get('/offer/{offer}/private_message/create', [PrivateMessageController::class, 'create'])->name('private_message.create')->where('offer', '[0-9]+');
     Route::post('/offer/{offer}/private_message', [PrivateMessageController::class, 'store'])->name('private_message.store')->where('offer', '[0-9]+');

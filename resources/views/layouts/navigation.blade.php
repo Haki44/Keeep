@@ -21,6 +21,10 @@
                         {{ __('Créer une offre') }}
                     </x-nav-link>
 
+                    <x-nav-link :href="route('offer.myoffers')" :active="request()->routeIs('offer.myoffers')">
+                        {{ __('Mes offres') }}
+                    </x-nav-link>
+
                     <a href="{{ route('reply.index') }}" class="{{ request()->routeIs('reply.index') ? 'inline-flex items-center px-1 pt-1 border-b-2 border-indigo-400 text-sm font-medium leading-5 text-gray-900 focus:outline-none focus:border-indigo-700 transition duration-150 ease-in-out' : 'inline-flex items-center px-1 pt-1 border-b-2 border-transparent text-sm font-medium leading-5 text-gray-500 hover:text-gray-700 hover:border-gray-300 focus:outline-none focus:text-gray-700 focus:border-gray-300 transition duration-150 ease-in-out'}}">
                         <span class="mr-2">Réponses</span>
 
