@@ -5,7 +5,7 @@
         </h2>
     </x-slot>
 
-    <div class="max-w-4xl px-2 mx-auto mt-6 md:max-w-full sm:px-6 lg:px-8">
+    <div class="max-w-4xl px-2 mx-auto mt-6 md:max-w-2xl sm:px-6 lg:px-8">
 
         <div class="p-5 overflow-hidden bg-white shadow-sm lg:p-10 sm:rounded-lg">
             <div class="flex flex-col justify-between flex-1 max-h-screen p:2 sm:p-6">
@@ -43,16 +43,14 @@
                         @endif
                     @endforeach
 
-
-
-
-
                 </div>
                 <div class="px-4 pt-4 mb-2 border-t-2 border-gray-200 sm:mb-0">
-                   <form action="" method="POST" class="relative flex">
+                   <form action="{{ route('private_message.response', ['offer' => $offer->id]) }}" method="POST" class="relative flex">
+                       @csrf
                       <input type="text" placeholder="Saisir votre message ici" name="content" class="w-full py-3 pl-12 text-gray-600 placeholder-gray-600 bg-gray-200 rounded-full focus:outline-none focus:placeholder-gray-400">
+                      <input type="hidden", name="to_id" value="{{ $user->id }}">
                       <div class="absolute inset-y-0 right-0 items-center hidden sm:flex">
-                         <button type="button" class="inline-flex items-center justify-center w-12 h-12 text-white transition duration-500 ease-in-out bg-blue-500 rounded-full hover:bg-blue-400 focus:outline-none">
+                         <button type="submit" class="inline-flex items-center justify-center w-12 h-12 text-white transition duration-500 ease-in-out bg-blue-500 rounded-full hover:bg-blue-400 focus:outline-none">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-6 h-6 transform rotate-90">
                                <path d="M10.894 2.553a1 1 0 00-1.788 0l-7 14a1 1 0 001.169 1.409l5-1.429A1 1 0 009 15.571V11a1 1 0 112 0v4.571a1 1 0 00.725.962l5 1.428a1 1 0 001.17-1.408l-7-14z"></path>
                             </svg>

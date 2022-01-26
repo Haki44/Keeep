@@ -6,9 +6,7 @@ use App\Notifications\ReplyNotification;
 use App\Models\Offer;
 use App\Models\Reply;
 use Illuminate\Http\Request;
-use App\Events\AddReplyEvent;
 use App\Notifications\RefuseResponseNotification;
-use App\Providers\RouteServiceProvider;
 
 class ReplyController extends Controller
 {
@@ -102,15 +100,16 @@ class ReplyController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  Reply  $reply
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Reply $reply)
     {
-
-        $reply = Reply::find($id);
         if (is_null($reply->is_accepted)) {
-            $reply->delete();
+            // CS: J'ai changé car a la base il n'y avait pas de softdelete sur le Model.
+            // Je l'ai mis car je l'utilise dans la methode refuse. Donc pour toujours supprimer sans softdelete le reply,
+            // j'utilise le forceDelete()
+            $reply->forceDelete();
 
             return redirect('dashboard')->with('success', 'Votre réponse a bien été annulée !');
         } else {
