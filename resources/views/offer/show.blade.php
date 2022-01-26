@@ -18,7 +18,7 @@
                 <img class="w-80" src="{{$_ENV["APP_URL"]}}/img/{{$offer->img}}" alt="{{$offer->name}}">
             </div>
             @endif
-            <div class="flex flex-column items-center">
+            <div class="flex items-center flex-column">
                 <div class="flex-column">
                     <p class="p-2 text-4xl font-bold">{{ $offer->name }}</p>
                     <p class="p-2 text-xl">Description : {{ $offer->description }}</p>
