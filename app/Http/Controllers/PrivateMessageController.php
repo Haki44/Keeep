@@ -7,6 +7,9 @@ use App\Models\Offer;
 use Illuminate\Http\Request;
 use App\Models\PrivateMessage;
 use App\Notifications\PrivateMessageNotification;
+use App\Providers\RouteServiceProvider;
+use Illuminate\Support\Facades\Auth;
+
 
 class PrivateMessageController extends Controller
 {
@@ -15,6 +18,18 @@ class PrivateMessageController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    public function list()
+    {
+        // On regroupe tout les messages qui on un 'to_id' indentique
+        $users = PrivateMessage::where('from_id', auth()->user()->id)->orderBy('created_at')->distinct()->get();
+        $users = $users->groupBy('to_id');
+
+        // On récupere les données des users
+        $users = User::whereIn('id', $users)->get();
+
+        return view('private_message.list', compact('users'));
+    }
+  
     public function index(Offer $offer, User $user)
     {
         // On récupère les messages envoyé de l'utilisateur connecté a celui qui a créé l'offre

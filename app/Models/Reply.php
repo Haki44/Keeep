@@ -16,7 +16,8 @@ class Reply extends Model
     protected $fillable = [
         'offer_id',
         'user_id',
-        'reply'
+        'reply',
+        'is_accepted'
     ];
 
     // La réponse appartient à une offre

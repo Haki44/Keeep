@@ -6,6 +6,10 @@ use App\Notifications\ReplyNotification;
 use App\Models\Offer;
 use App\Models\Reply;
 use Illuminate\Http\Request;
+use App\Events\AddReplyEvent;
+use App\Notifications\AcceptedOfferNotification;
+use App\Notifications\PrivateMessageNotification;
+use App\Providers\RouteServiceProvider;
 use App\Notifications\RefuseResponseNotification;
 
 class ReplyController extends Controller
@@ -88,13 +92,27 @@ class ReplyController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update($id)
     {
-        //
+        $reply = Reply::find($id);
+        $check = Reply::where('offer_id', $reply->offer_id)->where('is_accepted', 1)->get();
+
+        if ($check->count() < 1 ){
+            Reply::where('id', $reply->id)->update([
+                'is_accepted' => 1,
+            ]);
+
+             // Envoie d'un mail
+            $reply->user->notify(new AcceptedOfferNotification($reply, auth()->user()));
+
+            return redirect()->route('reply.index')->with('success', 'Votre réponse a bien été accéptée !');
+        } else {
+            return redirect()->route('reply.index')->with('success', 'La réponse à déjà été accéptée :(');
+        }
+
+
+
     }
 
     /**
@@ -111,9 +129,9 @@ class ReplyController extends Controller
             // j'utilise le forceDelete()
             $reply->forceDelete();
 
-            return redirect('dashboard')->with('success', 'Votre réponse a bien été annulée !');
+            return redirect()->route('reply.index')->with('success', 'Votre réponse a bien été annulée !');
         } else {
-            return redirect('dashboard')->with('danger', 'Vous ne pouvez pas annuler votre réponse, celle-ci a déjà été accepté');
+            return redirect()->route('reply.index')->with('danger', 'Vous ne pouvez pas annuler votre réponse, celle-ci a déjà été accepté');
         }
     }
 

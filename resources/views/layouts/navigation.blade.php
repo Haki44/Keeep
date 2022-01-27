@@ -50,6 +50,10 @@
                     </a>
                     @endcan
 
+                    <x-nav-link :href="route('private_message.list')" :active="request()->routeIs('private_message.list')">
+                        {{ __('Méssagerie') }}
+                    </x-nav-link>
+
                     @can('admin')
                     <x-nav-link :href="route('referent.create')" :active="request()->routeIs('referent.create')">
                         {{ __('Ajouter Référent') }}
@@ -128,6 +132,10 @@
                 @endif
             </a>
             @endcan
+
+            <x-responsive-nav-link :href="route('private_message.list')" :active="request()->routeIs('private_message.list')">
+                {{ __('Méssagerie') }}
+            </x-responsive-nav-link>
 
             @can('admin')
             <x-responsive-nav-link :href="route('referent.create')" :active="request()->routeIs('referent.create')">

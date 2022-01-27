@@ -9,7 +9,7 @@
 
         <div class="p-5 overflow-hidden bg-white shadow-sm lg:p-10 sm:rounded-lg">
 
-            
+
             @forelse ($offers as $offer)
                 <p class="my-2 text-2xl font-bold">Offre : <span class="underline">{{ $offer->name }}</span></p>
 
@@ -25,40 +25,42 @@
                             </thead>
                         @endif
                         <tbody class="block md:table-row-group">
-                
-                
+
+
                 @forelse ($offer->replies as $reply)
                     <tr class="block bg-gray-300 border border-grey-500 md:border-none md:table-row">
                         <td class="block w-1/5 p-2 text-left md:w-2/12 md:border md:border-grey-500 md:table-cell"><span class="inline-block w-full font-bold md:hidden">Prénom</span>{{ $reply->user->firstname }}</td>
                         <td class="block w-1/5 p-2 text-left md:w-2/12 md:border md:border-grey-500 md:table-cell"><span class="inline-block w-full font-bold md:hidden">Nom</span>{{ $reply->user->name }}</td>
-                        <td class="block w-full p-2 text-left md:border md:border-grey-500 md:table-cell md:w-6/12"><span class="inline-block w-full font-bold md:hidden">Message</span>Ils sont stocké ou les messages lors d'un achat d'offre ???</td>
+                        <td class="block w-full p-2 text-left md:border md:border-grey-500 md:table-cell md:w-6/12"><span class="inline-block w-full font-bold md:hidden">Message</span>{{ $reply->reply }}</td>
 
-                        {{-- En FullPage --}}
-                        <td class="hidden w-full p-2 text-left md:block md:w-1/12 md:border md:border-grey-500 md:table-cell">
-                            <a href="#" class="block md:flex md:justify-center">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="#00561B">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
-                                </svg>
-                            </a>
-                        </td>
-                        <td class="hidden w-full p-2 text-left md:block md:w-1/12 md:border md:border-grey-500 md:table-cell">
-                            <a href="{{ route('reply.refuse', $reply->id) }}" class="block md:flex md:justify-center" onclick="return confirm('Est-vous sur de refuser {{ $offer->name }} à {{ $reply->user->firstname }} ?')">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="#f00020">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-                                </svg>
-                            </a>
-                        </td>
+                        @if ($reply->is_accepted === null)
+                            {{-- En FullPage --}}
+                            <td class="hidden w-full p-2 text-left md:block md:w-1/12 md:border md:border-grey-500 md:table-cell">
+                                <a href="{{route('reply.update', $reply)}}" class="block md:flex md:justify-center">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="#00561B">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                                    </svg>
+                                </a>
+                            </td>
+                            <td class="hidden w-full p-2 text-left md:block md:w-1/12 md:border md:border-grey-500 md:table-cell">
+                                <a href="{{route('reply.destroy', $reply->id)}}" class="block md:flex md:justify-center">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="#f00020">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                                    </svg>
+                                </a>
+                            </td>
 
                         {{-- En Mobile --}}
                         <td class="block w-full p-2 md:mt-2 md:hidden">
                             <span class="inline-block w-1/3 font-bold md:hidden">Actions</span>
                             <span class="flex my-2">
-                                <a href="#" class="flex w-1/2">
+                                <a href="{{route('reply.update', $reply)}}" class="flex w-1/2">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="#00561B">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
                                     </svg>
                                     Accepter
                                 </a>
+
                                 <a href="{{ route('reply.refuse', $reply->id) }}" class="flex w-1/2" onclick="return confirm('Est-vous sur de refuser {{ $offer->name }} à {{ $reply->user->firstname }} ?')">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="#f00020">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
@@ -67,7 +69,15 @@
                                 </a>
                             </span>
                         </td>
-                        
+
+                        @else
+
+                        <td class="w-full p-2 text-left md:block md:w-1/12 md:border md:border-grey-500 md:table-cell">
+                                Offre acceptée
+                        </td>
+
+                        @endif
+
                     </tr>
                 @empty
                     <tr class="block bg-gray-300 border border-grey-500 md:border-none md:table-row">
@@ -81,8 +91,8 @@
                 <p>Vous ne proposez pas d'offres pour le moment</p>
             @endforelse
 
-            
-            
+
+
         </div>
     </div>
 </x-app-layout>
