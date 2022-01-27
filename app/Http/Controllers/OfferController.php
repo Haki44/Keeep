@@ -72,8 +72,9 @@ class OfferController extends Controller
      */
     public function show(Offer $offer)
     {
-        $offer = Offer::with('user')->findOrFail($offer->id);
-        $reply = Reply::where([['offer_id','=',$offer->id],['user_id','=', auth()->user()->id]])->first();
+        // C'est pas beau ca :o
+        // $reply = Reply::where([['offer_id','=',$offer->id],['user_id','=', auth()->user()->id]])->first();
+        $reply = Reply::where('offer_id', $offer->id)->where('user_id', auth()->user()->id)->first();
         return view('offer.show', compact('offer', 'reply'));
     }
 

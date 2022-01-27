@@ -60,7 +60,8 @@
                                     </svg>
                                     Accepter
                                 </a>
-                                <a href="{{route('reply.destroy', $reply->id)}}" class="flex w-1/2">
+
+                                <a href="{{ route('reply.refuse', $reply->id) }}" class="flex w-1/2" onclick="return confirm('Est-vous sur de refuser {{ $offer->name }} à {{ $reply->user->firstname }} ?')">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="#f00020">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
                                     </svg>

@@ -10,6 +10,7 @@ use App\Events\AddReplyEvent;
 use App\Notifications\AcceptedOfferNotification;
 use App\Notifications\PrivateMessageNotification;
 use App\Providers\RouteServiceProvider;
+use App\Notifications\RefuseResponseNotification;
 
 class ReplyController extends Controller
 {
@@ -48,13 +49,13 @@ class ReplyController extends Controller
     {
 
         $data = $request->validate(
-            [
-                'reply' => ['required', 'string'],
-            ],
-            [
-                'reply.required' => 'Vous ne pouvez pas laisser de réponse vide',
-                'reply.string' => 'La réponse doit être une chaine de caractère'
-            ]
+        [
+            'reply' => ['required', 'string'],
+        ],
+        [
+            'reply.required' => 'Vous ne pouvez pas laisser de réponse vide',
+            'reply.string' => 'La réponse doit être une chaine de caractère'
+        ]
         );
 
         $data = ['user_id' =>  auth()->user()->id, 'offer_id' => $offer->id, 'reply' => $data['reply']];
@@ -117,19 +118,37 @@ class ReplyController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  Reply  $reply
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Reply $reply)
     {
-
-        $reply = Reply::find($id);
         if (is_null($reply->is_accepted)) {
-            $reply->delete();
+            // CS: J'ai changé car a la base il n'y avait pas de softdelete sur le Model.
+            // Je l'ai mis car je l'utilise dans la methode refuse. Donc pour toujours supprimer sans softdelete le reply,
+            // j'utilise le forceDelete()
+            $reply->forceDelete();
 
             return redirect()->route('reply.index')->with('success', 'Votre réponse a bien été annulée !');
         } else {
             return redirect()->route('reply.index')->with('danger', 'Vous ne pouvez pas annuler votre réponse, celle-ci a déjà été accepté');
         }
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  \App\Models\Reply  $reply
+     * @return \Illuminate\Http\Response
+     */
+    public function refuse(Reply $reply)
+    {
+        // Soft delete
+        $reply->delete();
+
+        // Envoie d'un mail
+        $reply->user->notify(new RefuseResponseNotification($reply));
+
+        return redirect()->route('reply.index')->with('success', 'La réponse à bien été refusée');
     }
 }
