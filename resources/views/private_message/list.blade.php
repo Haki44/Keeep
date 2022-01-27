@@ -22,13 +22,7 @@
                                             <div>
                                                 <h3 class="text-xl">{{ $user->name }}</h3>
                                                 {{-- <h3 class="text-xl">{{ $user->name }}</h3> --}}
-                                                {{-- <p class="text-xs">disponible {{ $offer->offer_day->diffForHumans() }}</p>
-                                                <p class="mt-2">{{ substr($offer->description, 0, 30) }}...</p> --}}
                                             </div>
-                                            {{-- <div class="flex justify-between mt-2">
-                                                <a href="{{ route('offer.show', $offer->id) }}" class="text-blue-500">Voir le detail</a>
-                                                <h6 class="flex justify-end font-bold">{{ $offer->price }} kips</h6>
-                                            </div> --}}
                                         </div>
                                 </div>
                             </div>
