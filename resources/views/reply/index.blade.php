@@ -43,7 +43,7 @@
                                 </a>
                             </td>
                             <td class="hidden w-full p-2 text-left md:block md:w-1/12 md:border md:border-grey-500 md:table-cell">
-                                <a href="{{route('reply.destroy', $reply->id)}}" class="block md:flex md:justify-center">
+                                <a href="{{route('reply.refuse', $reply->id)}}" onclick="return confirm('Est-vous sur de refuser {{ $offer->name }} à {{ $reply->user->firstname }} ?')" class="block md:flex md:justify-center">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="#f00020">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
                                     </svg>
