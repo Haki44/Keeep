@@ -3,10 +3,11 @@
 namespace App\Http\Livewire;
 
 use App\Models\Offer;
+use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 use Livewire\WithPagination;
 
-class OffersList extends Component
+class MyOffers extends Component
 {
     // Permet de dire qu'un système de pagination est présent et du coup de le transformer en AJAX (Eviter de refresh toute la page)
 
@@ -20,7 +21,10 @@ class OffersList extends Component
     {
         return view('livewire.offers-list', [
             'offers' => Offer::
-            where('name', 'LIKE', "%{$this->search}%")->paginate(6)
+            where('name', 'LIKE', "%{$this->search}%")
+            ->where('user_id', Auth::user()->id)
+            ->orderBy('id', 'desc')
+            ->paginate(6)
         ]);
     }
 }
