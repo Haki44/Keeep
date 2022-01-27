@@ -21,6 +21,7 @@ class CreatePrivateMessagesTable extends Migration
             $table->foreign('to_id')->references('id')->on('users')->onDelete('cascade');
             $table->text('content');
             $table->dateTime('read_at')->nullable();
+            $table->boolean('is_readed')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });
