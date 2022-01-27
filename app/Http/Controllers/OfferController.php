@@ -6,6 +6,7 @@ use App\Models\Category;
 use App\Models\Offer;
 use App\Models\Reply;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class OfferController extends Controller
 {
@@ -16,9 +17,19 @@ class OfferController extends Controller
      */
     public function index()
     {
+        // Qui a fait ca ??? inutile le paramètre n'est pas passer au "controller" livewire, et la query faite dans ce même controller ne tiens donc pas compte de la query ci dessous.
         $offers = Offer::get();
 
         return view('dashboard', compact('offers'));
+    }
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function myoffers()
+    {
+        return view('offer.myoffers');
     }
 
     /**
