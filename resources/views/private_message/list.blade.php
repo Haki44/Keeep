@@ -21,7 +21,6 @@
                                         <div class="w-full h-full flex flex-col justify-between">
                                             <div>
                                                 <h3 class="text-xl">{{ $user->name }}</h3>
-                                                {{-- <h3 class="text-xl">{{ $user->name }}</h3> --}}
                                             </div>
                                         </div>
                                 </div>
