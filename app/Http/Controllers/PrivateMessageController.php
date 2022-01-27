@@ -28,8 +28,6 @@ class PrivateMessageController extends Controller
         // On récupere les données des users
         $users = User::whereIn('id', $users)->get();
 
-        // dd($users);
-
         return view('private_message.list', compact('users'));
     }
   
