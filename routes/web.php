@@ -65,7 +65,7 @@ Route::middleware('auth')->group(function() {
         Route::delete('/reply/{reply}', [ReplyController::class, 'destroy'])->name('reply.destroy');
         Route::get('/reply', [ReplyController::class, 'index'])->name('reply.index');
         Route::get('/reply/refuse/{reply}', [ReplyController::class, 'refuse'])->name('reply.refuse');
-        Route::get('/reply/{reply}/update', [ReplyController::class, 'update'])->name('reply.update')
+        Route::get('/reply/{reply}/update', [ReplyController::class, 'update'])->name('reply.update');
     });
 
     // Private messages accessible à tout le monde ? Ou seulement pour les étudiants ? Gate a mettre selon reponse

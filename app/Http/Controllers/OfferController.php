@@ -145,7 +145,6 @@ class OfferController extends Controller
     {
         Offer::find($offer->id)->delete();
 
-        // TODO : route à changer sur la liste des offres plus tard
         return redirect()->route('dashboard');
     }
 }
