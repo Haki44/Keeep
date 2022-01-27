@@ -47,6 +47,7 @@ Route::get('/', function () {
     Route::get('/offer/{offer}/show', [OfferController::class, 'show'])->name('offer.show')->where('offer', '[0-9]+');
 
     // Private messages
+    Route::get('/private_message/list', [PrivateMessageController::class, 'list'])->name('private_message.list')->middleware(['auth']);
     Route::get('/offer/{offer}/private_message/create', [PrivateMessageController::class, 'create'])->name('private_message.create')->where('offer', '[0-9]+');
     Route::post('/offer/{offer}/private_message', [PrivateMessageController::class, 'store'])->name('private_message.store')->where('offer', '[0-9]+');
 // });
@@ -63,7 +64,8 @@ Route::get('/dashboard', [OfferController::class, 'index'])->name('dashboard')->
 // REPLIES
 
 Route::post('/reply/{offer}', [ReplyController::class, 'store'])->name('reply.store')->middleware('can:create-offer-and-reply');
-Route::delete('/reply/{reply}', [ReplyController::class, 'destroy'])->name('reply.destroy')->middleware('can:create-offer-and-reply');
+Route::get('/reply/{reply}/destroy', [ReplyController::class, 'destroy'])->name('reply.destroy')->middleware('can:create-offer-and-reply');
+Route::get('/reply/{reply}/update', [ReplyController::class, 'update'])->name('reply.update')->middleware('can:create-offer-and-reply');
 
 Route::get('/reply', [ReplyController::class, 'index'])->name('reply.index');
 

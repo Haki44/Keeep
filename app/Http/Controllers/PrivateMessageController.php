@@ -5,8 +5,10 @@ namespace App\Http\Controllers;
 use App\Models\Offer;
 use Illuminate\Http\Request;
 use App\Models\PrivateMessage;
+use App\Models\User;
 use App\Notifications\PrivateMessageNotification;
 use App\Providers\RouteServiceProvider;
+use Illuminate\Support\Facades\Auth;
 
 class PrivateMessageController extends Controller
 {
@@ -15,9 +17,18 @@ class PrivateMessageController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function list()
     {
-        //
+        // On regroupe tout les messages qui on un 'to_id' indentique
+        $users = PrivateMessage::where('from_id', auth()->user()->id)->orderBy('created_at')->distinct()->get();
+        $users = $users->groupBy('to_id');
+
+        // On récupere les données des users
+        $users = User::whereIn('id', $users)->get();
+
+        // dd($users);
+
+        return view('private_message.list', compact('users'));
     }
 
     /**
