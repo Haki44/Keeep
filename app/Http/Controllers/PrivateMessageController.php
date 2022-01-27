@@ -156,4 +156,10 @@ class PrivateMessageController extends Controller
     {
         //
     }
+
+
+    public function get_new_messages(){
+        $new_messages = PrivateMessage::where('to_id', auth()->user()->id)->limit(5)->get();
+        dump($new_messages);
+    }
 }
