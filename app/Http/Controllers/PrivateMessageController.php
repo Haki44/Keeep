@@ -6,7 +6,6 @@ use App\Models\User;
 use App\Models\Offer;
 use Illuminate\Http\Request;
 use App\Models\PrivateMessage;
-use App\Models\User;
 use App\Notifications\PrivateMessageNotification;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Support\Facades\Auth;
