@@ -52,7 +52,7 @@
                     @endcan
 
                     <x-nav-link :href="route('private_message.list')" :active="request()->routeIs('private_message.list')">
-                        {{ __('Méssagerie') }}
+                        {{ __('Messagerie') }}
                     </x-nav-link>
 
                     @can('admin')

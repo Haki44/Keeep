@@ -20,7 +20,7 @@
                    </div>
                 </div>
                 <div id="messages" class="flex flex-col-reverse p-3 space-y-4 overflow-y-auto scrolling-touch scrollbar-thumb-blue scrollbar-thumb-rounded scrollbar-track-blue-lighter scrollbar-w-2">
-
+                    
                     @foreach ($private_messages as $private_message)
                         @if ($private_message->to_id == $user->id)
                             <div class="chat-message">
