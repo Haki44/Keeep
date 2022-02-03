@@ -50,9 +50,9 @@ class SendTradeCode extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
-                    ->subject($this->reply->user->name . 'Voici votre code pour l\'offre Keeep ' . $this->offer->name)
+                    ->subject($this->reply->user->name . 'Voici votre code pour l\'offre Keeep ' . $this->offer->firstname)
                     ->greeting('Bonjour ' . $this->reply->user->firstname . ',')
-                    ->line('Votre code est le ' . $this->code .', vous devrez le donner à ' . $this->offer->user->name . ' lors de la transaction')
+                    ->line('Votre code est le ' . $this->code .', vous devrez le donner à ' . $this->offer->user->firstname . ' lors de la transaction')
                     ->action('Voir la page de transaction', route('reply.show', $this->reply->id))
                     ->line('A bientôt,')
                     ->salutation('L\'équeeep');
