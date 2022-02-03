@@ -32,9 +32,9 @@ class ReplyCode extends Component
                 'code' => ['required', 'integer', 'between:1000,9999'],
             ],
             [
-                'code.required' => 'Ce champs doit être completer avec le code 4 chiffres',
-                'code.integer' => 'Verifier que vous avez bien saisie des entiers (sans virgule ni espace)',
-                'code.between' => 'Verifier que vous avez bien saisie 4 chiffres'
+                'code.required' => 'Ce champ doit être completé avec le code 4 chiffres',
+                'code.integer' => 'Verifier que vous avez bien saisi des entiers (sans virgule ni espace)',
+                'code.between' => 'Verifier que vous avez bien saisi 4 chiffres'
             ]
         );
         if(intval($data['code']) === intval($this->reply->starting_code)) {
