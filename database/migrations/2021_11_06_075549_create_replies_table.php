@@ -17,7 +17,7 @@ class CreateRepliesTable extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained();
             $table->foreignId('offer_id')->constrained();
-            $table->boolean('is_accepted')->nullable();
+            $table->boolean('status')->nullable();
             $table->text('reply');
             $table->timestamps();
             $table->softDeletes();

@@ -11,6 +11,8 @@ use App\Notifications\AcceptedOfferNotification;
 use App\Notifications\PrivateMessageNotification;
 use App\Providers\RouteServiceProvider;
 use App\Notifications\RefuseResponseNotification;
+use App\Notifications\SendTradeCode;
+use Illuminate\Support\Facades\Auth;
 
 class ReplyController extends Controller
 {
@@ -26,6 +28,18 @@ class ReplyController extends Controller
         $offers = Offer::whereRelation('user', 'user_id', auth()->user()->id)->get();
 
         return view('reply.index', compact('offers'));
+    }
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function myreplies()
+    {
+        // Liste des transaction en cours pour l'user (ou il n'est pas propriétaire de l'offre)
+        $replies = Reply::where('user_id', Auth::user()->id)->where('status', 1)->get();
+
+        return view('reply.myreplies', compact('replies'));
     }
 
     /**
@@ -75,7 +89,9 @@ class ReplyController extends Controller
      */
     public function show($id)
     {
-        //
+        $reply = Reply::with('offer')->find($id);
+
+        return view('reply.show', compact('reply'));
     }
 
     /**
@@ -93,22 +109,46 @@ class ReplyController extends Controller
      * Update the specified resource in storage.
      *
      */
-    public function update($id)
+    public function update($id, $status)
     {
         $reply = Reply::find($id);
-        $check = Reply::where('offer_id', $reply->offer_id)->where('is_accepted', 1)->get();
+        // Status 1 => réponse accepté, 0 réponse refusé (le status étant a null de base)
+        if($status == 1) {
+            // Verification pour etre sur qu'entre temps l'offre n'a pas été retiré ou déja accepté
+            $check = Reply::where('offer_id', $reply->offer_id)->where('status', 1)->get();
 
-        if ($check->count() < 1 ){
+            if ($check->count() < 1 ){
+
+                // On génère les codes
+                $starting_code = random_int(1000, 9999);
+                // On evite l'enventualité ou les 2 codes serait égaux
+                do {
+                    $ending_code = random_int(1000, 9999);
+                }while($ending_code === $starting_code);
+
+                Reply::where('id', $reply->id)->update([
+                    'status' => $status,
+                    'starting_code' => $starting_code,
+                    'ending_code' => $ending_code,
+                ]);
+
+                 // Envoie d'un mail
+                $reply->user->notify(new AcceptedOfferNotification($reply, auth()->user()));
+                $reply->user->notify(new SendTradeCode($reply, auth()->user(), $starting_code));
+
+                return redirect()->route('reply.index')->with('success', 'Votre réponse a bien été accéptée !');
+            } else {
+                return redirect()->route('reply.index')->with('success', 'La réponse à déjà été accéptée :(');
+            }
+        } else {
+
+            // En cas de refus on update avec le refus (0 dans status)
             Reply::where('id', $reply->id)->update([
-                'is_accepted' => 1,
+                'status' => $status,
             ]);
 
-             // Envoie d'un mail
-            $reply->user->notify(new AcceptedOfferNotification($reply, auth()->user()));
-
-            return redirect()->route('reply.index')->with('success', 'Votre réponse a bien été accéptée !');
-        } else {
-            return redirect()->route('reply.index')->with('success', 'La réponse à déjà été accéptée :(');
+            // Envoie d'un mail
+            $reply->user->notify(new RefuseResponseNotification($reply));
         }
 
 
@@ -123,7 +163,7 @@ class ReplyController extends Controller
      */
     public function destroy(Reply $reply)
     {
-        if (is_null($reply->is_accepted)) {
+        if (is_null($reply->status)) {
             // CS: J'ai changé car a la base il n'y avait pas de softdelete sur le Model.
             // Je l'ai mis car je l'utilise dans la methode refuse. Donc pour toujours supprimer sans softdelete le reply,
             // j'utilise le forceDelete()
@@ -133,22 +173,5 @@ class ReplyController extends Controller
         } else {
             return redirect()->route('reply.index')->with('danger', 'Vous ne pouvez pas annuler votre réponse, celle-ci a déjà été accepté');
         }
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Reply  $reply
-     * @return \Illuminate\Http\Response
-     */
-    public function refuse(Reply $reply)
-    {
-        // Soft delete
-        $reply->delete();
-
-        // Envoie d'un mail
-        $reply->user->notify(new RefuseResponseNotification($reply));
-
-        return redirect()->route('reply.index')->with('success', 'La réponse à bien été refusée');
     }
 }

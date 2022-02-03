@@ -93,7 +93,18 @@ class User extends Authenticatable
     {
         return $this->role->name === 'STUDENT';
     }
-  
+
+    // Call cette fonction quand on veut connaitre le nombre de replies sur lesquel il n'y eu aucune action (ex dans la navbar) pour eviter d'ouvrir des balises @php dans la vue ;)
+    public function getRepliesCount()
+    {
+        $count = 0;
+        $offers = $this->offers;
+        foreach ($offers as $offer) {
+            $count += $offer->replies->whereNull('status')->count();
+        }
+        return $count;
+    }
+
     // public function messageSends()
     // {
     //     return $this->hasMany(PrivateMessage::class, 'from_id');

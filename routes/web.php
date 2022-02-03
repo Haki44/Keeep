@@ -54,7 +54,7 @@ Route::middleware('auth')->group(function() {
     Route::get('/offer/{offer}/destroy', [OfferController::class, 'destroy'])->name('offer.destroy')->where('offer', '[0-9]+')->middleware('can:manage-offer,offer');
 
     Route::get('/dashboard', [OfferController::class, 'index'])->name('dashboard')->middleware(['auth']);
-  
+
     Route::middleware('can:create-offer-and-reply')->group(function() {
         // OFFERS
         Route::get('/offer/create', [OfferController::class, 'create'])->name('offer.create');
@@ -64,8 +64,10 @@ Route::middleware('auth')->group(function() {
         Route::post('/reply/{offer}', [ReplyController::class, 'store'])->name('reply.store');
         Route::delete('/reply/{reply}', [ReplyController::class, 'destroy'])->name('reply.destroy');
         Route::get('/reply', [ReplyController::class, 'index'])->name('reply.index');
-        Route::get('/reply/refuse/{reply}', [ReplyController::class, 'refuse'])->name('reply.refuse');
-        Route::get('/reply/{reply}/update', [ReplyController::class, 'update'])->name('reply.update');
+        Route::get('/reply/{reply}', [ReplyController::class, 'show'])->name('reply.show');
+        Route::get('/myreplies', [ReplyController::class, 'myreplies'])->name('reply.myreplies');
+        // Suppression de la route refuse
+        Route::get('/reply/{reply}/{status}/update', [ReplyController::class, 'update'])->name('reply.update');
     });
 
     // Private messages accessible à tout le monde ? Ou seulement pour les étudiants ? Gate a mettre selon reponse
