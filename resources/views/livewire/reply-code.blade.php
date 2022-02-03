@@ -11,11 +11,6 @@
     <div class="max-w-6xl pb-10 mx-auto mt-6 sm:px-6 lg:px-8">
         <div class="flex flex-wrap justify-center pt-2 pb-10 overflow-hidden bg-white shadow-sm">
             {{-- verif si trop d'essaie pour le premier code --}}
-            @if($reply->starting_code_count >= 3)
-                <div>
-                    <p class="p-1 text-3xl font-semi-bold">Vous avez depasser les 3 essais, la transaction est annulé</p>
-                </div>
-            @else
                 {{-- 1er step quand le premier code doit etre saisie pour debuter la transaction --}}
                 @if ($reply->user->id != Auth::user()->id && is_null($reply->started_at))
                     <div class="flex-column">
@@ -24,7 +19,7 @@
                             <div class=" mt-3">
                                 <x-label for="code" :value="__('Code à 4 chiffres')" />
 
-                                <x-input id="email" class="block mt-1 w-full" type="number" name="code" wire:model="code" required />
+                                <x-input id="code" class="block mt-1 w-full" type="number" name="code" wire:model="code" required />
                                 @error('code') <span class="error">{{ $message }}</span> @enderror
                             </div>
 
@@ -33,7 +28,8 @@
                                     {{ __('Valider') }}
                                 </x-button>
                             </div>
-                        <p class="p-2 text-xl">Vérifier que le code saisie correspond a celui qui vous a été donné.</p>
+                        <p class="p-2 text-xl">Vérifier que le code saisi correspond à celui qui vous a été donné.</p>
+                        <p class="p-2 text-xl">Il vous reste {{3 - $reply->starting_code_count}} essaies.</p>
                     </div>
                     {{-- 2e step quand le second code doit etre saisie pour finaliser la transaction --}}
                 @elseif ($reply->user->id === Auth::user()->id && !is_null($reply->started_at) && is_null($reply->ended_at))
@@ -43,7 +39,7 @@
                             <div class=" mt-3">
                                 <x-label for="code" :value="__('Code à 4 chiffres')" />
 
-                                <x-input id="email" class="block mt-1 w-full" type="number" name="code" wire:model="code" required />
+                                <x-input id="code" class="block mt-1 w-full" type="number" name="code" wire:model="code" required />
                             </div>
 
                             <div class="flex items-center justify-end mt-4">
@@ -51,7 +47,8 @@
                                     {{ __('Valider') }}
                                 </x-button>
                             </div>
-                        <p class="p-2 text-xl">Vérifier que le code saisie correspond a celui qui vous a été donné.</p>
+                        <p class="p-2 text-xl">Vérifier que le code saisi correspond à celui qui vous a été donné.</p>
+                        <p class="p-2 text-xl">Il vous reste {{3 - $reply->starting_code_count}} essaies.</p>
                     </div>
                     @elseif ($reply->user->id != Auth::user()->id && !is_null($reply->started_at) && is_null($reply->ended_at))
                     {{-- Polling sur 3s , le .visible sert a trigger si l'onglet est afficher ou non pour economiser la data (par exemple si les utilisateur ne ferme jamais leurs onglet...) --}}
@@ -69,7 +66,6 @@
                         <p class="p-1 text-3xl font-semi-bold">La transaction est en cours</p>
                     </div>
                 @endif
-            @endif
         </div>
     </div>
 </div>
