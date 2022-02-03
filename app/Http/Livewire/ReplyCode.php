@@ -51,8 +51,9 @@ class ReplyCode extends Component
             ]);
             // On vide le champs pour limiter les erreur de frappe et multisend
             $this->code = '';
-                if($this->reply->starting_code_count == 3) {
+            if($this->reply->starting_code_count == 3) {
                     Reply::where('id', $this->reply->id)->delete();
+            return redirect()->route('reply.index');
             }
         }
     }
