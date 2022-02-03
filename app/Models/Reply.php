@@ -17,7 +17,21 @@ class Reply extends Model
         'offer_id',
         'user_id',
         'reply',
-        'is_accepted'
+        'is_accepted',
+        'starting_code',
+        'starting_code_count',
+        'ending_code',
+        'ending_code_count',
+        'started_at',
+        'ended_at',
+    ];
+
+    // Cast du datetime pour la bdd
+    // Le date et datetime carbon scale sur le timezone dans config/app actuellement bien configurer sur 'Europe/Paris'
+    // mais ce n'est pas la valeur par défaut pensez a verifier si vous l'utiliser sur d'autre projet ♥
+    protected $casts = [
+        'started_at' => 'datetime:Y-m-d H:i:s',
+        'ended_at' => 'datetime:Y-m-d H:i:s',
     ];
 
     // La réponse appartient à une offre
