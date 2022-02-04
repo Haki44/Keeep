@@ -140,6 +140,8 @@ class ReplyController extends Controller
             } else {
                 return redirect()->route('reply.index')->with('success', 'La réponse à déjà été accéptée :(');
             }
+        } else if($status == 1 && $reply->started_at !== null ) {
+            dd('coucou');
         } else {
 
             // En cas de refus on update avec le refus (0 dans status)

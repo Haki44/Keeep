@@ -37,24 +37,50 @@ class ReplyCode extends Component
                 'code.between' => 'Verifier que vous avez bien saisi 4 chiffres'
             ]
         );
-        if(intval($data['code']) === intval($this->reply->starting_code)) {
-            Reply::where('id', $this->reply->id)->update([
-                'starting_code_count' => $this->reply->starting_code_count,
-                'started_at' => Carbon::now(),
-            ]);
-            return redirect()->route('reply.show', $this->reply->id);
+
+        // dump(intval($this->reply->starting_code));
+        // dd(intval($data['code']));
+        if($this->reply->started_at !== null){
+            if(intval($data['code']) === intval($this->reply->starting_code)) {
+                Reply::where('id', $this->reply->id)->update([
+                    'starting_code_count' => $this->reply->starting_code_count,
+                    'started_at' => Carbon::now(),
+                ]);
+                return redirect()->route('reply.show', $this->reply->id);
+            } else {
+                // Increment le compteur
+                $this->reply->increment('starting_code_count', 1);
+                Reply::where('id', $this->reply->id)->update([
+                    'starting_code_count' => $this->reply->starting_code_count,
+                ]);
+                // On vide le champs pour limiter les erreur de frappe et multisend
+                $this->code = '';
+                if($this->reply->starting_code_count == 3) {
+                        Reply::where('id', $this->reply->id)->delete();
+                return redirect()->route('reply.index');
+                }
+            }
         } else {
-            // Increment le compteur
-            $this->reply->increment('starting_code_count', 1);
-            Reply::where('id', $this->reply->id)->update([
-                'starting_code_count' => $this->reply->starting_code_count,
-            ]);
-            // On vide le champs pour limiter les erreur de frappe et multisend
-            $this->code = '';
-            if($this->reply->starting_code_count == 3) {
-                    Reply::where('id', $this->reply->id)->delete();
-            return redirect()->route('reply.index');
+            if(intval($data['code']) === intval($this->reply->ending_code)){
+                Reply::where('id', $this->reply->id)->update([
+                    'ending_code_count' => $this->reply->ending_code_count,
+                    'ended_at' => Carbon::now(),
+                ]);
+                return redirect()->route('reply.show', $this->reply->id);
+            } else  {
+                // Increment le compteur
+                $this->reply->increment('ending_code_count', 1);
+                Reply::where('id', $this->reply->id)->update([
+                    'ending_code_count' => $this->reply->ending_code_count,
+                ]);
+                // On vide le champs pour limiter les erreur de frappe et multisend
+                $this->code = '';
+                if($this->reply->ending_code_count == 3) {
+                        Reply::where('id', $this->reply->id)->delete();
+                return redirect()->route('reply.index');
+                }
             }
         }
+
     }
 }
