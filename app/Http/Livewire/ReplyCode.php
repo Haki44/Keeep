@@ -5,6 +5,8 @@ namespace App\Http\Livewire;
 use App\Models\Reply;
 use Carbon\Carbon;
 use Livewire\Component;
+use App\Notifications\SendTradeEndCode;
+
 
 class ReplyCode extends Component
 {
@@ -40,12 +42,15 @@ class ReplyCode extends Component
 
         // dump(intval($this->reply->starting_code));
         // dd(intval($data['code']));
-        if($this->reply->started_at !== null){
+        if($this->reply->started_at === null){
             if(intval($data['code']) === intval($this->reply->starting_code)) {
                 Reply::where('id', $this->reply->id)->update([
                     'starting_code_count' => $this->reply->starting_code_count,
                     'started_at' => Carbon::now(),
                 ]);
+                
+                $reply = Reply::find($this->reply->id);
+                $reply->user->notify(new SendTradeEndCode($reply, auth()->user(), $this->reply->ending_code));
                 return redirect()->route('reply.show', $this->reply->id);
             } else {
                 // Increment le compteur
@@ -73,11 +78,17 @@ class ReplyCode extends Component
                 Reply::where('id', $this->reply->id)->update([
                     'ending_code_count' => $this->reply->ending_code_count,
                 ]);
+
+
                 // On vide le champs pour limiter les erreur de frappe et multisend
                 $this->code = '';
                 if($this->reply->ending_code_count == 3) {
-                        Reply::where('id', $this->reply->id)->delete();
-                return redirect()->route('reply.index');
+                    $ending_code = random_int(1000, 9999);
+                    Reply::where('id', $this->reply->id)->update([
+                        'ending_code' => $ending_code,
+                        'ending_code_count' => null
+                    ]);
+                    return redirect()->route('reply.show', $this->reply->id);
                 }
             }
         }
