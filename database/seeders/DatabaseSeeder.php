@@ -96,6 +96,7 @@ class DatabaseSeeder extends Seeder
             'remember_token' => Str::random(10),
             'role_id' => $role_student->id,
             'school_id' => $school_1->id,
+            'kips' => 200,
             'register_token' => NULL
         ]);
 
@@ -108,6 +109,7 @@ class DatabaseSeeder extends Seeder
             'remember_token' => Str::random(10),
             'role_id' => $role_student->id,
             'school_id' => $school_2->id,
+            'kips' => 50,
             'register_token' => NULL
         ]);
 
