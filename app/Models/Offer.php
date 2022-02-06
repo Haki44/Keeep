@@ -28,6 +28,13 @@ class Offer extends Model
         'replies'
     ];
 
+    static public $pricing = [
+        0 => 'fixe',
+        1 => 'heure',
+        2 => 'jour',
+        3 => 'semaine'
+    ];
+
     public function category()
     {
         return $this->belongsTo(Category::class);
