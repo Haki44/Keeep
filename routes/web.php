@@ -72,7 +72,7 @@ Route::middleware('auth')->group(function() {
 
     // Private messages accessible à tout le monde ? Ou seulement pour les étudiants ? Gate a mettre selon reponse
     Route::get('/offer/{offer}/private_message/create', [PrivateMessageController::class, 'create'])->name('private_message.create')->where('offer', '[0-9]+');
-    Route::get('/private_message/{user}', [PrivateMessageController::class, 'index'])->name('private_message.index')->where('user', '[0-9]+');
+    Route::get('/private_message/{user_to}', [PrivateMessageController::class, 'index'])->name('private_message.index')->where('user_to', '[0-9]+')->middleware('can:not-pm-to-self,user_to');
     Route::post('/offer/{offer}/private_message', [PrivateMessageController::class, 'store'])->name('private_message.store')->where('offer', '[0-9]+');
     Route::post('/private_message/response', [PrivateMessageController::class, 'response'])->name('private_message.response');
 

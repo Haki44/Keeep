@@ -48,11 +48,12 @@ class PrivateMessageNotification extends Notification implements ShouldQueue
      */
     public function toMail($notifiable)
     {
+        // Si le PM vient d'une offre, alors on notifie avec l'offre
         if ($this->offer) {
             return (new MailMessage)->markdown('emails.private-message', ['offer' => $this->offer, 'user_from' => $this->user_from])
                                     ->subject('Nouveau message pour votre offre ' . $this->offer->name);
         }
-        
+        // Si c'est juste une réponse à partir du chat
         return (new MailMessage)
                         ->markdown('emails.reply-private-message', ['user_to' => $this->user_to, 'user_from' => $this->user_from])
                         ->subject($this->user_from->firstname . ' vous a envoyé un message');

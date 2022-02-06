@@ -5,7 +5,7 @@ Bonjour {{ $offer->user->firstname }},<br>
 
 Veuillez vous rendre sur Keeep pour lui répondre.<br>
 
-@component('mail::button', ['url' => route('private_message.index', ['user' => $user_from->id])])
+@component('mail::button', ['url' => route('private_message.index', ['user_to' => $user_from->id])])
 Répondre
 @endcomponent
 

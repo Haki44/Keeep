@@ -43,5 +43,9 @@ class AuthServiceProvider extends ServiceProvider
             return $user->isAdmin() ||
             ($user->id === $offer->user_id);
         });
+
+        Gate::define('not-pm-to-self', function (User $user, $user_to) {
+            return auth()->user()->id !== $user_to->id;
+        });
     }
 }

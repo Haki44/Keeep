@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="text-xl font-semibold leading-tight text-gray-800">
-            Messages privés avec {{ $user->firstname }} {{ strtoupper($user->name[0]) }}.
+            Messages privés avec {{ $user_to->firstname }} {{ strtoupper($user_to->name[0]) }}.
         </h2>
     </x-slot>
 
@@ -14,7 +14,7 @@
                       <img src="https://images.unsplash.com/photo-1549078642-b2ba4bda0cdb?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=facearea&amp;facepad=3&amp;w=144&amp;h=144" alt="" class="w-10 h-10 rounded-full sm:w-16 sm:h-16">
                       <div class="flex flex-col leading-tight">
                          <div class="flex items-center mt-1 text-2xl">
-                            <span class="mr-3 text-gray-700">{{ $user->firstname }}</span>
+                            <span class="mr-3 text-gray-700">{{ $user_to->firstname }}</span>
                          </div>
                       </div>
                    </div>
@@ -22,7 +22,7 @@
                 <div id="messages" class="flex flex-col-reverse p-3 space-y-4 overflow-y-auto scrolling-touch scrollbar-thumb-blue scrollbar-thumb-rounded scrollbar-track-blue-lighter scrollbar-w-2">
 
                     @foreach ($private_messages as $private_message)
-                        @if ($private_message->to_id == $user->id)
+                        @if ($private_message->to_id == $user_to->id)
                             <div class="chat-message">
                                 <div class="flex items-end justify-end">
                                     <div class="flex flex-col items-end order-1 max-w-xs mx-2 space-y-2 text-xs">
@@ -48,7 +48,7 @@
                    <form action="{{ route('private_message.response') }}" method="POST" class="relative flex">
                        @csrf
                       <input type="text" placeholder="Saisir votre message ici" name="content" class="w-full py-3 pl-12 text-gray-600 placeholder-gray-600 bg-gray-200 rounded-full focus:outline-none focus:placeholder-gray-400">
-                      <input type="hidden", name="to_id" value="{{ $user->id }}">
+                      <input type="hidden", name="to_id" value="{{ $user_to->id }}">
                       <div class="absolute inset-y-0 right-0 items-center hidden sm:flex">
                          <button type="submit" class="inline-flex items-center justify-center w-12 h-12 text-white transition duration-500 ease-in-out bg-blue-500 rounded-full hover:bg-blue-400 focus:outline-none">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-6 h-6 transform rotate-90">

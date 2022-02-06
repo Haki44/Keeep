@@ -30,18 +30,18 @@ class PrivateMessageController extends Controller
         return view('private_message.list', compact('users'));
     }
   
-    public function index(User $user)
+    public function index(User $user_to)
     {
-        // On récupère les messages envoyé de l'utilisateur connecté a celui qui a créé l'offre
-        $PM_sender = PrivateMessage::where('to_id', $user->id)->where('from_id', auth()->user()->id)->get();
+        // On récupère les messages envoyés de l'utilisateur connecté a celui qui a créé l'offre
+        $PM_sender = PrivateMessage::where('to_id', $user_to->id)->where('from_id', auth()->user()->id)->get();
 
         // On récupère les messages de l'utilisteur qui a créé l'offre a celui qui est connecté
-        $PM_receiver = PrivateMessage::where('to_id', auth()->user()->id)->where('from_id', $user->id)->get();
+        $PM_receiver = PrivateMessage::where('to_id', auth()->user()->id)->where('from_id', $user_to->id)->get();
 
         // On merge les 2 collections de facon ordonné (le plus ancien message en dernier)
         $private_messages = $PM_sender->merge($PM_receiver)->sortByDesc('created_at');
 
-        return view('private_message.index', compact('private_messages', 'user'));
+        return view('private_message.index', compact('private_messages', 'user_to'));
     }
 
     /**
@@ -123,7 +123,7 @@ class PrivateMessageController extends Controller
         $user_to->notify(new PrivateMessageNotification(auth()->user(), $user_to));
 
         // Redirection vers la page de chat
-        return redirect()->route('private_message.index', ['user' => $request->to_id])->with('success', 'Votre réponse a bien été envoyé');
+        return redirect()->route('private_message.index', ['user_to' => $request->to_id])->with('success', 'Votre réponse a bien été envoyé');
     }
 
     /**
