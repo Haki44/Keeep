@@ -30,7 +30,7 @@ class PrivateMessageController extends Controller
         return view('private_message.list', compact('users'));
     }
   
-    public function index(Offer $offer, User $user)
+    public function index(User $user)
     {
         // On récupère les messages envoyé de l'utilisateur connecté a celui qui a créé l'offre
         $PM_sender = PrivateMessage::where('to_id', $user->id)->where('from_id', auth()->user()->id)->get();
@@ -41,7 +41,7 @@ class PrivateMessageController extends Controller
         // On merge les 2 collections de facon ordonné (le plus ancien message en dernier)
         $private_messages = $PM_sender->merge($PM_receiver)->sortByDesc('created_at');
 
-        return view('private_message.index', compact('private_messages', 'user', 'offer'));
+        return view('private_message.index', compact('private_messages', 'user'));
     }
 
     /**
@@ -84,7 +84,7 @@ class PrivateMessageController extends Controller
         PrivateMessage::create($data);
 
         // Envoie d'un mail
-        $offer->user->notify(new PrivateMessageNotification($offer, auth()->user(), $offer->user->id));
+        $offer->user->notify(new PrivateMessageNotification(auth()->user(), $offer->user->id, $offer));
         
         // Redirection vers la home avec alert success
         return redirect()->route('offer.show', $offer->id)->with('success', 'Votre message à bien été envoyé à ' . $offer->user->firstname);
@@ -96,7 +96,7 @@ class PrivateMessageController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function response(Offer $offer, Request $request)
+    public function response(Request $request)
     {
         $content = $request->validate([
             'content' => ['required', 'max:255', 'string'],
@@ -118,13 +118,12 @@ class PrivateMessageController extends Controller
 
         PrivateMessage::create($data);
 
-        $user_to = User::findOrFail($request->to_id);
-
         // Envoie d'un mail
-        $offer->user->notify(new PrivateMessageNotification($offer, auth()->user(), $user_to, true));
+        $user_to = User::findOrFail($request->to_id);
+        $user_to->notify(new PrivateMessageNotification(auth()->user(), $user_to));
 
         // Redirection vers la page de chat
-        return redirect()->route('private_message.index', ['offer'=> $offer->id, 'user' => $request->to_id])->with('success', 'Votre réponse a bien été envoyé');
+        return redirect()->route('private_message.index', ['user' => $request->to_id])->with('success', 'Votre réponse a bien été envoyé');
     }
 
     /**

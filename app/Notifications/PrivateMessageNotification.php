@@ -16,19 +16,17 @@ class PrivateMessageNotification extends Notification implements ShouldQueue
     public $offer;
     public $user_from;
     public $user_to;
-    public $response = false;
 
     /**
      * Create a new notification instance.
      *
      * @return void
      */
-    public function __construct($offer, $user_from, $user_to, $response = false)
+    public function __construct($user_from, $user_to, $offer = null)
     {
         $this->offer = $offer;
         $this->user_from = $user_from;
         $this->user_to = $user_to;
-        $this->response = $response;
     }
 
     /**
@@ -50,14 +48,14 @@ class PrivateMessageNotification extends Notification implements ShouldQueue
      */
     public function toMail($notifiable)
     {
-        if ($this->response) {
-            return (new MailMessage)
-                            ->markdown('emails.reply-private-message', ['offer' => $this->offer, 'user_to' => $this->user_to, 'user_from' => $this->user_from])
-                            ->subject('Réponse à votre message pour l\'offre ' . $this->offer->name);
+        if ($this->offer) {
+            return (new MailMessage)->markdown('emails.private-message', ['offer' => $this->offer, 'user_from' => $this->user_from])
+                                    ->subject('Nouveau message pour votre offre ' . $this->offer->name);
         }
-
-        return (new MailMessage)->markdown('emails.private-message', ['offer' => $this->offer, 'user_from' => $this->user_from])
-                                ->subject('Nouveau message pour votre offre ' . $this->offer->name);
+        
+        return (new MailMessage)
+                        ->markdown('emails.reply-private-message', ['user_to' => $this->user_to, 'user_from' => $this->user_from])
+                        ->subject($this->user_from->firstname . ' vous a envoyé un message');
     }
 
     /**
