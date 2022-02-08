@@ -6,6 +6,7 @@ use App\Models\Reply;
 use Carbon\Carbon;
 use Livewire\Component;
 use App\Notifications\SendTradeEndCode;
+use App\Notifications\TradeEnded;
 
 
 class ReplyCode extends Component
@@ -40,8 +41,6 @@ class ReplyCode extends Component
             ]
         );
 
-        // dump(intval($this->reply->starting_code));
-        // dd(intval($data['code']));
         if($this->reply->started_at === null){
             if(intval($data['code']) === intval($this->reply->starting_code)) {
                 Reply::where('id', $this->reply->id)->update([
@@ -49,8 +48,10 @@ class ReplyCode extends Component
                     'started_at' => Carbon::now(),
                 ]);
                 
+                // Envoie du mail pour la fin de la transaction après la validation du premier code
                 $reply = Reply::find($this->reply->id);
-                $reply->user->notify(new SendTradeEndCode($reply, auth()->user(), $this->reply->ending_code));
+                auth()->user()->notify(new SendTradeEndCode($reply, auth()->user(), $this->reply->ending_code));
+
                 return redirect()->route('reply.show', $this->reply->id);
             } else {
                 // Increment le compteur
@@ -61,8 +62,8 @@ class ReplyCode extends Component
                 // On vide le champs pour limiter les erreur de frappe et multisend
                 $this->code = '';
                 if($this->reply->starting_code_count == 3) {
-                        Reply::where('id', $this->reply->id)->delete();
-                return redirect()->route('reply.index');
+                    Reply::where('id', $this->reply->id)->delete();
+                    return redirect()->route('reply.index');
                 }
             }
         } else {
@@ -71,6 +72,12 @@ class ReplyCode extends Component
                     'ending_code_count' => $this->reply->ending_code_count,
                     'ended_at' => Carbon::now(),
                 ]);
+
+                $reply = Reply::find($this->reply->id);
+                //Envoie de mail pour la fin de la transaction aux deux personnes concernés par la transaction
+                $reply->user->notify(new TradeEnded($reply, auth()->user(), $reply->offer->user));
+                $reply->offer->user->notify(new TradeEnded($reply, $reply->offer->user, $reply->user));
+
                 return redirect()->route('reply.show', $this->reply->id);
             } else  {
                 // Increment le compteur

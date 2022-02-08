@@ -8,7 +8,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-class SendTradeCode extends Notification
+class SendTradeEndCode extends Notification
 {
     use Queueable;
 
@@ -50,9 +50,9 @@ class SendTradeCode extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
-                    ->subject($this->reply->user->name . 'Voici votre code pour l\'offre Keeep ' . $this->offer->firstname)
-                    ->greeting('Bonjour ' . $this->reply->user->firstname . ',')
-                    ->line('Votre code est le ' . $this->code .', vous devrez le donner à ' . $this->offer->user->firstname . ' lors de la fin de la transaction')
+                    ->subject($this->user_from->firstname . ', Voici votre code pour l\'offre Keeep')
+                    ->greeting('Bonjour ' . $this->user_from->firstname . ',')
+                    ->line('Votre code est le ' . $this->code .', vous devrez le donner à ' . $this->reply->user->firstname . ' lors de la fin de la transaction')
                     ->action('Voir la page de transaction', route('reply.show', $this->reply->id))
                     ->line('A bientôt,')
                     ->salutation('L\'équeeep');
