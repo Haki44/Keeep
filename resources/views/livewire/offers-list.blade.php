@@ -27,7 +27,7 @@
                             </div>
                             <div class="flex justify-between mt-2">
                                 <a href="{{ route('offer.show', $offer->id) }}" class="text-blue-500">Voir le detail</a>
-                                <h6 class="flex justify-end font-bold">{{ $offer->price }} kips</h6>
+                                <h6 class="flex justify-end font-bold">{{ $offer->price }} kips @if ($offer->pricing !== 0)/ {{ $offer->pricing_name }}@endif</h6>
                             </div>
                             @can('manage-offer', $offer)
                                 <div class="flex justify-between mt-2">

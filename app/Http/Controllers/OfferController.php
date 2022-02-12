@@ -58,6 +58,7 @@ class OfferController extends Controller
             'offer_day' => 'required|date',
             'price' => 'required|numeric',
             'category_id' => 'required',
+            'pricing' => 'required'
         ],
         [
             'name.required' => 'Vous devez indiquer le nom de l\'offre',
@@ -118,6 +119,7 @@ class OfferController extends Controller
             'offer_day' => 'required|date',
             'price' => 'required|numeric',
             'category_id' => 'required',
+            'pricing' => 'required'
         ],
         [
             'name.required' => 'Vous devez indiquer le nom de l\'offre',

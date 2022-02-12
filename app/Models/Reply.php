@@ -24,6 +24,7 @@ class Reply extends Model
         'ending_code_count',
         'started_at',
         'ended_at',
+        'quantity'
     ];
 
     // Cast du datetime pour la bdd

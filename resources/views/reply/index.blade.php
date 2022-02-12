@@ -19,7 +19,10 @@
                             <tr class="absolute block border border-grey-500 md:border-none md:table-row -top-full md:top-auto -left-full md:left-auto md:relative ">
                                 <th class="block p-2 font-bold text-left text-white bg-indigo-600 md:w-2/12 md:border md:border-grey-500 md:table-cell">Prénom</th>
                                 <th class="p-2 font-bold text-left text-white bg-indigo-600 md:w-2/12 justify-centerblock md:border md:border-grey-500 md:table-cell">Nom</th>
-                                <th class="block p-2 font-bold text-left text-white bg-indigo-600 md:border md:border-grey-500 md:table-cell md:w-6/12">Message</th>
+                                @if ($offer->pricing !== 0)
+                                    <th class="p-2 font-bold text-left text-white bg-indigo-600 md:w-2/12 justify-centerblock md:border md:border-grey-500 md:table-cell">Quantité</th>
+                                @endif
+                                <th class="block p-2 font-bold text-left text-white bg-indigo-600 md:border md:border-grey-500 md:table-cell md:w-4/12">Message</th>
                                 <th colspan="2" class="block p-2 font-bold text-left text-white bg-indigo-600 md:w-2/12 md:text-center md:border md:border-grey-500 md:table-cell">Actions</th>
                             </tr>
                             </thead>
@@ -29,9 +32,12 @@
 
                 @forelse ($offer->replies as $reply)
                     <tr class="block bg-gray-300 border border-grey-500 md:border-none md:table-row">
-                        <td class="block w-1/5 p-2 text-left md:w-2/12 md:border md:border-grey-500 md:table-cell"><span class="inline-block w-full font-bold md:hidden">Prénom</span>{{ $reply->user->firstname }}</td>
-                        <td class="block w-1/5 p-2 text-left md:w-2/12 md:border md:border-grey-500 md:table-cell"><span class="inline-block w-full font-bold md:hidden">Nom</span>{{ $reply->user->name }}</td>
-                        <td class="block w-full p-2 text-left md:border md:border-grey-500 md:table-cell md:w-6/12"><span class="inline-block w-full font-bold md:hidden">Message</span>{{ $reply->reply }}</td>
+                        <td class="block w-1/5 p-2 text-left md:w-2/12 md:border md:border-grey-500 md:table-cell">{{ $reply->user->firstname }}</td>
+                        <td class="block w-1/5 p-2 text-left md:w-2/12 md:border md:border-grey-500 md:table-cell">{{ $reply->user->name }}</td>
+                        @if ($offer->pricing !== 0)
+                            <td class="block w-1/5 p-2 text-left md:w-2/12 md:border md:border-grey-500 md:table-cell">{{ $reply->quantity }} {{ $reply->quantity > 1 ? $offer->pricing_name . 's' : $offer->pricing_name }}</td>
+                        @endif
+                        <td class="block w-full p-2 text-left md:border md:border-grey-500 md:table-cell md:w-4/12">{{ $reply->reply }}</td>
 
                         @if ($reply->status === null)
                             {{-- En FullPage --}}
