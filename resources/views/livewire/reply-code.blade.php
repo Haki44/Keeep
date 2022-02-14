@@ -43,12 +43,12 @@
                             </div>
 
                             <div class="flex items-center justify-end mt-4">
-                                <x-button class="ml-3" wire:click="">
+                                <x-button class="ml-3" wire:click="checkCode">
                                     {{ __('Valider') }}
                                 </x-button>
                             </div>
                         <p class="p-2 text-xl">Vérifier que le code saisi correspond à celui qui vous a été donné.</p>
-                        <p class="p-2 text-xl">Il vous reste {{3 - $reply->starting_code_count}} essaies.</p>
+                        <p class="p-2 text-xl">Il vous reste {{3 - $reply->ending_code_count}} essaies.</p>
                     </div>
                     @elseif ($reply->user->id != Auth::user()->id && !is_null($reply->started_at) && is_null($reply->ended_at))
                     {{-- Polling sur 3s , le .visible sert a trigger si l'onglet est afficher ou non pour economiser la data (par exemple si les utilisateur ne ferme jamais leurs onglet...) --}}

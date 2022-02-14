@@ -8,25 +8,24 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-class SendTradeCode extends Notification
+class TradeEnded extends Notification
 {
     use Queueable;
 
     public $offer;
     public $reply;
-    public $user_from;
-    public $code;
+    public $user_to;
 
     /**
      * Create a new notification instance.
      *
      * @return void
      */
-    public function __construct($reply, $user_from, $code)
+    public function __construct($reply, $user_to, $user_from)
     {
         $this->reply = $reply;
+        $this->user_to = $user_to;
         $this->user_from = $user_from;
-        $this->code = $code;
         $this->offer = Offer::where('id', $reply->offer_id)->first();
     }
 
@@ -50,12 +49,12 @@ class SendTradeCode extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
-            ->subject($this->reply->user->name . 'Voici votre code pour l\'offre Keeep ' . $this->offer->firstname)
-            ->greeting('Bonjour ' . $this->reply->user->firstname . ',')
-            ->line('Votre code est le ' . $this->code .', vous devrez le donner à ' . $this->offer->user->firstname . ' lors de la transaction')
-            ->action('Voir la page de transaction', route('reply.show', $this->reply->id))
-            ->line('A bientôt,')
-            ->salutation('L\'équeeep');
+                ->subject('Transaction terminée ' . $this->user_to->firstname)
+                ->greeting('Bonjour ' . $this->user_to->firstname . ',')
+                ->line('La transaction pour l\'offre ' . $this->offer->name . ' avec ' . $this->user_from->firstname . ' est terminée.')
+                ->line('A bientôt,')
+                ->salutation('L\'équeeep');
+    
     }
 
     /**

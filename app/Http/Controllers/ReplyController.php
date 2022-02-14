@@ -114,8 +114,9 @@ class ReplyController extends Controller
         $reply = Reply::find($id);
         // Status 1 => réponse accepté, 0 réponse refusé (le status étant a null de base)
         if($status == 1) {
-            // Verification pour etre sur qu'entre temps l'offre n'a pas été retiré ou déja accepté
-            $check = Reply::where('offer_id', $reply->offer_id)->where('status', 1)->get();
+            // Verification pour etre sur qu'entre temps l'offre n'a pas été retiré ou déja accepté,
+            // si une réponse du même utilisateur existe déjà, récupérer la réponse avec la transaction non terminée
+            $check = Reply::where('offer_id', $reply->offer_id)->where('status', 1)->where('ended_at', null)->get();
 
             if ($check->count() < 1 ){
 

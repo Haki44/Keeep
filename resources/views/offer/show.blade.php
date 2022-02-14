@@ -33,7 +33,7 @@
                                     @method('DELETE')
                                     <button type="submit" class="mb-2 text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-lg px-5 py-2.5 text-center">Annuler ma réponse</button>
                                 </form>
-                            @elseif(!is_null($reply) && $reply->status === 1)
+                            @elseif(!is_null($reply) && $reply->status === 1 && is_null($offer->replies->last()->ended_at))
                                 <div id="alert-1" class="flex p-4 mb-4 bg-green-100 rounded-lg" role="alert">
                                     <div class="ml-3 text-sm font-medium text-green-700">
                                         Vous ne pouvez plus annuler votre réponse car elle a été acceptée par <strong>{{ $offer->user->firstname }} {{ $offer->user->name[0] }}</strong>
@@ -41,9 +41,8 @@
                                 </div>
                             @endif
                         @endif
-
-                        @if(is_null($reply) && $offer->user_id !== auth()->user()->id)
-                        <a href="#" @click="open = !open" class="mb-2 text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-lg px-5 py-2.5 text-center">Acheter ({{ $offer->price }} kips)</a>
+                        @if((is_null($reply) || !is_null($offer->replies->last()->ended_at)) && $offer->user_id !== auth()->user()->id)
+                            <a href="#" @click="open = !open" class="mb-2 text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-lg px-5 py-2.5 text-center">Acheter ({{ $offer->price }} kips)</a>
                         @endif
                         <div x-show="open" class="w-full sm:w-2/3">
                             <x-auth-validation-errors class="mb-4" :errors="$errors" />
