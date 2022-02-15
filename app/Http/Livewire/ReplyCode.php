@@ -5,6 +5,9 @@ namespace App\Http\Livewire;
 use App\Models\Reply;
 use Carbon\Carbon;
 use Livewire\Component;
+use App\Notifications\SendTradeEndCode;
+use App\Notifications\TradeEnded;
+
 
 class ReplyCode extends Component
 {
@@ -37,24 +40,65 @@ class ReplyCode extends Component
                 'code.between' => 'Verifier que vous avez bien saisi 4 chiffres'
             ]
         );
-        if(intval($data['code']) === intval($this->reply->starting_code)) {
-            Reply::where('id', $this->reply->id)->update([
-                'starting_code_count' => $this->reply->starting_code_count,
-                'started_at' => Carbon::now(),
-            ]);
-            return redirect()->route('reply.show', $this->reply->id);
-        } else {
-            // Increment le compteur
-            $this->reply->increment('starting_code_count', 1);
-            Reply::where('id', $this->reply->id)->update([
-                'starting_code_count' => $this->reply->starting_code_count,
-            ]);
-            // On vide le champs pour limiter les erreur de frappe et multisend
-            $this->code = '';
-            if($this->reply->starting_code_count == 3) {
+
+        if($this->reply->started_at === null){
+            if(intval($data['code']) === intval($this->reply->starting_code)) {
+                Reply::where('id', $this->reply->id)->update([
+                    'starting_code_count' => $this->reply->starting_code_count,
+                    'started_at' => Carbon::now(),
+                ]);
+                
+                // Envoie du mail pour la fin de la transaction après la validation du premier code
+                $reply = Reply::find($this->reply->id);
+                auth()->user()->notify(new SendTradeEndCode($reply, auth()->user(), $this->reply->ending_code));
+
+                return redirect()->route('reply.show', $this->reply->id);
+            } else {
+                // Increment le compteur
+                $this->reply->increment('starting_code_count', 1);
+                Reply::where('id', $this->reply->id)->update([
+                    'starting_code_count' => $this->reply->starting_code_count,
+                ]);
+                // On vide le champs pour limiter les erreur de frappe et multisend
+                $this->code = '';
+                if($this->reply->starting_code_count == 3) {
                     Reply::where('id', $this->reply->id)->delete();
-            return redirect()->route('reply.index');
+                    return redirect()->route('reply.index');
+                }
+            }
+        } else {
+            if(intval($data['code']) === intval($this->reply->ending_code)){
+                Reply::where('id', $this->reply->id)->update([
+                    'ending_code_count' => $this->reply->ending_code_count,
+                    'ended_at' => Carbon::now(),
+                ]);
+
+                $reply = Reply::find($this->reply->id);
+                //Envoie de mail pour la fin de la transaction aux deux personnes concernés par la transaction
+                $reply->user->notify(new TradeEnded($reply, auth()->user(), $reply->offer->user));
+                $reply->offer->user->notify(new TradeEnded($reply, $reply->offer->user, $reply->user));
+
+                return redirect()->route('reply.show', $this->reply->id);
+            } else  {
+                // Increment le compteur
+                $this->reply->increment('ending_code_count', 1);
+                Reply::where('id', $this->reply->id)->update([
+                    'ending_code_count' => $this->reply->ending_code_count,
+                ]);
+
+
+                // On vide le champs pour limiter les erreur de frappe et multisend
+                $this->code = '';
+                if($this->reply->ending_code_count == 3) {
+                    $ending_code = random_int(1000, 9999);
+                    Reply::where('id', $this->reply->id)->update([
+                        'ending_code' => $ending_code,
+                        'ending_code_count' => null
+                    ]);
+                    return redirect()->route('reply.show', $this->reply->id);
+                }
             }
         }
+
     }
 }
