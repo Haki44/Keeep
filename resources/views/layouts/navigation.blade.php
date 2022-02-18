@@ -61,6 +61,7 @@
                 </div>
             </div>
             <div class="hidden sm:flex sm:items-center sm:ml-6">
+                <div class="text-sm font-medium text-gray-500 pr-5">{{ Auth::user()->kips }} kips</div>
 
                 <x-dropdown align="bottom" width="48">
                     <x-slot name="trigger">

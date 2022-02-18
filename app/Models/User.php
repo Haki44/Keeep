@@ -32,7 +32,8 @@ class User extends Authenticatable
         'password',
         'role_id',
         'register_token',
-        'school_id'
+        'school_id',
+        'kips'
     ];
 
     /**

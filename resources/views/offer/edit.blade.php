@@ -40,6 +40,13 @@
                     <x-input id="price" class="block mt-1 w-full" type="number" name="price" :value="old('price') ?? $offer->price" />
                 </div>
 
+                <!-- Type de prix -->
+                <div class="mt-4">
+                    <x-label for="pricing" value="Prix par :" />
+
+                    <x-select class="w-full" label="Prix par" field="pricing" :value="$offer->pricing" :values="App\Models\Offer::$pricing_values" />
+                </div>
+
                 <!-- category_id -->
                 <div class="mt-4">
                     <x-label for="category_id" value="Catégorie *" />

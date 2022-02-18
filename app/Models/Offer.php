@@ -18,6 +18,7 @@ class Offer extends Model
         'price',
         'user_id',
         'category_id',
+        'pricing'
     ];
 
     protected $casts = [
@@ -26,6 +27,13 @@ class Offer extends Model
 
     protected $with = [
         'replies'
+    ];
+
+    static public $pricing_values = [
+        0 => 'fixe',
+        1 => 'heure',
+        2 => 'jour',
+        3 => 'semaine'
     ];
 
     public function category()
@@ -47,5 +55,10 @@ class Offer extends Model
     public function replies()
     {
         return $this->hasMany(Reply::class)->where('deleted_at', NULL);
+    }
+
+    public function getPricingNameAttribute()
+    {
+        return static::$pricing_values[$this->pricing];
     }
 }

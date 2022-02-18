@@ -12,6 +12,7 @@ use App\Notifications\PrivateMessageNotification;
 use App\Providers\RouteServiceProvider;
 use App\Notifications\RefuseResponseNotification;
 use App\Notifications\SendTradeCode;
+use App\Rules\HaveEnoughKips;
 use Illuminate\Support\Facades\Auth;
 
 class ReplyController extends Controller
@@ -61,18 +62,35 @@ class ReplyController extends Controller
 
     public function store(Request $request, Offer $offer)
     {
+        // Si l'offre n'a pas une tarification fixe, on vérifie puis on prend la quantité
+        if($offer->pricing !== 0) {
+            $data = $request->validate(
+                [
+                    'reply' => ['required', 'string'],
+                    'quantity' => ['required', 'integer', 'min:1', new HaveEnoughKips($offer->price)]
+                ],
+                [
+                    'reply.required' => 'Vous ne pouvez pas laisser de réponse vide',
+                    'reply.string' => 'La réponse doit être une chaine de caractère',
+                    'quantity.required' => 'Vous devez indiquer une quantité',
+                    'quantity.integer' => 'La quantité doit être un nombre',
+                    'quantity.min:1' => 'La quantité doit être supérieure ou égale à 1',
+                ]
+            );
+            $data = ['user_id' =>  auth()->user()->id, 'offer_id' => $offer->id, 'reply' => $data['reply'], 'quantity' => $data['quantity']];
+        } else {
+            $data = $request->validate(
+                [
+                    'reply' => ['required', 'string'],
+                ],
+                [
+                    'reply.required' => 'Vous ne pouvez pas laisser de réponse vide',
+                    'reply.string' => 'La réponse doit être une chaine de caractère',
 
-        $data = $request->validate(
-        [
-            'reply' => ['required', 'string'],
-        ],
-        [
-            'reply.required' => 'Vous ne pouvez pas laisser de réponse vide',
-            'reply.string' => 'La réponse doit être une chaine de caractère'
-        ]
-        );
-
-        $data = ['user_id' =>  auth()->user()->id, 'offer_id' => $offer->id, 'reply' => $data['reply']];
+                ]
+            );
+            $data = ['user_id' =>  auth()->user()->id, 'offer_id' => $offer->id, 'reply' => $data['reply']];
+        }
 
         Reply::create($data);
         $offer->user->notify(new ReplyNotification($offer, auth()->user(), $data['reply']));
