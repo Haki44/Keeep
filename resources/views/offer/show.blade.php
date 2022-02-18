@@ -42,7 +42,7 @@
                             @endif
                         @endif
 
-                        @if(is_null($reply) && $offer->user_id !== auth()->user()->id)
+                        @if((is_null($reply) || !is_null($offer->replies->last()->ended_at)) && $offer->user_id !== auth()->user()->id)
                             @if ($offer->price > auth()->user()->kips)
                                 <div class="ml-3 text-m font-medium text-red-700">
                                     <p>Vous n'avez pas assez de Kips !</p>
