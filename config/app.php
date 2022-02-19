@@ -175,6 +175,7 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         App\Providers\TelescopeServiceProvider::class,
+        App\Providers\TransactionServiceProvider::class,
 
     ],
 
@@ -229,6 +230,8 @@ return [
         'URL' => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
+        'TransactionsBalance' => App\Helpers\Transactions\Balance::class,
+        'TransactionHandling' => App\Helpers\Transactions\TransactionHandling::class
 
     ],
 
