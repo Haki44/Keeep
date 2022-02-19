@@ -68,7 +68,7 @@ class ReplyCode extends Component
                     return redirect()->route('reply.show', $this->reply->id);
                 } else {
                     // @TODO FAIRE LE MESSAGE D'ERREUR
-                    return redirect()->route('reply.show', $this->reply->id);
+                    return redirect()->route('/', $this->reply->id);
                 }
 
             } else {
@@ -92,12 +92,15 @@ class ReplyCode extends Component
                 ]);
 
                 $reply = Reply::find($this->reply->id);
-                //Envoie de mail pour la fin de la transaction aux deux personnes concernés par la transaction
-                $reply->user->notify(new TradeEnded($reply, auth()->user(), $reply->offer->user));
-                $reply->offer->user->notify(new TradeEnded($reply, $reply->offer->user, $reply->user));
 
+                if(!is_null($reply->ended_at)){
+                    TransactionHandling::credit_kips($reply->offer->user_id, $reply->offer->price);
 
+                    //Envoie de mail pour la fin de la transaction aux deux personnes concernés par la transaction
+                    $reply->user->notify(new TradeEnded($reply, auth()->user(), $reply->offer->user));
+                    $reply->offer->user->notify(new TradeEnded($reply, $reply->offer->user, $reply->user));
 
+                }
 
 
                 return redirect()->route('reply.show', $this->reply->id);
