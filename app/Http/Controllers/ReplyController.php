@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Notifications\CancelResponseNotification;
 use App\Notifications\ReplyNotification;
 use App\Models\Offer;
 use App\Models\Reply;
@@ -112,9 +113,11 @@ class ReplyController extends Controller
         if (is_null($reply->is_accepted)) {
             $reply->delete();
 
-            return redirect('dashboard')->with('success', 'Votre réponse a bien été annulée !');
+            $reply->user->notify(new CancelResponseNotification($reply));
+            return redirect()->route('reply.index')->with('success', 'Votre réponse a bien été annulée !');
+
         } else {
-            return redirect('dashboard')->with('danger', 'Vous ne pouvez pas annuler votre réponse, celle-ci a déjà été accepté');
+            return redirect()->route('reply.index')->with('danger', 'Vous ne pouvez pas annuler votre réponse, celle-ci a déjà été accepté');
         }
     }
 
