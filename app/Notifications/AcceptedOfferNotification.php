@@ -13,16 +13,20 @@ class AcceptedOfferNotification extends Notification
 
     public $offer;
     public $user_from;
+    public $reply;
+    public $user_to;
 
     /**
      * Create a new notification instance.
      *
      * @return void
      */
-    public function __construct($offer, $user_from)
+    public function __construct($offer, $user_from, $reply, $user_to)
     {
         $this->offer = $offer;
         $this->user_from = $user_from;
+        $this->reply = $reply;
+        $this->user_to = $user_to;
     }
 
     /**
@@ -44,8 +48,8 @@ class AcceptedOfferNotification extends Notification
      */
     public function toMail($notifiable)
     {
-        return (new MailMessage)->markdown('emails.private-message', ['offer' => $this->offer, 'user_from' => $this->user_from])
-                                ->subject('Offre acceptée !' . $this->offer->name);
+        return (new MailMessage)->markdown('emails.accepted-response', ['offer' => $this->offer, 'user_from' => $this->user_from, 'reply' => $this->reply, 'user_to' => $this->user_to])
+                                ->subject('Votre réponse pour l\'offre ' . $this->offer->name . ' a été acceptée !');
     }
 
     /**

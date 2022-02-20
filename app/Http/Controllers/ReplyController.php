@@ -7,6 +7,7 @@ use App\Models\Offer;
 use App\Models\Reply;
 use Illuminate\Http\Request;
 use App\Events\AddReplyEvent;
+use App\Models\User;
 use App\Notifications\AcceptedOfferNotification;
 use App\Notifications\PrivateMessageNotification;
 use App\Providers\RouteServiceProvider;
@@ -130,6 +131,8 @@ class ReplyController extends Controller
     public function update($id, $status)
     {
         $reply = Reply::find($id);
+        $offer = Offer::find($reply->offer_id);
+        $user_to = User::find($reply->user_id);
         // Status 1 => réponse accepté, 0 réponse refusé (le status étant a null de base)
         if($status == 1) {
             // Verification pour etre sur qu'entre temps l'offre n'a pas été retiré ou déja accepté,
@@ -152,7 +155,7 @@ class ReplyController extends Controller
                 ]);
 
                  // Envoie d'un mail
-                $reply->user->notify(new AcceptedOfferNotification($reply, auth()->user()));
+                $reply->user->notify(new AcceptedOfferNotification($reply, auth()->user(), $reply, $user_to));
                 $reply->user->notify(new SendTradeCode($reply, auth()->user(), $starting_code));
 
                 return redirect()->route('reply.index')->with('success', 'Votre réponse a bien été accéptée !');
