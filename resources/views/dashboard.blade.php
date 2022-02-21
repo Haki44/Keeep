@@ -4,7 +4,7 @@
             {{ __('Dashboard') }}
         </h2>
     </x-slot>
-    
+
     <livewire:offers-list />
 
 </x-app-layout>

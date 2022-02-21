@@ -20,16 +20,9 @@ class PrivateMessageController extends Controller
      */
     public function list()
     {
-        // On regroupe tout les messages qui on un 'to_id' indentique
-        $users = PrivateMessage::where('from_id', auth()->user()->id)->orderBy('created_at')->distinct()->get();
-        $users = $users->groupBy('to_id');
-
-        // On récupere les données des users
-        $users = User::whereIn('id', $users)->get();
-
-        return view('private_message.list', compact('users'));
+        return view('private_message.list');
     }
-  
+
     public function index(Offer $offer, User $user)
     {
         // On récupère les messages envoyé de l'utilisateur connecté a celui qui a créé l'offre
@@ -85,7 +78,7 @@ class PrivateMessageController extends Controller
 
         // Envoie d'un mail
         $offer->user->notify(new PrivateMessageNotification($offer, auth()->user(), $offer->user->id));
-        
+
         // Redirection vers la home avec alert success
         return redirect()->route('offer.show', $offer->id)->with('success', 'Votre message à bien été envoyé à ' . $offer->user->firstname);
     }
