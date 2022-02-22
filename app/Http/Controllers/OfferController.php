@@ -17,10 +17,7 @@ class OfferController extends Controller
      */
     public function index()
     {
-        // Qui a fait ca ??? inutile le paramètre n'est pas passer au "controller" livewire, et la query faite dans ce même controller ne tiens donc pas compte de la query ci dessous.
-        $offers = Offer::get();
-
-        return view('dashboard', compact('offers'));
+        return view('dashboard');
     }
     /**
      * Display a listing of the resource.
