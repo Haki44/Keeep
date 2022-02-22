@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers;
 
+
 use App\Notifications\ReplyNotification;
 use App\Models\Offer;
 use App\Models\Reply;
 use Illuminate\Http\Request;
 use App\Events\AddReplyEvent;
 use App\Notifications\AcceptedOfferNotification;
+use App\Notifications\CancelResponseNotification;
 use App\Notifications\PrivateMessageNotification;
 use App\Providers\RouteServiceProvider;
 use App\Notifications\RefuseResponseNotification;
@@ -155,9 +157,9 @@ class ReplyController extends Controller
                 $reply->user->notify(new AcceptedOfferNotification($reply, auth()->user()));
                 $reply->user->notify(new SendTradeCode($reply, auth()->user(), $starting_code));
 
-                return redirect()->route('reply.index')->with('success', 'Votre réponse a bien été accéptée !');
+                return redirect()->route('reply.index')->with('success', 'Votre réponse a bien été acceptée !');
             } else {
-                return redirect()->route('reply.index')->with('success', 'La réponse à déjà été accéptée :(');
+                return redirect()->route('reply.index')->with('success', 'La réponse à déjà été acceptée :(');
             }
         } else {
 
@@ -187,10 +189,11 @@ class ReplyController extends Controller
             // Je l'ai mis car je l'utilise dans la methode refuse. Donc pour toujours supprimer sans softdelete le reply,
             // j'utilise le forceDelete()
             $reply->forceDelete();
+            $reply->user->notify(new CancelResponseNotification($reply));
 
             return redirect()->route('reply.index')->with('success', 'Votre réponse a bien été annulée !');
         } else {
-            return redirect()->route('reply.index')->with('danger', 'Vous ne pouvez pas annuler votre réponse, celle-ci a déjà été accepté');
+            return redirect()->route('reply.index')->with('danger', 'Vous ne pouvez pas annuler votre réponse, celle-ci a déjà été acceptée');
         }
     }
 }
