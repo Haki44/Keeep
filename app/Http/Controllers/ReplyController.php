@@ -155,9 +155,9 @@ class ReplyController extends Controller
                 $reply->user->notify(new AcceptedOfferNotification($reply, auth()->user()));
                 $reply->user->notify(new SendTradeCode($reply, auth()->user(), $starting_code));
 
-                return redirect()->route('reply.index')->with('success', 'Votre réponse a bien été accéptée !');
+                return redirect()->route('reply.index')->with('success', 'Votre réponse a bien été acceptée !');
             } else {
-                return redirect()->route('reply.index')->with('success', 'La réponse à déjà été accéptée :(');
+                return redirect()->route('reply.index')->with('success', 'La réponse a déjà été acceptée :(');
             }
         } else {
 
