@@ -2,11 +2,14 @@
 
 namespace App\Http\Livewire;
 
+use App\Helpers\Transactions\TransactionHandling;
 use App\Models\Reply;
 use Carbon\Carbon;
 use Livewire\Component;
 use App\Notifications\SendTradeEndCode;
 use App\Notifications\TradeEnded;
+use App\Helpers;
+use TransactionsBalance;
 
 
 class ReplyCode extends Component
@@ -47,12 +50,27 @@ class ReplyCode extends Component
                     'starting_code_count' => $this->reply->starting_code_count,
                     'started_at' => Carbon::now(),
                 ]);
-                
-                // Envoie du mail pour la fin de la transaction après la validation du premier code
                 $reply = Reply::find($this->reply->id);
-                auth()->user()->notify(new SendTradeEndCode($reply, auth()->user(), $this->reply->ending_code));
+                // On check si l'user a assez de Kips pour poursuivre la transaction
+                $enough_kips = TransactionsBalance::verify_user_balance($reply->offer, $reply->user->kips);
 
-                return redirect()->route('reply.show', $this->reply->id);
+                if($enough_kips){
+                    // On fait le prélèvement des kips pour les stocker temporairement dans un séquestre
+
+
+                   TransactionHandling::make_transaction($reply->offer, $reply->user_id);
+                   TransactionHandling::withdraw_kips($reply->user_id, $reply->offer->price);
+
+
+                    // Envoie du mail pour la fin de la transaction après la validation du premier code
+                    auth()->user()->notify(new SendTradeEndCode($reply, auth()->user(), $this->reply->ending_code));
+
+                    return redirect()->route('reply.show', $this->reply->id);
+                } else {
+                    // @TODO FAIRE LE MESSAGE D'ERREUR
+                    return redirect()->route('/', $this->reply->id);
+                }
+
             } else {
                 // Increment le compteur
                 $this->reply->increment('starting_code_count', 1);
@@ -74,9 +92,16 @@ class ReplyCode extends Component
                 ]);
 
                 $reply = Reply::find($this->reply->id);
-                //Envoie de mail pour la fin de la transaction aux deux personnes concernés par la transaction
-                $reply->user->notify(new TradeEnded($reply, auth()->user(), $reply->offer->user));
-                $reply->offer->user->notify(new TradeEnded($reply, $reply->offer->user, $reply->user));
+
+                if(!is_null($reply->ended_at)){
+                    TransactionHandling::credit_kips($reply->offer->user_id, $reply->offer->price);
+
+                    //Envoie de mail pour la fin de la transaction aux deux personnes concernés par la transaction
+                    $reply->user->notify(new TradeEnded($reply, auth()->user(), $reply->offer->user));
+                    $reply->offer->user->notify(new TradeEnded($reply, $reply->offer->user, $reply->user));
+
+                }
+
 
                 return redirect()->route('reply.show', $this->reply->id);
             } else  {
