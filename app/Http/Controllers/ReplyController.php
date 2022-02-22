@@ -159,7 +159,7 @@ class ReplyController extends Controller
 
                 return redirect()->route('reply.index')->with('success', 'Votre réponse a bien été acceptée !');
             } else {
-                return redirect()->route('reply.index')->with('success', 'La réponse à déjà été acceptée :(');
+                return redirect()->route('reply.index')->with('success', 'La réponse a déjà été acceptée :(');
             }
         } else {
 

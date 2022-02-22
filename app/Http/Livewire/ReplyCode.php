@@ -52,23 +52,20 @@ class ReplyCode extends Component
                 ]);
                 $reply = Reply::find($this->reply->id);
                 // On check si l'user a assez de Kips pour poursuivre la transaction
-                $enough_kips = TransactionsBalance::verify_user_balance($reply->offer, $reply->user->kips);
+                $enough_kips = TransactionsBalance::verify_user_balance($reply->offer->price, $reply->user->kips);
 
                 if($enough_kips){
                     // On fait le prélèvement des kips pour les stocker temporairement dans un séquestre
 
-
                    TransactionHandling::make_transaction($reply->offer, $reply->user_id);
                    TransactionHandling::withdraw_kips($reply->user_id, $reply->offer->price);
-
 
                     // Envoie du mail pour la fin de la transaction après la validation du premier code
                     auth()->user()->notify(new SendTradeEndCode($reply, auth()->user(), $this->reply->ending_code));
 
-                    return redirect()->route('reply.show', $this->reply->id);
+                    return redirect()->route('reply.show', $reply->id)->with('success', "Le début de l'échange a bien été enregistré !");
                 } else {
-                    // @TODO FAIRE LE MESSAGE D'ERREUR
-                    return redirect()->route('/', $this->reply->id);
+                    return redirect()->route('reply.show', $reply->id)->with('danger', "Vous n'avez pas assez de kips pour cet échange :(");
                 }
 
             } else {
@@ -77,7 +74,7 @@ class ReplyCode extends Component
                 Reply::where('id', $this->reply->id)->update([
                     'starting_code_count' => $this->reply->starting_code_count,
                 ]);
-                // On vide le champs pour limiter les erreur de frappe et multisend
+                // On vide le champs pour limiter les erreurs de frappe et multisend
                 $this->code = '';
                 if($this->reply->starting_code_count == 3) {
                     Reply::where('id', $this->reply->id)->delete();
@@ -99,9 +96,7 @@ class ReplyCode extends Component
                     //Envoie de mail pour la fin de la transaction aux deux personnes concernés par la transaction
                     $reply->user->notify(new TradeEnded($reply, auth()->user(), $reply->offer->user));
                     $reply->offer->user->notify(new TradeEnded($reply, $reply->offer->user, $reply->user));
-
                 }
-
 
                 return redirect()->route('reply.show', $this->reply->id);
             } else  {

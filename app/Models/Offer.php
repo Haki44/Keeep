@@ -6,6 +6,7 @@ use App\Models\PrivateMessage;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Offer extends Model
 {
@@ -60,5 +61,11 @@ class Offer extends Model
     public function getPricingNameAttribute()
     {
         return static::$pricing_values[$this->pricing];
+    }
+
+    // Une offre "acceptée" n'a qu'une réponse, pour l'enregistrement de la transaction
+    public function reply()
+    {
+        return $this->hasOne(Reply::class);
     }
 }

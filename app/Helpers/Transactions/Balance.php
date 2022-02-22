@@ -12,15 +12,15 @@ class Balance {
     /**
      * Helper qui compare le solde de l'user et la somme de l'offre
      *
-     * @param Offer $offer
+     * @param $price (prix de l'offre)
      * @param $user_balance (solde de l'user)
      *
      * @return bool
      *
      */
-    public function verify_user_balance(Offer $offer, $user_balance): bool
+    public function verify_user_balance($price, $user_balance): bool
     {
-        if($user_balance >= $offer->price){
+        if($user_balance >= $price){
             return true;
         } else {
             return false;
