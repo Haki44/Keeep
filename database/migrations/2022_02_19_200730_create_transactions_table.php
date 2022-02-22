@@ -15,10 +15,13 @@ class CreateTransactionsTable extends Migration
     {
         Schema::create('transactions', function (Blueprint $table) {
             $table->id();
-            $table->integer('offer_id');
-            $table->integer('reply_user_id');
-            $table->integer('offer_user_id');
+            $table->foreign('offer_id')->references('id')->on('offers');
+            $table->foreign('reply_user_id')->references('user_id')->on('replies');
+            $table->foreign('offer_user_id')->references('user_id')->on('offers');
             $table->integer('amount');
+            $table->unsignedBigInteger('offer_id');
+            $table->unsignedBigInteger('reply_user_id');
+            $table->unsignedBigInteger('offer_user_id');
             $table->timestamps();
         });
     }
