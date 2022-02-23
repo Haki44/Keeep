@@ -21,10 +21,13 @@
 
                     <div class="max-w-6xl mx-auto sm:px-6 lg:px-8 flex flex-wrap flex-col justify-evenly">
                         @foreach ($users as $user)
-                            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg w-1/4 h-auto m-1">
+                            <div class="border-solid border-2 border-sky-500 bg-white overflow-hidden shadow-sm sm:rounded-lg w-1/4 h-auto m-1">
                                 <div class="p-6 bg-white border-b border-gray-200 h-full">
 
-                                        <div class="w-full h-full flex flex-col justify-between">
+                                        <div class="w-full h-full flex flex-row justify-around items-center">
+                                            <div>
+                                                <img src="https://images.unsplash.com/photo-1549078642-b2ba4bda0cdb?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=facearea&amp;facepad=3&amp;w=144&amp;h=144" alt="" class="w-10 h-10 rounded-full sm:w-16 sm:h-16">
+                                            </div>
                                             <div>
                                                 <h3 class="text-xl">{{ $user->name }} {{ $user->firstname }}</h3>
                                             </div>

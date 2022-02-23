@@ -157,7 +157,7 @@ class ReplyController extends Controller
                 ]);
 
                  // Envoie d'un mail
-                $reply->user->notify(new AcceptedOfferNotification($reply, auth()->user(), $reply, $user_to));
+                $reply->user->notify(new AcceptedOfferNotification($offer, auth()->user(), $reply, $user_to));
                 $reply->user->notify(new SendTradeCode($reply, auth()->user(), $starting_code));
 
                 return redirect()->route('reply.index')->with('success', 'Votre réponse a bien été acceptée !');
