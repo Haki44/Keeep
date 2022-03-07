@@ -2,6 +2,9 @@
 
 namespace App\Http\Livewire;
 
+use App\Events\AddCreditTransactionEvent;
+use App\Events\AddReferentEvent;
+use App\Events\AddWithdrawTransactionEvent;
 use App\Helpers\Transactions\TransactionHandling;
 use App\Models\Reply;
 use Carbon\Carbon;
@@ -51,14 +54,11 @@ class ReplyCode extends Component
                     'started_at' => Carbon::now(),
                 ]);
                 $reply = Reply::find($this->reply->id);
-                // On check si l'user a assez de Kips pour poursuivre la transaction
-                $enough_kips = TransactionsBalance::verify_user_balance($reply->offer->price, $reply->user->kips);
 
-                if($enough_kips){
-                    // On fait le prélèvement des kips pour les stocker temporairement dans un séquestre
+                if(TransactionsBalance::verify_user_balance($reply->offer->price, $reply->user->kips)){
 
-                   TransactionHandling::make_transaction($reply->offer, $reply->user_id);
-                   TransactionHandling::withdraw_kips($reply->user_id, $reply->offer->price);
+                    // On appel l'évènement pour prélever les kips
+                    event(new AddWithdrawTransactionEvent($reply));
 
                     // Envoie du mail pour la fin de la transaction après la validation du premier code
                     auth()->user()->notify(new SendTradeEndCode($reply, auth()->user(), $this->reply->ending_code));
@@ -91,7 +91,7 @@ class ReplyCode extends Component
                 $reply = Reply::find($this->reply->id);
 
                 if(!is_null($reply->ended_at)){
-                    TransactionHandling::credit_kips($reply->offer->user_id, $reply->offer->price);
+                    event(new AddCreditTransactionEvent($reply));
 
                     //Envoie de mail pour la fin de la transaction aux deux personnes concernés par la transaction
                     $reply->user->notify(new TradeEnded($reply, auth()->user(), $reply->offer->user));

@@ -14,6 +14,10 @@ class Transaction extends Model
         'offer_id',
         'reply_user_id',
         'offer_user_id',
-        'amount',
+        'offer_amount',
+        'type',
+        'offer_name',
+        'offer_user_amount',
+        'reply_user_amount',
     ];
 }

@@ -5,7 +5,11 @@ namespace App\Providers;
 use App\Events\AddStudentEvent;
 use App\Events\AddReferentEvent;
 use App\Events\AddReplyEvent;
+use App\Events\AddCreditTransactionEvent;
+use App\Events\AddWithdrawTransactionEvent;
+use App\Listeners\InsertCreditTransactionListener;
 use App\Listeners\InsertNewReply;
+use App\Listeners\InsertWithdrawTransactionListener;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Auth\Events\Registered;
 use App\Listeners\InsertNewStudentListener;
@@ -32,6 +36,12 @@ class EventServiceProvider extends ServiceProvider
         ],
         AddReplyEvent::class => [
             InsertNewReply::class,
+        ],
+        AddWithdrawTransactionEvent::class => [
+            InsertWithdrawTransactionListener::class,
+        ],
+        AddCreditTransactionEvent::class => [
+            InsertCreditTransactionListener::class,
         ],
     ];
 

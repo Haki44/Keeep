@@ -14,7 +14,6 @@ class TransactionServiceProvider extends ServiceProvider
     public function register()
     {
         require_once app_path() . '/Helpers/Transactions/Balance.php';
-        require_once app_path() . '/Helpers/Transactions/TransactionHandling.php';
     }
 
     /**

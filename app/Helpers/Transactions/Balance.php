@@ -20,11 +20,6 @@ class Balance {
      */
     public function verify_user_balance($price, $user_balance): bool
     {
-        if($user_balance >= $price){
-            return true;
-        } else {
-            return false;
-        }
-
+        return $user_balance >= $price;
     }
 }
