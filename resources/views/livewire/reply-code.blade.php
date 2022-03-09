@@ -29,6 +29,9 @@
                                 </x-button>
                             </div>
                         <p class="p-2 text-xl">Vérifier que le code saisi correspond à celui qui vous a été donné.</p>
+                        @if ($reply->starting_code_count)
+                            <p class="p-2 text-xl text-red-600">Code invalide</p>
+                        @endif
                         <p class="p-2 text-xl">Il vous reste {{3 - $reply->starting_code_count}} essaies.</p>
                     </div>
                     {{-- 2e step quand le second code doit etre saisie pour finaliser la transaction --}}
@@ -48,6 +51,9 @@
                                 </x-button>
                             </div>
                         <p class="p-2 text-xl">Vérifier que le code saisi correspond à celui qui vous a été donné.</p>
+                        @if ($reply->ending_code_count)
+                            <p class="p-2 text-xl text-red-600">Code invalide</p>
+                        @endif
                         <p class="p-2 text-xl">Il vous reste {{3 - $reply->ending_code_count}} essaies.</p>
                     </div>
                     @elseif ($reply->user->id != Auth::user()->id && !is_null($reply->started_at) && is_null($reply->ended_at))

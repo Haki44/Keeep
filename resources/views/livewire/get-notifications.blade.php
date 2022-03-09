@@ -7,15 +7,15 @@
     </button>
     <ul x-show="open" class="absolute w-64 top-20 bg-white d-flex">
         @foreach($notifications as $notification)
-            @if(isset($notification->is_accepted))
-                @if($notification->is_accepted === 1)
+            @if (isset($notification->is_accepted))
+                @if ($notification->is_accepted === 1)
                     <li>
                         <a href="{{ route('offer.show', ['offer' => $notification->offer_id]) }}" class="w-64 bg-white border-b-2 border-gray-100 hover:bg-gray-100 p-5 cursor-pointer">
                             <strong> Votre offre a été acceptée</strong>
                         </a>
                     </li>
                 @endif
-                @if(!is_null($notification->deleted_at))
+                @if (!is_null($notification->deleted_at))
                         <li>
                             <a href="{{ route('offer.show', ['offer' => $notification->offer_id]) }}" class="w-64 bg-white border-b-2 border-gray-100 hover:bg-gray-100 p-5 cursor-pointer">
                                 <strong> Votre offre a été refusée</strong>
@@ -23,7 +23,7 @@
                         </li>
                 @endif
 
-            @elseif(isset($notification->from_id))
+            @elseif (isset($notification->from_id))
                 <li class="w-64 bg-white border-b-2 border-gray-100 hover:bg-gray-100 p-5 cursor-pointer">
                     <a href="">
                         <strong>Nouveau message</strong><br>{{ substr($notification->content, 0, 50) . ' ...'}}
