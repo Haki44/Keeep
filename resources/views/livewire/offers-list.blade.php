@@ -23,7 +23,7 @@
                                 <h3 class="text-xl">{{ $offer->name }}</h3>
                                 <p class="text-xs">
                                     {{-- Check si l'offre est a la date d'aujourd'hui ou non --}}
-                                    @if (date_format(new DateTime($offer->offer_day), 'Y-m-d') == date_format(new DateTime(), 'Y-m-d'))
+                                    @if (date_format(new DateTime($offer->offer_day), 'Y-m-d') <= date_format(new DateTime(), 'Y-m-d'))
                                         <span class="inline-flex items-center justify-center px-2 py-1 mr-2 text-xs font-bold leading-none text-white bg-green-400 rounded-full">Disponible</span></p>
                                     @else
                                         <span class="inline-flex items-center justify-center px-2 py-1 mr-2 text-xs font-bold leading-none text-white bg-orange-400 rounded-full">Bientôt disponible</span></p>
