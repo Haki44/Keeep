@@ -97,7 +97,7 @@ class ReplyCode extends Component
     public function endTransaction($data) {
 
         // Code valide
-        if (intval($data['code']) === intval($this->reply->ending_code)){
+        if (intval($data['code']) === intval($this->reply->ending_code)) {
             // On update la transaction pour qu'elle apparaisse terminé
             $this->reply->update(['ended_at' => Carbon::now()]);
 
