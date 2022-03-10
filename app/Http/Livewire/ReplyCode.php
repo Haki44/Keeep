@@ -43,7 +43,7 @@ class ReplyCode extends Component
         );
 
         // Entre si la 1ere étape de la transaction n'est pas terminé => saisie du 1er code
-        if ($this->reply->started_at === null){
+        if ($this->reply->started_at === null) {
 
             $this->startTransaction($data);
 
