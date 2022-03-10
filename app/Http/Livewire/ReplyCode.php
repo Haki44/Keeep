@@ -89,9 +89,7 @@ class ReplyCode extends Component
             return redirect()->route('reply.show', $this->reply->id)->with('danger', "Vous n'avez pas assez de kips pour cet échange :(");
         } else {
             // Incremente le compteur en cas d'echec
-            // Le ->increment() ne fonctionne pas ici pour une raison obscure j'ai fais des save, plein de test etc mais rien... si  quelqu'un arrive a le fix ;)
-            $this->reply->starting_code_count += 1;
-            $this->reply->save();
+            $$this->reply->increment('starting_code_count', 1);
         }
 
     }
@@ -113,9 +111,7 @@ class ReplyCode extends Component
             return redirect()->route('reply.show', $this->reply->id);
         } else {
             // Incremente le compteur en cas d'echec
-            // Le ->increment() ne fonctionne pas ici pour une raison obscure j'ai fais des save, plein de test etc mais rien... si  quelqu'un arrive a le fix ;)
-            $this->reply->ending_code_count += 1;
-            $this->reply->save();
+            $this->reply->increment('ending_code_count', 1);
         }
     }
 
