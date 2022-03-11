@@ -66,7 +66,7 @@ class ReplyController extends Controller
     public function store(Request $request, Offer $offer)
     {
         // Si l'offre n'a pas une tarification fixe, on vérifie puis on prend la quantité
-        if($offer->pricing !== 0) {
+        if ($offer->pricing !== 0) {
             $data = $request->validate(
                 [
                     'reply' => ['required', 'string'],
@@ -136,7 +136,7 @@ class ReplyController extends Controller
         $offer = Offer::find($reply->offer_id);
         $user_to = User::find($reply->user_id);
         // Status 1 => réponse accepté, 0 réponse refusé (le status étant a null de base)
-        if($status == 1) {
+        if ($status == 1) {
             // Verification pour etre sur qu'entre temps l'offre n'a pas été retiré ou déja accepté,
             // si une réponse du même utilisateur existe déjà, récupérer la réponse avec la transaction non terminée
             $check = Reply::where('offer_id', $reply->offer_id)->where('status', 1)->where('ended_at', null)->get();

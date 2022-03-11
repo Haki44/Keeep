@@ -16,7 +16,7 @@
             </div>
         </div>
         <hr>
-        <div class="flex flex-col md:flex-row @if($reply->offer->img != null) justify-start @else justify-center @endif pb-4 overflow-hidden bg-white shadow-sm">
+        <div class="flex flex-col md:flex-row @if ($reply->offer->img != null) justify-start @else justify-center @endif pb-4 overflow-hidden bg-white shadow-sm">
             @if ($reply->offer->img != null)
             <div class="pr-4 mx-auto md:mx-0">
                 <img class="w-80" src="{{$_ENV["APP_URL"]}}/img/{{$reply->offer->img}}" alt="{{$reply->offer->name}}">

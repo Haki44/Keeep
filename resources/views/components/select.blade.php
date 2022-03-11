@@ -6,7 +6,7 @@
     <div class="w-full">
         <select name="{{ $field }}" id="{{ $field }}" class="w-full rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 @error($field) is-invalid @enderror">
             @foreach ($values as $k => $v)
-                <option value="{{ $k }}" @if($k == (old($field) ?? $value)) selected @endif>{{ $v }}</option>
+                <option value="{{ $k }}" @if ($k == (old($field) ?? $value)) selected @endif>{{ $v }}</option>
             @endforeach
         </select>
         @error($field)
