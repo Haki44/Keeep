@@ -4,6 +4,7 @@ namespace App\Http\Livewire;
 
 use App\Events\AddCreditTransactionEvent;
 use App\Events\AddWithdrawTransactionEvent;
+use App\Notifications\AbortTrade;
 use Carbon\Carbon;
 use Livewire\Component;
 use App\Notifications\SendTradeEndCode;
@@ -116,8 +117,8 @@ class ReplyCode extends Component
     }
 
     public function abortTransaction() {
-        $this->reply->user->notify(new TradeEnded($this->reply, auth()->user(), $this->reply->offer->user));
-        $this->reply->offer->user->notify(new TradeEnded($this->reply, $this->reply->offer->user, $this->reply->user));
+        $this->reply->user->notify(new AbortTrade($this->reply, auth()->user(), $this->reply->offer->user));
+        $this->reply->offer->user->notify(new AbortTrade($this->reply, $this->reply->offer->user, $this->reply->user));
         $this->reply->delete();
         return redirect()->route('reply.index')->with('danger', "Vous avez saisie 3 code non valide, la transaction est annulé.");
     }
