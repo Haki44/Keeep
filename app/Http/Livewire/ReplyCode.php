@@ -75,7 +75,7 @@ class ReplyCode extends Component
         // Code valide
         if (intval($data['code']) === intval($this->reply->starting_code)) {
             // VSCode met TransactionsBalance en erreur car il recupere pas l'alias mais ca fonctionne bien
-            if (TransactionsBalance::verify_user_balance($this->reply->offer->price, $this->reply->user->kips)){
+            if (TransactionsBalance::verify_user_balance($this->reply->offer->price, $this->reply->user->kips)) {
 
                 $this->reply->update(['started_at' => Carbon::now()]);
 
