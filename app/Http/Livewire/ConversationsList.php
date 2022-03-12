@@ -16,8 +16,9 @@ class ConversationsList extends Component
         $users = PrivateMessage::where('from_id', auth()->user()->id)->orderBy('created_at')->distinct()->get();
         $users = $users->groupBy('to_id');
 
+
         return view('livewire.conversations-list', [
-            'users' => User::where('name', 'LIKE', "%{$this->search}%")->whereIn('id', $users)->get()
+            'users' => User::whereIn('id', $users)->get()
         ]);
     }
 }
