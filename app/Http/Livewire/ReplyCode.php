@@ -90,7 +90,7 @@ class ReplyCode extends Component
             return redirect()->route('reply.show', $this->reply->id)->with('danger', "Vous n'avez pas assez de kips pour cet échange :(");
         } else {
             // Incremente le compteur en cas d'echec
-            $$this->reply->increment('starting_code_count', 1);
+            $this->reply->increment('starting_code_count', 1);
         }
 
     }
