@@ -9,7 +9,7 @@
         <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg p-10 flex justify-center">
             <x-auth-validation-errors class="mb-4" :errors="$errors" />
 
-            <form class="w-full sm:w-2/3" method="POST" action="{{ route('offer.update', $offer->id) }}">
+            <form enctype="multipart/form-data" class="w-full sm:w-2/3" method="POST" action="{{ route('offer.update', $offer->id) }}">
                 @csrf
 
                 <!-- Name -->
@@ -17,6 +17,13 @@
                     <x-label for="name" value="Nom de l'offre *" />
 
                     <x-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name') ?? $offer->name" autofocus />
+                </div>
+
+                <!-- Photo -->
+                <div class="mt-4">
+                    <x-label for="img" value="Ajouter une photo" />
+
+                    <input type="file" accept="image/*" class="form-control" name="img" id="addFile">
                 </div>
 
                 <!-- Date du post de l'offre -->
