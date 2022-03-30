@@ -55,7 +55,8 @@ class OfferController extends Controller
             'offer_day' => 'required|date',
             'price' => 'required|numeric',
             'category_id' => 'required',
-            'pricing' => 'required'
+            'pricing' => 'required',
+            'img' => 'nullable',
         ],
         [
             'name.required' => 'Vous devez indiquer le nom de l\'offre',
@@ -67,6 +68,16 @@ class OfferController extends Controller
         );
 
         $data['user_id'] = auth()->user()->id;
+        
+        if(isset($data['img'])){
+            $filename = time() . '.' . $request->img->extension();
+
+            $data['img'] = $request->file('img')->storeAs(
+                $data['name'],
+                $filename,
+                'public'
+            ); 
+        };
 
         $offer = Offer::create($data);
 
@@ -116,7 +127,8 @@ class OfferController extends Controller
             'offer_day' => 'required|date',
             'price' => 'required|numeric',
             'category_id' => 'required',
-            'pricing' => 'required'
+            'pricing' => 'required',
+            'img' => 'nullable',
         ],
         [
             'name.required' => 'Vous devez indiquer le nom de l\'offre',
@@ -128,6 +140,15 @@ class OfferController extends Controller
         );
 
         $offer_id = $offer->id;
+
+        if(isset($data['img'])){
+            $filename = time() . '.' . $request->img->extension();
+            $data['img'] = $request->file('img')->storeAs(
+                $data['name'],
+                $filename,
+                'public'
+            );
+        }
 
         Offer::whereId($offer->id)->update($data);
 
