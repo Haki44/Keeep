@@ -41,7 +41,7 @@ class AuthServiceProvider extends ServiceProvider
 
         Gate::define('manage-offer', function (User $user, Offer $offer) {
             return $user->isAdmin() ||
-            ($user->id === $offer->user_id);
+            ($user->id == $offer->user_id);
         });
     }
 }
