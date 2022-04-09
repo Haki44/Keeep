@@ -47,9 +47,21 @@
                     </a>
                 @endif
 
-                <x-button class="ml-3">
-                    {{ __('Log in') }}
-                </x-button>
+                <x-card>
+                    <x-slot name="image">
+                        <a href="/">
+                            <x-application-logo class="w-20 h-20 fill-current text-gray-500" />
+                        </a>
+                    </x-slot>
+
+                    <div class="mb-4 text-sm text-gray-600" >
+                    <x-slot name="title" >
+                        Offre
+                    </x-slot>
+
+                    </div>
+
+                </x-card>
             </div>
         </form>
     </x-auth-card>
