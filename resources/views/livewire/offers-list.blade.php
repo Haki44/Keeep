@@ -16,28 +16,39 @@
 
         <div class="flex flex-wrap max-w-6xl mx-auto sm:px-6 lg:px-8 justify-evenly">
             @foreach ($offers as $offer)
-            <div class="w-1/4 h-auto m-1 overflow-hidden bg-white shadow-sm sm:rounded-lg">
-                <div class="h-full p-6 bg-white border-b border-gray-200">
-                        <div class="flex flex-col justify-between w-full h-full">
+            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg w-1/4 h-auto m-1">
+                <div class="bg-white border-b border-gray-200 h-full">
+                        <div class="w-full h-full flex flex-col justify-start">
                             <div>
-                                <h3 class="text-xl">{{ $offer->name }}</h3>
-                                <p class="text-xs">
-                                    {{-- Check si l'offre est a la date d'aujourd'hui ou non --}}
-                                    @if (date_format(new DateTime($offer->offer_day), 'Y-m-d') <= date_format(new DateTime(), 'Y-m-d'))
-                                        <span class="inline-flex items-center justify-center px-2 py-1 mr-2 text-xs font-bold leading-none text-white bg-green-400 rounded-full">Disponible</span></p>
-                                    @else
-                                        <span class="inline-flex items-center justify-center px-2 py-1 mr-2 text-xs font-bold leading-none text-white bg-orange-400 rounded-full">Bientôt disponible</span></p>
-                                    @endif
-                                <p class="mt-2">{{ substr($offer->description, 0, 30) }}...</p>
+                                @if ($offer->img != null)
+                                <div class="grid justify-items-center">
+                                    <img class="w-auto max-h-48" src="{{ Storage::url($offer->img) }}" alt="{{ $offer->name }}">
+                                </div>  
+                                @else
+                                <div>
+                                    <img class="w-auto" src="{{ asset('img/no_img.png') }}" alt="{{ $offer->name }}">
+                                </div>  
+                                @endif
                             </div>
-                            <div class="flex justify-between mt-2">
-                                <a href="{{ route('offer.show', $offer->id) }}" class="text-blue-500">Voir le detail</a>
-                                <h6 class="flex justify-end font-bold">{{ $offer->price }} kips 
-                                    @if ($offer->pricing != 0) / {{ $offer->pricing_name }} @endif 
-                                </h6>
-                            </div>
+                            <div>
+                                <div class="p-4">
+                                    <h3 class="text-xl">{{ $offer->name }}</h3>
+                                    <p class="text-xs">
+                                        {{-- Check si l'offre est a la date d'aujourd'hui ou non --}}
+                                        @if (date_format(new DateTime($offer->offer_day), 'Y-m-d') <= date_format(new DateTime(), 'Y-m-d'))
+                                            <span class="inline-flex items-center justify-center px-2 py-1 mr-2 text-xs font-bold leading-none text-white bg-green-400 rounded-full">Disponible</span></p>
+                                        @else
+                                            <span class="inline-flex items-center justify-center px-2 py-1 mr-2 text-xs font-bold leading-none text-white bg-orange-400 rounded-full">Bientôt disponible</span></p>
+                                        @endif
+                                    <p class="mt-2">{{ substr($offer->description, 0, 30) }}...</p>
+                                </div>
+            
+                                <div class="p-4 flex justify-between mt-2">
+                                    <a href="{{ route('offer.show', $offer->id) }}" class="text-blue-500">Voir le detail</a>
+                                    <h6 class="flex justify-end font-bold">{{ $offer->price }} kips @if ($offer->pricing !== 0)/ {{ $offer->pricing_name }}@endif</h6>
+                                </div>
                             @can('manage-offer', $offer)
-                                <div class="flex justify-between mt-2">
+                                <div class="p-4 flex justify-between mt-2">
                                     <div x-data="{ open{{ $offer->id }}: false }">
                                         <button x-on:click="open{{ $offer->id }} = true" class="text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Supprimer</button>
                                         <div x-show="open{{ $offer->id }}" class="fixed left-0 right-0 z-50 flex items-center justify-center overflow-x-hidden overflow-y-auto bg-black bg-opacity-25 h-modal md:h-full top-4 md:inset-0">
@@ -69,6 +80,7 @@
                                     <a href="{{ route('offer.edit', $offer->id) }}" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Modifier</a>
                                 </div>
                             @endcan
+                            </div>
                         </div>
 
                 </div>

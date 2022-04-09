@@ -17,9 +17,10 @@ class Offer extends Model
         'description',
         'offer_day',
         'price',
+        'img',
         'user_id',
         'category_id',
-        'pricing'
+        'pricing',  
     ];
 
     protected $casts = [
