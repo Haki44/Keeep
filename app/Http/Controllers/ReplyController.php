@@ -191,7 +191,7 @@ class ReplyController extends Controller
             // CS: J'ai changé car a la base il n'y avait pas de softdelete sur le Model.
             // Je l'ai mis car je l'utilise dans la methode refuse. Donc pour toujours supprimer sans softdelete le reply,
             // j'utilise le forceDelete()
-            $reply->forceDelete();
+            $reply->delete();
             $reply->user->notify(new CancelResponseNotification($reply));
 
             return redirect()->route('reply.index')->with('success', 'Votre réponse a bien été annulée !');

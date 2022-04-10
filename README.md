@@ -33,14 +33,14 @@ referent1@gmail.com / password
 referent2@gmail.com / password
 
 - étudiant 1
-etudiant1@gmail.com / password
+julie@gmail.com / password
 
 - étudiant 2
-etudiant2@gmail.com / password
+clement@gmail.com / password
 
 # Test d'un ajout Référent
 
-- php artisan migrate:refresh --seed
+- php artisan migrate:fresh --seed
 - Dans .env modifier : 
     * QUEUE_CONNECTION=database 
     * les données MAIL (par ceux de Mailtrap)
