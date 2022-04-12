@@ -16,75 +16,7 @@
 
         <div class="max-w-6xl mx-auto sm:px-6 lg:px-8 flex flex-wrap justify-evenly">
             @foreach ($offers as $offer)
-            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg w-1/4 h-auto m-1">
-                <div class="bg-white border-b border-gray-200 h-full">
-                        <div class="w-full h-full flex flex-col justify-start">
-                            <div>
-                                @if ($offer->img != null)
-                                <div class="grid justify-items-center">
-                                    <img class="w-auto max-h-48" src="{{ Storage::url($offer->img) }}" alt="{{ $offer->name }}">
-                                </div>  
-                                @else
-                                <div>
-                                    <img class="w-auto" src="{{ asset('img/no_img.png') }}" alt="{{ $offer->name }}">
-                                </div>  
-                                @endif
-                            </div>
-                            <div>
-                                <div class="p-4">
-                                    <h3 class="text-xl">{{ $offer->name }}</h3>
-                                    <p class="text-xs">
-                                        {{-- Check si l'offre est a la date d'aujourd'hui ou non --}}
-                                        @if (date_format(new DateTime($offer->offer_day), 'Y-m-d') <= date_format(new DateTime(), 'Y-m-d'))
-                                            <span class="inline-flex items-center justify-center px-2 py-1 mr-2 text-xs font-bold leading-none text-white bg-green-400 rounded-full">Disponible</span></p>
-                                        @else
-                                            <span class="inline-flex items-center justify-center px-2 py-1 mr-2 text-xs font-bold leading-none text-white bg-orange-400 rounded-full">Bientôt disponible</span></p>
-                                        @endif
-                                    <p class="mt-2">{{ substr($offer->description, 0, 30) }}...</p>
-                                </div>
-            
-                                <div class="p-4 flex justify-between mt-2">
-                                    <a href="{{ route('offer.show', $offer->id) }}" class="text-blue-500">Voir le detail</a>
-                                    <h6 class="flex justify-end font-bold">{{ $offer->price }} kips @if ($offer->pricing !== 0)/ {{ $offer->pricing_name }}@endif</h6>
-                                </div>
-                            @can('manage-offer', $offer)
-                                <div class="p-4 flex justify-between mt-2">
-                                    <div x-data="{ open{{ $offer->id }}: false }">
-                                        <button @click="open{{ $offer->id }} = true" class="text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Supprimer</button>
-                                        <div x-show="open{{ $offer->id }}" class="overflow-x-hidden overflow-y-auto fixed h-modal md:h-full top-4 left-0 right-0 md:inset-0 z-50 justify-center items-center flex bg-black bg-opacity-25">
-                                            <div class="relative w-full max-w-2xl px-4 h-full md:h-auto">
-                                                <!-- Modal content -->
-                                                <div class="bg-white rounded-lg shadow relative">
-                                                    <!-- Modal header -->
-                                                    <div class="flex items-start justify-between p-5 border-b rounded-t">
-                                                        <h3 class="text-xl lg:text-2xl font-semibold">
-                                                            Suppression
-                                                        </h3>
-                                                        <button @click="open{{ $offer->id }} = false" type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center">
-                                                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
-                                                        </button>
-                                                    </div>
-                                                    <!-- Modal body -->
-                                                    <div class="p-6 space-y-6">
-                                                        <p>Voulez-vous vraiment supprimer l'offre "{{ $offer->name }}" ?</p>
-                                                    </div>
-                                                    <!-- Modal footer -->
-                                                    <div class="flex space-x-2 items-center p-6 border-t border-gray-200 rounded-b">
-                                                        <a href="{{ route('offer.destroy', $offer->id) }}" class="text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Supprimer</a>
-                                                        <button @click="open{{ $offer->id }} = false" type="button" class="text-gray-900 hover:text-white border border-gray-800 hover:bg-gray-900 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Annuler</button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <a href="{{ route('offer.edit', $offer->id) }}" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Modifier</a>
-                                </div>
-                            @endcan
-                            </div>
-                        </div>
-
-                </div>
-            </div>
+                <x-card :offer="$offer"></x-card>
             @endforeach
         </div>
         <div>

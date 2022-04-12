@@ -25,9 +25,16 @@ module.exports = {
                     800: '#540ec5',
                     900: '#341074', 
                 }, 
-                yellow : '#F5b276'
+                yellow: {
+                    900: '#f5b276',
+                },
+            },
+            backgroundImage: {
+                'home-page': "url('/img/home-background.png')",
+                'footer-texture': "url('/img/footer-texture.png')",
             }
         },
+        
     },
 
     variants: {
