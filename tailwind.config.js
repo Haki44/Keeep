@@ -36,12 +36,17 @@ module.exports = {
         },
         
     },
-
+    theme: {
+        colors: {
+            'yellowkeeep': '#f5b276',
+        },
+    },
+    
     variants: {
         extend: {
             opacity: ['disabled'],
         },
     },
 
-    plugins: [require('@tailwindcss/forms')],
+
 };

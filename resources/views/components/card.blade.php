@@ -1,19 +1,15 @@
 @props(['offer' => 'null'])
 
-@php
-   
-@endphp
-
 <div class="max-w-sm w-full m-3 rounded-lg overflow-hidden shadow-lg">
   @if ($offer->img != null)
-  <div class="relative grid justify-items-center">
-      <img class="w-auto max-h-32" src="{{ Storage::url($offer->img) }}" alt="{{ $offer->name }}">
-  </div>  
+  <a href="{{ route('offer.show', $offer->id) }}" class="relative grid justify-items-center">
+      <img class="w-auto max-h-32" src="{{ Storage::path('public/'.$offer->img.'.jpg') }}" alt="{{ $offer->name }}"/>
+  </a>  
   @else
-  <div class="relative h-32 bg-purple-100 block text-center flex justify-center items-center">
-      <p>{{ $offer->name }}</p>
-      <hr class="absolute w-3.5 h-3.5 @if (date_format(new DateTime($offer->offer_day), 'Y-m-d') <= date_format(new DateTime(), 'Y-m-d')) bg-yellow-300 @else bg-green-500 @endif rounded-full top-5 right-5">
-    </div>  
+  <a href="{{ route('offer.show', $offer->id) }}" class="relative h-32 bg-purple-100 block text-center flex justify-center items-center">
+    <p class="text-xl uppercase">{{ $offer->name }}</p>
+    <hr class="absolute w-3.5 h-3.5 @if (date_format(new DateTime($offer->offer_day), 'Y-m-d') <= date_format(new DateTime(), 'Y-m-d')) bg-yellow-300 @else bg-green-500 @endif rounded-full top-5 right-5"/>
+  </a>  
   @endif    
   <div class="h-14 px-6 py-4">
     <h6 class="flex justify-between font-bold"> 

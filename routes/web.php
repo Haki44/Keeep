@@ -25,7 +25,7 @@ Route::get('/doc', function () {
 
 Route::get('/', function () {
     return view('welcome');
-});
+})->middleware('guest');
 
 Route::middleware('auth')->group(function() {
 

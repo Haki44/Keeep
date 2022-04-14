@@ -10,7 +10,6 @@
         "production": "mix --production"
     },
     "devDependencies": {
-        "@tailwindcss/forms": "^0.2.1",
         "alpinejs": "^2.8.2",
         "autoprefixer": "^10.4.0",
         "axios": "^0.21",
@@ -21,6 +20,6 @@
         "resolve-url-loader": "^4.0.0",
         "sass": "^1.43.2",
         "sass-loader": "^12.1.0",
-        "tailwindcss": "^3.0.23"
+        "tailwindcss": "^3.0.24"
     }
 }
