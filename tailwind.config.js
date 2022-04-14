@@ -40,6 +40,9 @@ module.exports = {
         colors: {
             'yellowkeeep': '#f5b276',
         },
+        backgroundColor: {
+            'yellowkeeep': '#f5b276',
+        }
     },
     
     variants: {

@@ -26,6 +26,6 @@
         {!! $icon !!}
     </i>   
 
-    <input type="{{$type}}" {{ $disabled ? 'disabled' : '' }} {!! $attributes->merge(['class' => 'w-full appearance-none border-0 border-b-2 border-gray-200 w-full py-2 px-5 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500 focus:text-yellowkeeep focus:ring-0']) !!}>
+    <input type="{{$type}}" {{ $disabled ? 'disabled' : '' }} {!! $attributes->merge(['class' => 'w-full appearance-none border-0 border-b-2 border-gray-200 w-full py-2 px-5 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-900 focus:text-yellowkeeep focus:ring-0']) !!}>
   
 </div>

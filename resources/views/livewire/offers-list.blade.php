@@ -2,7 +2,7 @@
     <div class="py-12">
         <div class="flex items-center justify-center">
             <div class="flex rounded mb-4 absolute top-0">
-                <x-search/>
+                {{-- <x-search/> --}}
             </div>
         </div>
 

@@ -547,6 +547,9 @@ Ensure the default browser behavior of the `hidden` attribute.
 .z-50 {
   z-index: 50;
 }
+.z-40 {
+  z-index: 40;
+}
 .order-1 {
   order: 1;
 }
@@ -1070,6 +1073,10 @@ Ensure the default browser behavior of the `hidden` attribute.
 .bg-cover {
   background-size: cover;
 }
+.object-cover {
+  -o-object-fit: cover;
+     object-fit: cover;
+}
 .p-5 {
   padding: 1.25rem;
 }
@@ -1271,6 +1278,9 @@ Ensure the default browser behavior of the `hidden` attribute.
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+.opacity-50 {
+  opacity: 0.5;
+}
 .opacity-0 {
   opacity: 0;
 }
@@ -1350,7 +1360,49 @@ Ensure the default browser behavior of the `hidden` attribute.
 }
 
 .custom-input {
-  color: red;
+  color: blue;
+}
+
+.control-input {
+  position: relative;
+  z-index: 1;
+  padding: 0 gap(m);
+  width: 100%;
+  height: 50px;
+  border: 1px solid #323262;
+  border-radius: 3px;
+  font-family: arial, sans-serif;
+  font-size: 1rem;
+  font-weight: regular;
+}
+.control-input[type=file] {
+  padding: 0 gap(m);
+}
+.control-input[type=file]::-webkit-file-upload-button {
+  visibility: hidden;
+  margin-left: 10px;
+  padding: 0;
+  height: 50px;
+  width: 0px;
+}
+
+.control-button {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  height: 50px;
+  width: 50px;
+  line-height: 0;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+  color: white;
+  background-color: #323262;
+  border-radius: 0 3px 3px 0;
+  font-family: arial, sans-serif;
+  font-size: 1rem;
+  font-weight: 800;
 }
 
 .hover\:bg-opacity-25:hover {

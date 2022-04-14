@@ -3,8 +3,10 @@
 <div class="max-w-sm w-full m-3 rounded-lg overflow-hidden shadow-lg">
   @if ($offer->img != null)
   <a href="{{ route('offer.show', $offer->id) }}" class="relative grid justify-items-center items-center">
-      <p class="text-xl uppercase absolute">{{ $offer->name }}</p>
-      <img class="object-cover max-h-32 w-full opacity-50" src="{{Storage::url($offer->img)}}" alt="{{ $offer->name }}"/>
+    <p class="z-10 text-xl uppercase absolute">{{ $offer->name }}</p>
+    <div class="bg-purple-400 h-full w-full opacity-50 absolute block"></div>
+    <img class="object-cover max-h-32 w-full opacity-50" src="{{Storage::url($offer->img)}}" alt="{{ $offer->name }}"/>
+    <hr class="absolute w-3.5 h-3.5 @if (date_format(new DateTime($offer->offer_day), 'Y-m-d') <= date_format(new DateTime(), 'Y-m-d')) bg-yellow-300 @else bg-green-500 @endif rounded-full top-5 right-5"/>
   </a>  
   @else
   <a href="{{ route('offer.show', $offer->id) }}" class="relative h-32 bg-purple-100 block text-center flex justify-center items-center">
@@ -26,12 +28,12 @@
       @can('manage-offer', $offer)
         <div class="flex justify-between" x-data="{ open{{ $offer->id }}: false }">
           <a class="mx-1 z-10" href="{{ route('offer.edit', $offer->id) }}">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <svg class="stroke-yellow-300" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path d="M15.232 5.232L18.768 8.768L15.232 5.232ZM16.732 3.732C17.2009 3.2631 17.8369 2.99967 18.5 2.99967C19.1631 2.99967 19.7991 3.2631 20.268 3.732C20.7369 4.2009 21.0003 4.83687 21.0003 5.5C21.0003 6.16313 20.7369 6.7991 20.268 7.268L6.5 21.036H3V17.464L16.732 3.732V3.732Z" stroke="#F5B276" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
           </a>
           <button class="mx-1 z-10" @click="open{{ $offer->id }} = true" type="button">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <svg class="stroke-yellow-300" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path d="M4 7H20M19 7L18.133 19.142C18.0971 19.6466 17.8713 20.1188 17.5011 20.4636C17.1309 20.8083 16.6439 21 16.138 21H7.862C7.35614 21 6.86907 20.8083 6.49889 20.4636C6.1287 20.1188 5.90292 19.6466 5.867 19.142L5 7H19ZM10 11V17V11ZM14 11V17V11ZM15 7V4C15 3.73478 14.8946 3.48043 14.7071 3.29289C14.5196 3.10536 14.2652 3 14 3H10C9.73478 3 9.48043 3.10536 9.29289 3.29289C9.10536 3.48043 9 3.73478 9 4V7H15Z" stroke="#F5B276" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
           </button>

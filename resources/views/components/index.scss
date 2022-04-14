@@ -1,3 +1,21 @@
 .custom-input{ 
-    color: red
+    color: blue;
+}
+$size: 50px;
+$gap: 10px;
+$borderRadius: 3px;
+
+// Color
+$primary: hsla(240, 33, 29, 1);
+$secondary: white;
+
+
+.control-input {
+    position: relative;
+    
+    &[type="file"] {
+        &::-webkit-file-upload-button {
+            visibility: hidden;
+        }
+    }		
 }
