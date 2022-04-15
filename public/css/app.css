@@ -634,14 +634,14 @@ Ensure the default browser behavior of the `hidden` attribute.
 .mt-2 {
   margin-top: 0.5rem;
 }
-.mr-2 {
-  margin-right: 0.5rem;
-}
 .mb-2 {
   margin-bottom: 0.5rem;
 }
 .ml-1 {
   margin-left: 0.25rem;
+}
+.mr-2 {
+  margin-right: 0.5rem;
 }
 .ml-2 {
   margin-left: 0.5rem;
@@ -733,14 +733,14 @@ Ensure the default browser behavior of the `hidden` attribute.
 .h-14 {
   height: 3.5rem;
 }
-.h-32 {
-  height: 8rem;
-}
 .h-3\.5 {
   height: 0.875rem;
 }
 .h-3 {
   height: 0.75rem;
+}
+.h-32 {
+  height: 8rem;
 }
 .h-auto {
   height: auto;
@@ -1067,6 +1067,10 @@ Ensure the default browser behavior of the `hidden` attribute.
 .border-solid {
   border-style: solid;
 }
+.bg-yellowkeeep {
+  --tw-bg-opacity: 1;
+  background-color: rgb(245 178 118 / var(--tw-bg-opacity));
+}
 .bg-opacity-25 {
   --tw-bg-opacity: 0.25;
 }
@@ -1220,13 +1224,13 @@ Ensure the default browser behavior of the `hidden` attribute.
   font-size: 1.5rem;
   line-height: 2rem;
 }
-.text-4xl {
-  font-size: 2.25rem;
-  line-height: 2.5rem;
-}
 .text-lg {
   font-size: 1.125rem;
   line-height: 1.75rem;
+}
+.text-4xl {
+  font-size: 2.25rem;
+  line-height: 2.5rem;
 }
 .text-3xl {
   font-size: 1.875rem;
@@ -1248,6 +1252,9 @@ Ensure the default browser behavior of the `hidden` attribute.
 }
 .font-bold {
   font-weight: 700;
+}
+.font-normal {
+  font-weight: 400;
 }
 .uppercase {
   text-transform: uppercase;
@@ -1359,54 +1366,15 @@ Ensure the default browser behavior of the `hidden` attribute.
   border-radius: 0.25rem;
 }
 
-.custom-input {
-  color: blue;
-}
-
 .control-input {
   position: relative;
-  z-index: 1;
-  padding: 0 gap(m);
-  width: 100%;
-  height: 50px;
-  border: 1px solid #323262;
-  border-radius: 3px;
-  font-family: arial, sans-serif;
-  font-size: 1rem;
-  font-weight: regular;
-}
-.control-input[type=file] {
-  padding: 0 gap(m);
 }
 .control-input[type=file]::-webkit-file-upload-button {
   visibility: hidden;
-  margin-left: 10px;
-  padding: 0;
-  height: 50px;
-  width: 0px;
 }
 
-.control-button {
-  position: absolute;
-  right: 0;
-  bottom: 0;
-  height: 50px;
-  width: 50px;
-  line-height: 0;
-  -webkit-user-select: none;
-     -moz-user-select: none;
-      -ms-user-select: none;
-          user-select: none;
-  color: white;
-  background-color: #323262;
-  border-radius: 0 3px 3px 0;
-  font-family: arial, sans-serif;
-  font-size: 1rem;
-  font-weight: 800;
-}
-
-.hover\:bg-opacity-25:hover {
-  --tw-bg-opacity: 0.25;
+.bg-yellowkeeep {
+  background-color: #F5B276;
 }
 
 .focus\:z-10:focus {

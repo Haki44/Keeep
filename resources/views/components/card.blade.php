@@ -6,12 +6,12 @@
     <p class="z-10 text-xl uppercase absolute">{{ $offer->name }}</p>
     <div class="bg-purple-400 h-full w-full opacity-50 absolute block"></div>
     <img class="object-cover max-h-32 w-full opacity-50" src="{{Storage::url($offer->img)}}" alt="{{ $offer->name }}"/>
-    <hr class="absolute w-3.5 h-3.5 @if (date_format(new DateTime($offer->offer_day), 'Y-m-d') <= date_format(new DateTime(), 'Y-m-d')) bg-yellow-300 @else bg-green-500 @endif rounded-full top-5 right-5"/>
+    <hr class="absolute w-3.5 h-3.5 @if (date_format(new DateTime($offer->offer_day), 'Y-m-d') <= date_format(new DateTime(), 'Y-m-d')) bg-yellowkeeep @else bg-green-500 @endif rounded-full top-5 right-5"/>
   </a>  
   @else
   <a href="{{ route('offer.show', $offer->id) }}" class="relative h-32 bg-purple-100 block text-center flex justify-center items-center">
     <p class="text-xl uppercase">{{ $offer->name }}</p>
-    <hr class="absolute w-3.5 h-3.5 @if (date_format(new DateTime($offer->offer_day), 'Y-m-d') <= date_format(new DateTime(), 'Y-m-d')) bg-yellow-300 @else bg-green-500 @endif rounded-full top-5 right-5"/>
+    <hr class="absolute w-3.5 h-3.5 @if (date_format(new DateTime($offer->offer_day), 'Y-m-d') <= date_format(new DateTime(), 'Y-m-d')) bg-yellowkeeep @else bg-green-500 @endif rounded-full top-5 right-5"/>
   </a>  
   @endif    
   <div class="h-14 px-6 py-4">
