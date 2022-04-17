@@ -31,7 +31,8 @@
 
 
                 @forelse ($offer->replies as $reply)
-                    <tr class="block bg-gray-300 border border-grey-500 md:border-none md:table-row">
+                    <x-reply :offer="$offer" :reply="$reply" />
+                    {{-- <tr class="block bg-gray-300 border border-grey-500 md:border-none md:table-row">
                         <td class="block w-1/5 p-2 text-left md:w-2/12 md:border md:border-grey-500 md:table-cell">{{ $reply->user->firstname }}</td>
                         <td class="block w-1/5 p-2 text-left md:w-2/12 md:border md:border-grey-500 md:table-cell">{{ $reply->user->name }}</td>
                         @if ($offer->pricing !== 0)
@@ -39,9 +40,9 @@
                         @endif
                         <td class="block w-full p-2 text-left md:border md:border-grey-500 md:table-cell md:w-4/12">{{ $reply->reply }}</td>
 
-                        @if ($reply->status === null)
+                        @if ($reply->status === null) --}}
                             {{-- En FullPage --}}
-                            <td class="hidden w-full p-2 text-left md:block md:w-1/12 md:border md:border-grey-500 md:table-cell">
+                            {{-- <td class="hidden w-full p-2 text-left md:block md:w-1/12 md:border md:border-grey-500 md:table-cell">
                                 <a href="{{route('reply.update', [$reply->id, 1])}}" class="block md:flex md:justify-center">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="#00561B">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
@@ -54,10 +55,10 @@
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
                                     </svg>
                                 </a>
-                            </td>
+                            </td> --}}
 
                         {{-- En Mobile --}}
-                        <td class="block w-full p-2 md:mt-2 md:hidden">
+                        {{-- <td class="block w-full p-2 md:mt-2 md:hidden">
                             <span class="inline-block w-1/3 font-bold md:hidden">Actions</span>
                             <span class="flex my-2">
                                 <a href="{{route('reply.update', [$reply->id,1])}}" class="flex w-1/2">
@@ -90,7 +91,7 @@
 
                         @endif
 
-                    </tr>
+                    </tr> --}}
                 @empty
                     <tr class="block bg-gray-300 border border-grey-500 md:border-none md:table-row">
                         <td colspan="4" class="block p-2 text-left md:border md:border-grey-500 md:table-cell">Pas de réponse pour le moment</td>

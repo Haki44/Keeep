@@ -1,0 +1,88 @@
+$purple: #341074;
+
+nav {
+    border-bottom: 3px solid $purple;
+}
+
+.purple {
+    background-color: $purple;
+}
+
+.color-purple {
+    color: $purple;
+}
+
+.orange {
+    background-color: #F5B276;
+}
+
+.green {
+    background-color: #4DAA54;
+}
+
+.red {
+    background-color: #CD1818;
+}
+
+.chat-message-right {
+    position: relative;
+
+    &::after {
+        content: '';
+        position: absolute;
+        bottom: 4px;
+        right: -4px;
+        width: 0;
+        height: 0;
+        border-right : 17px solid transparent;
+        border-bottom : 11px solid $purple;
+        border-left : 11px solid transparent;
+        z-index: -1;
+    }
+}
+.chat-message-left {
+    position: relative;
+
+    &::after {
+        content: '';
+        position: absolute;
+        bottom: 4px;
+        left: -4px;
+        width: 0;
+        height: 0;
+        border-right : 11px solid transparent;
+        border-bottom : 11px solid $purple;
+        border-left : 17px solid transparent;
+        z-index: -1;
+    }
+}
+
+.conversation-single {
+    border-bottom: 2px solid $purple;
+}
+
+.burger-menu {
+    h2 {
+        padding: 0 30px;
+        width: calc(100% - 30px);
+        text-align: center;
+        color: $purple;
+        text-transform: uppercase;
+        font-weight: bold;
+    }
+}
+
+.nav-mobile {
+    a {
+        position: relative;
+        &::after {
+            content: '';
+            position: absolute;
+            width: calc(100% - 1.75rem);
+            height: 1px;
+            background-color: $purple;
+            bottom: 0;
+            left: 0.75rem;
+        }
+    }
+}
