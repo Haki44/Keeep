@@ -88,9 +88,9 @@ class DatabaseSeeder extends Seeder
 
         // ETDUDIANTS
         $etudiant1 = User::create([
-            'name' => 'etudiant1',
-            'firstname' => 'Christopher',
-            'email'=>'etudiant1@gmail.com',
+            'name' => 'Charpentier',
+            'firstname' => 'Julie',
+            'email'=>'julie@gmail.com',
             'email_verified_at' => now(),
             'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
             'remember_token' => Str::random(10),
@@ -101,9 +101,9 @@ class DatabaseSeeder extends Seeder
         ]);
 
         $etudiant2 = User::create([
-            'name' => 'etudiant2',
-            'firstname' => 'Maxsense',
-            'email'=>'etudiant2@gmail.com',
+            'name' => 'Margand',
+            'firstname' => 'Clément',
+            'email'=>'clement@gmail.com',
             'email_verified_at' => now(),
             'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
             'remember_token' => Str::random(10),
@@ -119,6 +119,7 @@ class DatabaseSeeder extends Seeder
             'description' => 'Bonjour, je vous prete ma cafetiere qui n\'a jamais servi',
             'offer_day' => '2021-11-25',
             'price' => '15',
+            'pricing' => 0,
             'user_id' => $etudiant1->id,
             'category_id' => $utilitaire->id,
         ]);
@@ -126,8 +127,9 @@ class DatabaseSeeder extends Seeder
         Offer::create([
             'name' => 'Magnifique pelle',
             'description' => 'Hello je prete ma pelle si vous avez besoin d\'enterrer un cadavre',
-            'offer_day' => '2021-11-28',
+            'offer_day' => '2022-05-28',
             'price' => '18',
+            'pricing' => 0,
             'user_id' => $etudiant2->id,
             'category_id' => $jardin->id,
         ]);
@@ -137,6 +139,7 @@ class DatabaseSeeder extends Seeder
             'description' => 'Salut pour ceux qui vive dans la poussiere et qui n\'ont pas d\'aspi, bah j\'en ai un :)',
             'offer_day' => '2021-11-23',
             'price' => '24',
+            'pricing' => 0,
             'user_id' => $etudiant1->id,
             'category_id' => $electromenager->id,
         ]);
@@ -146,6 +149,7 @@ class DatabaseSeeder extends Seeder
             'description' => 'Je vous prete mon grille pain, il est rouge',
             'offer_day' => '2021-11-26',
             'price' => '8',
+            'pricing' => 1,
             'user_id' => $etudiant2->id,
             'category_id' => $electromenager->id,
         ]);
