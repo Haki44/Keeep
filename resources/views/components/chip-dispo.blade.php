@@ -1,11 +1,11 @@
 @props(['offerDay' => 'null'])
 
 @if (date_format(new DateTime($offerDay), 'Y-m-d') <= date_format(new DateTime(), 'Y-m-d')) 
-  <div class="bg-yellowkeeep p-2 rounded-full text-white">
-    Indisponible
+  <div class="w-32 bg-yellowkeeep p-2 rounded-full text-white">
+    <p class="text-center">Indisponible</p>
   </div>
 @else 
-  <div class="bg-green-500 p-2 rounded-full text-white">
-    Disponible
+  <div class="w-32 bg-green-500 p-2 rounded-full text-white">
+    <p class="text-center">Disponible</p>
   </div>
 @endif
