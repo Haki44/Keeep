@@ -1,4 +1,4 @@
-<div class="h-full d-flex justify-content-center border-bottom-1 relative ml-4" x-data="{ open:true}">
+<div class="h-full d-flex justify-content-center border-bottom-1 relative ml-4" x-data="{ open:false}">
     <button class="w-5 h-5 mr-3 mt-3 absolute top-22 d-flex" @click="open = !open">
         <div class="w-7 h-7 bg-red-600 d-flex text-white absolute rounded-full mb-3 -left-1 -top-1">{{$notifications->count()}}</div>
         <svg xmlns="http://www.w3.org/2000/svg" class="h-11 w-11 right-5 top-0" viewBox="0 0 20 20">
@@ -7,8 +7,8 @@
     </button>
     <ul x-show="open" class="absolute w-64 top-20 bg-white d-flex">
         @foreach($notifications as $notification)
-            @if (isset($notification->is_accepted))
-                @if ($notification->is_accepted === 1)
+            @if (isset($notification->status))
+                @if ($notification->status === 1)
                     <li>
                         <a href="{{ route('offer.show', ['offer' => $notification->offer_id]) }}" class="w-64 bg-white border-b-2 border-gray-100 hover:bg-gray-100 p-5 cursor-pointer">
                             <strong> Votre offre a été acceptée</strong>
