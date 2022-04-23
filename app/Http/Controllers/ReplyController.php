@@ -133,48 +133,55 @@ class ReplyController extends Controller
     public function update($id, $status)
     {
         $reply = Reply::find($id);
-        $offer = Offer::find($reply->offer_id);
-        $user_to = User::find($reply->user_id);
-        // Status 1 => réponse accepté, 0 réponse refusé (le status étant a null de base)
-        if ($status == 1) {
-            // Verification pour etre sur qu'entre temps l'offre n'a pas été retiré ou déja accepté,
-            // si une réponse du même utilisateur existe déjà, récupérer la réponse avec la transaction non terminée
-            $check = Reply::where('offer_id', $reply->offer_id)->where('status', 1)->where('ended_at', null)->get();
-
-            if ($check->count() < 1 ){
-
-                // On génère les codes
-                $starting_code = random_int(1000, 9999);
-                // On evite l'enventualité ou les 2 codes serait égaux
-                do {
-                    $ending_code = random_int(1000, 9999);
-                }while($ending_code === $starting_code);
-
-                Reply::where('id', $reply->id)->update([
-                    'status' => $status,
-                    'starting_code' => $starting_code,
-                    'ending_code' => $ending_code,
-                ]);
-
-                 // Envoie d'un mail
-                $reply->user->notify(new AcceptedOfferNotification($offer, auth()->user(), $reply, $user_to));
-                $reply->user->notify(new SendTradeCode($reply, auth()->user(), $starting_code));
-
-                return redirect()->route('reply.index')->with('success', 'Votre réponse a bien été acceptée !');
-            } else {
-                return redirect()->route('reply.index')->with('success', 'La réponse a déjà été acceptée :(');
-            }
+        
+        // Si la réponse n'existe pas, annulé
+        if (!$reply) {
+            // alors on renvoie un message d'erreur 
+            return redirect()->route('reply.index')->with('danger', 'Vous ne pouvez pas accepter/annulé la réponse, celle-ci a été annulé');
         } else {
 
-            // En cas de refus on update avec le refus (0 dans status)
-            Reply::where('id', $reply->id)->update([
-                'status' => $status,
-            ]);
+            $offer = Offer::find($reply->offer_id);
+            $user_to = User::find($reply->user_id);
+            // Status 1 => réponse accepté, 0 réponse refusé (le status étant a null de base)
+            if ($status == 1) {
+                // Verification pour etre sur qu'entre temps l'offre n'a pas été retiré ou déja accepté,
+                // si une réponse du même utilisateur existe déjà, récupérer la réponse avec la transaction non terminée
+                $check = Reply::where('offer_id', $reply->offer_id)->where('status', 1)->where('ended_at', null)->get();
 
-            // Envoie d'un mail
-            $reply->user->notify(new RefuseResponseNotification($reply));
+                if ($check->count() < 1 ) {
+
+                    // On génère les codes
+                    $starting_code = random_int(1000, 9999);
+                    // On evite l'enventualité ou les 2 codes serait égaux
+                    do {
+                        $ending_code = random_int(1000, 9999);
+                    } while ($ending_code === $starting_code);
+
+                    Reply::where('id', $reply->id)->update([
+                        'status' => $status,
+                        'starting_code' => $starting_code,
+                        'ending_code' => $ending_code,
+                    ]);
+
+                    // Envoie d'un mail
+                    $reply->user->notify(new AcceptedOfferNotification($offer, auth()->user(), $reply, $user_to));
+                    $reply->user->notify(new SendTradeCode($reply, auth()->user(), $starting_code));
+
+                    return redirect()->route('reply.index')->with('success', 'Votre réponse a bien été acceptée !');
+                } else {
+                    return redirect()->route('reply.index')->with('success', 'La réponse a déjà été acceptée :(');
+                }
+            } else {
+
+                // En cas de refus on update avec le refus (0 dans status)
+                Reply::where('id', $reply->id)->update([
+                    'status' => $status,
+                ]);
+
+                // Envoie d'un mail
+                $reply->user->notify(new RefuseResponseNotification($reply));
+            }
         }
-
 
 
     }
