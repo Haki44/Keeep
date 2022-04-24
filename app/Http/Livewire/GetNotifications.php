@@ -22,7 +22,8 @@ class GetNotifications extends Component
 
     }
 
-    public function switch_to_readed($id){
+    public function switch_to_readed($id)
+    {
 
         $private_message = PrivateMessage::find($id);
 
