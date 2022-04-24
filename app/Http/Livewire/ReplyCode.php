@@ -4,6 +4,7 @@ namespace App\Http\Livewire;
 
 use App\Events\AddCreditTransactionEvent;
 use App\Events\AddWithdrawTransactionEvent;
+use App\Models\Reply;
 use App\Notifications\AbortTrade;
 use Carbon\Carbon;
 use Livewire\Component;
@@ -91,6 +92,11 @@ class ReplyCode extends Component
         } else {
             // Incremente le compteur en cas d'echec
             $this->reply->increment('starting_code_count', 1);
+            
+            // Update du champ ending_code_count, sans ça n'incrémente pas le champ
+            Reply::where('id', $this->reply->id)->update([
+                'starting_code_count' => $this->reply->starting_code_count,
+            ]);
         }
 
     }
@@ -113,6 +119,11 @@ class ReplyCode extends Component
         } else {
             // Incremente le compteur en cas d'echec
             $this->reply->increment('ending_code_count', 1);
+
+            // Update du champ ending_code_count, sans ça n'incrémente pas le champ
+            Reply::where('id', $this->reply->id)->update([
+                'ending_code_count' => $this->reply->ending_code_count,
+            ]);
         }
     }
 
