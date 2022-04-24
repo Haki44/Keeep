@@ -10,32 +10,26 @@
     </button>
     <div x-show="open" class="absolute h-64 top-20 -right-5 w-64">
         <ul class="flex w-[100%] bg-white flex-col h-auto">
-            @foreach($replies as $reply)
-
-
-                @if (isset($reply->status))
-                    @if ($reply->status === 1)
+            @foreach($notifications as $notification)
+                @if (isset($notification->status))
+                    @if ($notification->status === 1)
                         <li class="w-[100%] bg-white flex flex-col border-b-2 border-gray-100 hover:bg-gray-100 p-5 cursor-pointer">
-                            <a href="{{ route('offer.show', ['offer' => $reply->offer_id]) }}">
+                            <a href="{{ route('offer.show', ['offer' => $notification->offer_id]) }}">
                                 <strong> Votre offre a été acceptée</strong>
                             </a>
                         </li>
                     @endif
-                    @if (!is_null($reply->deleted_at))
+                    @if (!is_null($notification->deleted_at))
                         <li class="w-[100%] bg-white flex flex-col border-b-2 border-gray-100 hover:bg-gray-100 p-5 cursor-pointer">
-                            <a href="{{ route('offer.show', ['offer' => $reply->offer_id]) }}">
+                            <a href="{{ route('offer.show', ['offer' => $notification->offer_id]) }}">
                                 <strong> Votre offre a été refusée</strong>
                             </a>
                         </li>
                     @endif
                 @endif
-            @endforeach
-            @foreach($privates_messages as $private_message)
-                @if (is_null($private_message->is_readed))
-                    <li class="w-[100%] bg-white flex flex-col border-b-2 border-gray-100 hover:bg-gray-100 p-5 cursor-pointer" wire:click.prevent="switch_to_readed({{ $private_message->id }})">
-                        <a href="{{ route('private_message.index', ['offer' => $reply->offer_id, 'user' => 4]) }}">
-                            <strong>Nouveau message</strong><br>{{ substr($private_message->content, 0, 50) . ' ...'}}
-                        </a>
+                @if ($notification->is_readed === null && $notification->to_id)
+                    <li class="w-[100%] bg-white flex flex-col border-b-2 border-gray-100 hover:bg-gray-100 p-5 cursor-pointer" wire:click.prevent="switch_to_readed({{ $notification->id }})">
+                        <strong>Nouveau message</strong><br>{{ substr($notification->content, 0, 50) . ' ...'}}
                     </li>
                 @endif
             @endforeach

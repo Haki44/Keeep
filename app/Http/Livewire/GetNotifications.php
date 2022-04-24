@@ -16,8 +16,7 @@ class GetNotifications extends Component
         $replies = Reply::where('user_id', auth()->user()->id)->get();
 
         return view('livewire.get-notifications', [
-            'replies' => $replies,
-            'privates_messages' => $private_messages,
+            'notifications' => [...$private_messages, ...$replies],
             'notification_count' => count($private_messages) + count($replies)
             ]);
 
