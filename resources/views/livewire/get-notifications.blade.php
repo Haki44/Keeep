@@ -10,7 +10,7 @@
     </button>
     <div x-show="open" class="absolute h-64 top-20 -right-5 w-64">
         <ul class="flex w-[100%] bg-white flex-col h-auto">
-            @foreach($notifications as $notification)
+            @foreach ($notifications as $notification)
                 @if (isset($notification->status))
                     @if ($notification->status === 1)
                         <li class="w-[100%] bg-white flex flex-col border-b-2 border-gray-100 hover:bg-gray-100 p-5 cursor-pointer">
