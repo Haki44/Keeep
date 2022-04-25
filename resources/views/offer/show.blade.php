@@ -9,6 +9,7 @@
         <div class="flex flex-wrap justify-center pt-2 pb-10 overflow-hidden bg-white shadow-sm">
             <div class="flex-column">
                 <p class="p-1 text-4xl font-semi-bold">Nom : {{ $offer->user->firstname }} {{ $offer->user->name[0] }}.  de {{$offer->user->school->name}}</p>
+                <x-chip-dispo offerDay='{{$offer->offer_day}}'></x-chip-dispo>
             </div>
         </div>
         <hr>
@@ -25,8 +26,10 @@
                     <p class="p-2 text-xl">Prix : {{ $offer->price }} Kips @if ($offer->pricing != 0)/ {{ $offer->pricing_name }}@endif</p>
                     <p class="p-2 text-xl">Disponible le  : {{ date('d/m/Y', strtotime($offer->offer_day)) }}</p>
                     <div class="flex flex-col items-center p-2"  x-data="{ open:{{$errors->isEmpty() ? 'false' :'open'}} }">
-                        @if ($offer->user_id != auth()->user()->id)
-                            <a href="{{ route('private_message.create', $offer->id) }}" class="mr-2 mb-2 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-lg px-5 py-2.5 text-center">Contacter {{ $offer->user->firstname }} pour + de précisions</a>
+
+                        @if ($offer->user_id !== auth()->user()->id)
+                            {{-- <a href="{{ route('private_message.create', $offer->id) }}" class="mr-2 mb-2 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-lg px-5 py-2.5 text-center">Contacter {{ $offer->user->firstname }} pour + de précisions</a> --}}
+                            <x-button color="purple" route="{{route('private_message.create', $offer->id)}}" paramRoute="{{$offer->id}}">Contacter {{ $offer->user->firstname }} pour + de précisions</x-button>
                             @if (!is_null($reply) && is_null($reply->status))
                                 <form  method="POST" action="{{ route('reply.destroy', $reply->id) }}">
                                     @csrf
@@ -48,7 +51,8 @@
                                     <p>Vous n'avez pas assez de Kips !</p>
                                 </div>
                             @else
-                                <a href="#" @click="open = !open" class="mb-2 text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-lg px-5 py-2.5 text-center">Acheter ( {{ $offer->price }} kips  @if ($offer->pricing != 0)/ {{ $offer->pricing_name }}@endif)</a>
+                                <x-button  type="click" price="{{$offer->price}}"></x-button>
+                                {{-- <a href="#" @click="open = !open" class="mb-2 text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-lg px-5 py-2.5 text-center">Acheter ( {{ $offer->price }} kips  @if ($offer->pricing !== 0)/ {{ $offer->pricing_name }}@endif)</a> --}}
                             @endif
 
                             <div x-show="open" class="w-full sm:w-2/3">

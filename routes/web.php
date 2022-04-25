@@ -23,6 +23,10 @@ Route::get('/doc', function () {
     return view('documentation');
 })->name('documentation');
 
+Route::get('/', function () {
+    return view('welcome');
+})->middleware('guest');
+
 Route::middleware('auth')->group(function() {
 
     // REFERENTS
@@ -37,9 +41,6 @@ Route::middleware('auth')->group(function() {
         Route::post('/students', [StudentController::class, 'store'])->name('student.store');
     });
 
-    Route::get('/', function () {
-        return view('welcome');
-    });
 
     // OFFERS
     // Route::middleware('can:student')->group(function () {

@@ -12,14 +12,20 @@ module.exports = {
             fontFamily: {
                 sans: ['Nunito', ...defaultTheme.fontFamily.sans],
             },
+    
+            backgroundImage: {
+                'home-page': "url('/img/home-background.png')",
+                'footer-texture': "url('/img/footer-texture.png')",
+            }
         },
+        
     },
-
+    
     variants: {
         extend: {
             opacity: ['disabled'],
         },
     },
 
-    plugins: [require('@tailwindcss/forms')],
+
 };

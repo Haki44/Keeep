@@ -1,0 +1,12 @@
+.control-input {
+    position: relative;
+    
+    &[type="file"] {
+        &::-webkit-file-upload-button {
+            visibility: hidden;
+        }
+    }		
+}
+.bg-yellowkeeep {
+    background-color: #F5B276;
+}

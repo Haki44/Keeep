@@ -1,4 +1,4 @@
-<x-guest-layout>
+<x-guest-layout class="">
     <x-auth-card>
         <x-slot name="logo">
             <a href="/">
@@ -19,7 +19,7 @@
             <div>
                 <x-label for="email" :value="__('Email')" />
 
-                <x-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autofocus />
+                <x-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autofocus input_type="description" placeholder="Votre email"/>            
             </div>
 
             <!-- Password -->
@@ -46,10 +46,8 @@
                         {{ __('Forgot your password?') }}
                     </a>
                 @endif
-
-                <x-button class="ml-3">
-                    {{ __('Log in') }}
-                </x-button>
+                
+                <x-button type="submit" color="purple">Log in</x-button>
             </div>
         </form>
     </x-auth-card>
