@@ -6,13 +6,13 @@
             </div>
         </div>
 
-        <div class="max-w-6xl mx-auto sm:px-6 lg:px-8 flex flex-wrap justify-evenly">
+        <div class="flex flex-wrap max-w-6xl mx-auto sm:px-6 lg:px-8 justify-evenly">
             @foreach ($offers as $offer)
                 <x-card :offer="$offer"></x-card>
             @endforeach
         </div>
         <div>
-            <div class="w-screen flex justify-center mt-5">
+            <div class="flex justify-center w-screen mt-5">
                 {{ $offers->links() }}
             </div>
         </div>

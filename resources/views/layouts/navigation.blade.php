@@ -61,12 +61,12 @@
                 </div>
             </div>
             <div class="hidden sm:flex sm:items-center sm:ml-6">
-                <div class="text-sm font-medium text-gray-500 pr-5">{{ Auth::user()->kips }} kips</div>
+                <div class="pr-5 text-sm font-medium text-gray-500">{{ Auth::user()->kips }} kips</div>
 
                 <x-dropdown align="bottom" width="48">
                     <x-slot name="trigger">
                         <button class="flex items-center text-sm font-medium text-gray-500 transition duration-150 ease-in-out hover:text-gray-700 hover:border-gray-300 focus:outline-none focus:text-gray-700 focus:border-gray-300">
-                            <div>{{ Auth::user()->name }}</div>
+                            <div>{{ Auth::user()->firstname }}</div>
 
                             <div class="ml-1">
                                 <svg class="w-4 h-4 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
