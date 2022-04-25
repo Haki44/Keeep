@@ -1,12 +1,12 @@
-@props(['disabled' => false, 'label', 'placeholder' => 'Votre email', 'input_type' => 'email', 'type' => null])
+@props(['disabled' => false, 'label' => 'email', 'type' => null])
 
 @php
-    switch ($input_type) {
+    switch ($label) {
         case 'email':
             $icon = '<svg class="h-4 w-4 text-black"  width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">  <path stroke="none" d="M0 0h24v24H0z"/>  <rect x="3" y="5" width="18" height="14" rx="2" />  <polyline points="3 7 12 13 21 7" /></svg>';
             break;
         case 'password':
-            $icon = '<svg class="h-4 w-4 text-black"  fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 10h16M4 14h16M4 18h16"/></svg>';
+            $icon = '<svg class="h-4 w-4 text-black"  fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z"/></svg>';
             break;
         case 'description':
             $icon = '<svg class="h-4 w-4 text-black"  fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 10h16M4 14h16M4 18h16"/></svg>';

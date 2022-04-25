@@ -16,7 +16,7 @@
                 <div class="mt-4">
                     <x-label for="name" value="Nom de l'offre *" />
 
-                    <x-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name')" autofocus />
+                    <x-input id="name" label="profil" class="block mt-1 w-full" type="text" name="name" :value="old('name')" autofocus />
                 </div>
 
                 <!-- Photo -->
