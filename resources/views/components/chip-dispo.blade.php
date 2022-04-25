@@ -1,5 +1,5 @@
 @props(['offerDay' => null])
-{{-- commentaire date --}}
+{{-- Format date offer : YY-MM-DD HH-MM-SS --}}
 @if (date_format(new DateTime($offerDay), 'Y-m-d') >= date_format(new DateTime(), 'Y-m-d')) 
   <div class="w-32 bg-yellowkeeep p-2 rounded-full text-white">
     <p class="text-center">Indisponible</p>
