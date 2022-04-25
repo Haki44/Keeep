@@ -1,8 +1,8 @@
 <div>
-    <div class="py-12">
+    <div class="py-5">
         <div class="flex items-center justify-center">
-            <div class="flex rounded mb-4 absolute top-0">
-                {{-- <x-search/> --}}
+            <div class="flex rounded mb-4 top-0">
+                <x-search/>
             </div>
         </div>
 

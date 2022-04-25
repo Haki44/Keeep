@@ -23,7 +23,7 @@
                 <div class="mt-4">
                     <x-label for="img" value="Ajouter une photo" />
 
-                    <x-input-field type="file" accept="image/*" class="form-control" name="img" id="addFile"/>
+                    <x-input-field />
                 </div>
 
                 <!-- Date du post de l'offre -->
