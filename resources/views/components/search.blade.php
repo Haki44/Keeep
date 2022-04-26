@@ -1,15 +1,14 @@
-        
-<div class="flex justify-end h-20 w-screen relative">
+@props(['model' => null])
+
+<div class="relative flex justify-end w-screen h-20">
     <div class="">
-        {{-- <div x-show="dropdownOpen" class="right-0 mt-2 bg-white shadow-lg overflow-hidden w-screen"> --}}
-            <div class="top-0 bg-purple-900 absolute h-20 w-screen left-0 text-white text-center flex items-center justify-center text-xl pb-5">
-                Que recherchez-vous ?
+        <div class="absolute top-0 left-0 flex items-center justify-center w-screen h-20 pb-5 text-xl text-center text-white bg-purple-900">
+            Que recherchez-vous ?
+        </div>
+        <div class="absolute left-0 flex justify-center w-screen top-12">
+            <div class="py-2">
+                <input type="text" class="px-4 py-2 border-2 border-purple-900 w-80 focus:ring-purple-400 focus:border-purple-400" placeholder="Rechercher une offre..." wire:model.debounce.500ms={{ $model }}>
             </div>
-            <div class="absolute flex justify-center w-screen left-0 top-12">
-                <div class="py-2">
-                    <input type="text" class="border-2 border-purple-900 px-4 py-2 w-80 focus:ring-purple-400 focus:border-purple-400" placeholder="Rechercher une offre..." wire:model.debounce.500ms="search">
-                </div>
-            </div>
-        {{-- </div> --}}
+        </div>
     </div>
 </div>
