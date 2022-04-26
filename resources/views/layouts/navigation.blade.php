@@ -90,7 +90,7 @@
 
                 <livewire:get-notifications />
             </div>
-
+            {{-- <x-search></x-search> --}}
             <!-- Hamburger -->
             <div class="burger-menu flex items-center -mr-2 w-full relative sm:hidden">
                 <button @click="open = ! open" class="absolute inline-flex items-center justify-center text-gray-400 transition duration-150 ease-in-out rounded-md hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 focus:text-gray-500">
