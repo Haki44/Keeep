@@ -116,6 +116,10 @@
                 {{ __('Créer une offre') }}
             </x-responsive-nav-link>
 
+            <x-responsive-nav-link :href="route('offer.myoffers')" :active="request()->routeIs('offer.myoffers')">
+                {{ __('Mes offres') }}
+            </x-responsive-nav-link>
+
             <a href="{{ route('reply.index') }}" class="{{ request()->routeIs('reply.index') ? 'uppercase color-purple block pl-3 pr-4 py-4 text-center font-medium bg-indigo-50 focus:outline-none focus:text-indigo-800 focus:bg-indigo-100 focus:border-indigo-700 transition duration-150 ease-in-out' : 'uppercase color-purple block pl-3 pr-4 py-4 text-center font-medium hover:text-gray-800 hover:bg-gray-50 hover:border-gray-300 focus:outline-none focus:text-gray-800 focus:bg-gray-50 focus:border-gray-300 transition duration-150 ease-in-out' }}">
 
                 <span>Réponses</span>
@@ -132,7 +136,7 @@
             </x-responsive-nav-link>
 
             <x-responsive-nav-link :href="route('private_message.list')" :active="request()->routeIs('private_message.list')">
-                {{ __('Méssagerie') }}
+                {{ __('Messagerie') }}
             </x-responsive-nav-link>
 
             @can('admin')
