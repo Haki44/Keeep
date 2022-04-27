@@ -1,12 +1,32 @@
 .control-input {
     position: relative;
-    
+
     &[type="file"] {
         &::-webkit-file-upload-button {
             visibility: hidden;
         }
-    }		
+    }
 }
 .bg-yellowkeeep {
     background-color: #F5B276;
+}
+
+.bg-yellowkeeep-btn {
+    background-color: #F5B276;
+}
+
+.bg-yellowkeeep-btn:hover {
+    background-color: #ff9e4a;
+}
+
+.bg-yellowkeeep-disabled {
+    background-color: #ffdab9;
+}
+
+.bg-purple-keeep{
+    background-color: #4a1d96;
+}
+
+.purple-keeep{
+    color: #4a1d96;
 }

@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="text-xl font-semibold leading-tight text-gray-800">
-            Liste des réponses à mes offres
+            Réponses à mes offres
         </h2>
     </x-slot>
 
@@ -9,96 +9,50 @@
 
         <div class="p-5 overflow-hidden bg-white shadow-sm lg:p-10 sm:rounded-lg">
 
-
             @forelse ($offers as $offer)
-                <p class="my-2 text-2xl font-bold">Offre : <span class="underline">{{ $offer->name }}</span></p>
+                <div class="flex flex-wrap justify-center">
+                    <p class="my-2 text-2xl font-bold">Offre : {{ $offer->name }}</p>
+                </div>
+                    <div class="flex flex-wrap justify-center">
+                        @forelse ($offer->replies as $reply)
 
-                    <table class="block min-w-full mb-5 border-collapse md:table">
-                        @if (count($offer->replies) != 0)
-                            <thead class="block md:table-header-group">
-                            <tr class="absolute block border border-grey-500 md:border-none md:table-row -top-full md:top-auto -left-full md:left-auto md:relative ">
-                                <th class="block p-2 font-bold text-left text-white bg-indigo-600 md:w-2/12 md:border md:border-grey-500 md:table-cell">Prénom</th>
-                                <th class="p-2 font-bold text-left text-white bg-indigo-600 md:w-2/12 justify-centerblock md:border md:border-grey-500 md:table-cell">Nom</th>
-                                @if ($offer->pricing !== 0)
-                                    <th class="p-2 font-bold text-left text-white bg-indigo-600 md:w-2/12 justify-centerblock md:border md:border-grey-500 md:table-cell">Quantité</th>
-                                @endif
-                                <th class="block p-2 font-bold text-left text-white bg-indigo-600 md:border md:border-grey-500 md:table-cell md:w-4/12">Message</th>
-                                <th colspan="2" class="block p-2 font-bold text-left text-white bg-indigo-600 md:w-2/12 md:text-center md:border md:border-grey-500 md:table-cell">Actions</th>
-                            </tr>
-                            </thead>
-                        @endif
-                        <tbody class="block md:table-row-group">
+                            <div class="m-3 w-11/12 max-w-sm bg-white rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700">
+                                <div class="px-4 pt-4 flex flex-col items-center pb-10">
+                                    <h5 class="m-2 text-xl font-medium text-gray-900 dark:text-white">{{ $reply->user->firstname }} {{ $reply->user->name }}</h5>
+                                    <span class="m-2 text-sm text-gray-500 dark:text-gray-400">{{ $reply->reply }}</span>
+                                    @if ($offer->pricing !== 0)
+                                        <p class="text-sm text-gray-500 dark:text-gray-400" >{{ $reply->quantity }} {{ $reply->quantity > 1 ? $offer->pricing_name . 's' : $offer->pricing_name }}</p>
+                                    @endif
 
+                                    @if ($reply->status === null)
+                                    <div class="m-2 flex mt-4 space-x-3 lg:mt-6">
+                                        <a href="{{route('reply.update', [$reply->id,1])}}" class="inline-flex items-center py-2 px-4 text-sm font-medium text-center text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-blue-800">Accepter</a>
+                                        <a href="{{ route('reply.update', [$reply->id, 0]) }}" class="inline-flex items-center py-2 px-4 text-sm font-medium text-center text-gray-900 bg-yellowkeeep-btn focus:ring-4 focus:outline-none focus:ring-gray-200">Refuser</a>
+                                    </div>
 
-                @forelse ($offer->replies as $reply)
-                    <tr class="block bg-gray-300 border border-grey-500 md:border-none md:table-row">
-                        <td class="block w-1/5 p-2 text-left md:w-2/12 md:border md:border-grey-500 md:table-cell">{{ $reply->user->firstname }}</td>
-                        <td class="block w-1/5 p-2 text-left md:w-2/12 md:border md:border-grey-500 md:table-cell">{{ $reply->user->name }}</td>
-                        @if ($offer->pricing !== 0)
-                            <td class="block w-1/5 p-2 text-left md:w-2/12 md:border md:border-grey-500 md:table-cell">{{ $reply->quantity }} {{ $reply->quantity > 1 ? $offer->pricing_name . 's' : $offer->pricing_name }}</td>
-                        @endif
-                        <td class="block w-full p-2 text-left md:border md:border-grey-500 md:table-cell md:w-4/12">{{ $reply->reply }}</td>
+                                    @elseif ($reply->status === 0)
 
-                        @if ($reply->status === null)
-                            {{-- En FullPage --}}
-                            <td class="hidden w-full p-2 text-left md:block md:w-1/12 md:border md:border-grey-500 md:table-cell">
-                                <a href="{{route('reply.update', [$reply->id, 1])}}" class="block md:flex md:justify-center">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="#00561B">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
-                                    </svg>
-                                </a>
-                            </td>
-                            <td class="hidden w-full p-2 text-left md:block md:w-1/12 md:border md:border-grey-500 md:table-cell">
-                                <a href="{{route('reply.update', [$reply->id, 0])}}" onclick="return confirm('Est-vous sur de refuser {{ $offer->name }} à {{ $reply->user->firstname }} ?')" class="block md:flex md:justify-center">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="#f00020">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-                                    </svg>
-                                </a>
-                            </td>
+                                    <p class="m-2 inline-flex items-center py-2 px-4 text-sm font-medium text-center text-gray-900 bg-yellowkeeep-disabled focus:ring-4 focus:outline-none focus:ring-gray-200">
+                                            Offre refusée
+                                    </p>
 
-                        {{-- En Mobile --}}
-                        <td class="block w-full p-2 md:mt-2 md:hidden">
-                            <span class="inline-block w-1/3 font-bold md:hidden">Actions</span>
-                            <span class="flex my-2">
-                                <a href="{{route('reply.update', [$reply->id,1])}}" class="flex w-1/2">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="#00561B">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
-                                    </svg>
-                                    Accepter
-                                </a>
+                                    @elseif ($reply->status === 1)
 
-                                <a href="{{ route('reply.update', [$reply->id, 0]) }}" class="flex w-1/2" onclick="return confirm('Est-vous sur de refuser {{ $offer->name }} à {{ $reply->user->firstname }} ?')">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="#f00020">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-                                    </svg>
-                                    Refuser
-                                </a>
-                            </span>
-                        </td>
+                                    <a href="{{route('reply.show', $reply->id)}}" class="m-2 inline-flex items-center py-2 px-4 text-sm font-medium text-center text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-blue-800">Voir les détails de la transaction</a>
 
-                        @elseif ($reply->status === 0)
+                                    @endif
 
-                        <td class="w-full p-2 text-left md:block md:w-2/12 md:border md:border-grey-500 md:table-cell">
-                                Offre refusée
-                        </td>
-
-                        @elseif ($reply->status === 1)
-
-                        <td class="w-full p-2 text-left md:block md:w-2/12 md:border md:border-grey-500 md:table-cell">
-                            <a href="{{route('reply.show', $reply->id)}}" class="text-white block bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Voir les détails de la transaction</a>
-                        </td>
-
-                        @endif
-
-                    </tr>
-                @empty
-                    <tr class="block bg-gray-300 border border-grey-500 md:border-none md:table-row">
-                        <td colspan="4" class="block p-2 text-left md:border md:border-grey-500 md:table-cell">Pas de réponse pour le moment</td>
-                    </tr>
-                @endforelse
-                    </tbody>
-                </table>
-
+                                </div>
+                            </div>
+                        @empty
+                        <div class="m-3 w-11/12 max-w-sm bg-white rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700">
+                            <div class="px-4 pt-4 flex flex-col items-center pb-10">
+                                <h5 class="mb-1 text-xl font-medium text-gray-900 dark:text-white">Pas de réponses pour le moment</h5>
+                            </div>
+                        </div>
+                        @endforelse
+                    </div>
+            <hr class="m-3">
             @empty
                 <p>Vous ne proposez pas d'offres pour le moment</p>
             @endforelse
