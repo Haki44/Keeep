@@ -66,9 +66,8 @@ class OfferController extends Controller
             'price.required' => 'Vous devez indiquer un prix à votre offre',
         ]
         );
-
         $data['user_id'] = auth()->user()->id;
-        
+
         if(isset($data['img'])){
             $filename = time() . '.' . $request->img->extension();
 
@@ -76,7 +75,7 @@ class OfferController extends Controller
                 $data['name'],
                 $filename,
                 'public'
-            ); 
+            );
         };
 
         $offer = Offer::create($data);
@@ -151,7 +150,6 @@ class OfferController extends Controller
         }
 
         Offer::whereId($offer->id)->update($data);
-
         return redirect()->route('offer.show', $offer_id);
     }
 
@@ -164,7 +162,6 @@ class OfferController extends Controller
     public function destroy(Offer $offer)
     {
         Offer::find($offer->id)->delete();
-
         return redirect()->route('dashboard');
     }
 }

@@ -526,14 +526,14 @@ samp {
  *    CSS Remedy, with `svg` added as well.
  *
  *    https://github.com/mozdevs/cssremedy/issues/14
- * 
+ *
  * 2. Add `vertical-align: middle` to align replaced elements more
  *    sensibly by default when overriding `display` by adding a
  *    utility like `inline`.
  *
  *    This can trigger a poorly considered linting error in some
  *    tools but is included by design.
- * 
+ *
  *    https://github.com/jensimmons/cssremedy/issues/14#issuecomment-634934210
  */
 
@@ -31969,91 +31969,6 @@ video {
   border-radius: 0.25rem;
 }
 
-nav {
-  border-bottom: 3px solid #341074;
-}
-
-.purple {
-  background-color: #341074;
-}
-
-.color-purple {
-  color: #341074;
-}
-
-.orange {
-  background-color: #F5B276;
-}
-
-.green {
-  background-color: #4DAA54;
-}
-
-.red {
-  background-color: #CD1818;
-}
-
-.chat-message-right {
-  position: relative;
-}
-
-.chat-message-right::after {
-  content: "";
-  position: absolute;
-  bottom: 4px;
-  right: -4px;
-  width: 0;
-  height: 0;
-  border-right: 17px solid transparent;
-  border-bottom: 11px solid #341074;
-  border-left: 11px solid transparent;
-  z-index: -1;
-}
-
-.chat-message-left {
-  position: relative;
-}
-
-.chat-message-left::after {
-  content: "";
-  position: absolute;
-  bottom: 4px;
-  left: -4px;
-  width: 0;
-  height: 0;
-  border-right: 11px solid transparent;
-  border-bottom: 11px solid #341074;
-  border-left: 17px solid transparent;
-  z-index: -1;
-}
-
-.conversation-single {
-  border-bottom: 2px solid #341074;
-}
-
-.burger-menu h2 {
-  padding: 0 30px;
-  width: calc(100% - 30px);
-  text-align: center;
-  color: #341074;
-  text-transform: uppercase;
-  font-weight: bold;
-}
-
-.nav-mobile a {
-  position: relative;
-}
-
-.nav-mobile a::after {
-  content: "";
-  position: absolute;
-  width: calc(100% - 1.75rem);
-  height: 1px;
-  background-color: #341074;
-  bottom: 0;
-  left: 0.75rem;
-}
-
 .control-input {
   position: relative;
 }
@@ -32064,6 +31979,26 @@ nav {
 
 .bg-yellowkeeep {
   background-color: #F5B276;
+}
+
+.bg-yellowkeeep-btn {
+  background-color: #F5B276;
+}
+
+.bg-yellowkeeep-btn:hover {
+  background-color: #ff9e4a;
+}
+
+.bg-yellowkeeep-disabled {
+  background-color: #ffdab9;
+}
+
+.bg-purple-keeep {
+  background-color: #4a1d96;
+}
+
+.purple-keeep {
+  color: #4a1d96;
 }
 
 @media (min-width: 640px) {
