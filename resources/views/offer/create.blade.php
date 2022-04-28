@@ -62,7 +62,7 @@
                 </div>
 
                 <div class="flex items-center justify-end mt-4">
-                    <x-button class="ml-4">
+                    <x-button class="ml-4" type="submit" color="purple">
                         Créer une offre
                     </x-button>
                 </div>
