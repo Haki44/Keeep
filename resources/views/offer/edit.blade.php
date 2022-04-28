@@ -23,7 +23,7 @@
                 <div class="mt-4">
                     <x-label for="img" value="Ajouter une photo" />
 
-                    <input type="file" accept="image/*" class="form-control" name="img" id="addFile">
+                    <x-input-field />
                 </div>
 
                 <!-- Date du post de l'offre -->
@@ -62,7 +62,7 @@
                 </div>
 
                 <div class="flex items-center justify-end mt-4">
-                    <x-button class="ml-4">
+                    <x-button class="ml-4" type="submit" color="purple">
                         Modifier cette offre
                     </x-button>
                 </div>
