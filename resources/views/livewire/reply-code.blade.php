@@ -24,7 +24,7 @@
                             </div>
 
                             <div class="flex items-center justify-center mt-4">
-                                <x-button-code class="ml-3" wire:click="checkCode">
+                                <x-button-code class="ml-3">
                                     <p class="text-xl w-full p-1 text-center">Confirmer</p>
                                 </x-button-code>
                             </div>
@@ -46,7 +46,7 @@
                             </div>
 
                             <div class="flex items-center justify-center mt-4">
-                                <x-button-code class="ml-3" wire:click="checkCode">
+                                <x-button-code class="ml-3">
                                     <p class="text-xl w-full p-1 text-center">Confirmer</p>
                                 </x-button-code>
                             </div>
